@@ -5,7 +5,7 @@
     background-color: #F11076;
 }
 .cor-branco {
-    color: white;
+    color: white !important;
 }
 .fundo-branco {
     color: white;
