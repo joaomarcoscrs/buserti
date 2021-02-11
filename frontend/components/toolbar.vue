@@ -3,9 +3,32 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <img class="logo-buser ml-3 mr-10" src="~/static/buser_logo.png">
-    <v-btn text raised depressed color="#F11076" class="container-pages-toolbar" :to="{name: 'index'}">
+
+    <v-btn v-if="currentRoute=='index'" text color="#F11076" class="container-pages-toolbar" :to="{name: 'index'}">
+      <v-icon size="30" class="ml-2 mr-2 mt-0 mb-0 cor-rosa-escuro">mdi-home</v-icon>
+      <span class="texto-toolbar cor-rosa-escuro">home</span>
+    </v-btn>
+    <v-btn v-else text color="#F11076" class="container-pages-toolbar" :to="{name: 'index'}">
       <v-icon size="30" class="ml-2 mr-2 mt-0 mb-0 cor-branco">mdi-home</v-icon>
       <span class="texto-toolbar cor-branco">home</span>
+    </v-btn>
+
+    <v-btn v-if="currentRoute=='softwares'" text color="#F11076" class="container-pages-toolbar" :to="{name: 'softwares'}">
+      <v-icon size="30" class="ml-2 mr-2 mt-0 mb-0 cor-rosa-escuro">mdi-cloud-download</v-icon>
+      <span class="texto-toolbar cor-rosa-escuro">gerenciar softwares</span>
+    </v-btn>
+    <v-btn v-else text color="#F11076" class="container-pages-toolbar" :to="{name: 'softwares'}">
+      <v-icon size="30" class="ml-2 mr-2 mt-0 mb-0 cor-branco">mdi-cloud-download</v-icon>
+      <span class="texto-toolbar cor-branco">gerenciar softwares</span>
+    </v-btn>
+
+    <v-btn v-if="currentRoute=='permissoes'" text color="#F11076" class="container-pages-toolbar" :to="{name: 'permissoes'}">
+      <v-icon size="30" class="ml-2 mr-2 mt-0 mb-0 cor-rosa-escuro">mdi-lock-open-variant</v-icon>
+      <span class="texto-toolbar cor-rosa-escuro">gerenciar permissões</span>
+    </v-btn>
+    <v-btn v-else text color="#F11076" class="container-pages-toolbar" :to="{name: 'permissoes'}">
+      <v-icon size="30" class="ml-2 mr-2 mt-0 mb-0 cor-branco">mdi-lock-open-variant</v-icon>
+      <span class="texto-toolbar cor-branco">gerenciar permissões</span>
     </v-btn>
     <v-spacer />
     <v-btn v-if="!logged_user" text dark ripple class="ma-0 ml-5" @click="open_login_dialog($event)">Login</v-btn>
@@ -59,6 +82,9 @@ export default {
   computed: {
     logged_user () {
       return this.$store.state.auth.currentUser
+    },
+    currentRoute () {
+      return this.$route.name
     }
   },
   methods: {
@@ -83,10 +109,12 @@ export default {
   .container-pages-toolbar {
     display:flex;
     align-items: center;
+    margin-left: 10px;
   }
   .texto-toolbar {
-    font-size: 18px;
+    font-size: 15px;
     padding-top: 5px;
+    padding-left: 2px;
     font-family: 'Montserrat' !important;
     text-transform: lowercase;
     font-weight: 600;

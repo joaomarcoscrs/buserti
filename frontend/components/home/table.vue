@@ -1,22 +1,17 @@
 <template>
   <v-layout justify-center align-center>
-    <employeesTable />
+    table de employees
   </v-layout>
 </template>
 
 <script>
 
-import employeesTable from '~/components/home/table.vue'
-
 export default {
-  components: {
-    employeesTable
-  },
   data () {
     return {}
   }
 }
 </script>
 
-<style>
+<style scoped>
 </style>
