@@ -1,14 +1,17 @@
 from django.contrib import admin
 
-from core.models import ActivityLog, Todo
+from core.models import ActivityLog, Computer, Permission, Software, Group, Employee
 
 
 class ActivityLogAdmin(admin.ModelAdmin):
     list_display = ('type', 'logged_user', 'created_at')
 
-class TodoAdmin(admin.ModelAdmin):
-    list_display = ('description', 'done')
 
 
 admin.site.register(ActivityLog, ActivityLogAdmin)
-admin.site.register(Todo, TodoAdmin)
+
+admin.site.register(Computer)
+admin.site.register(Permission)
+admin.site.register(Software)
+admin.site.register(Group)
+admin.site.register(Employee)
