@@ -1,6 +1,6 @@
 <template>
-  <v-app style="background-color: #DCDCDC"><toolbar :state="layout" />
-    <sidenav-left :state="layout" />
+  <v-app style="background-color: #DCDCDC">
+    <toolbar :state="layout" />
     <v-content>
       <v-container fluid>
         <nuxt />
