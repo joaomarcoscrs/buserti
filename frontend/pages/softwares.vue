@@ -8,6 +8,7 @@
 
 <script>
 import groupcard from '~/components/groups/group_card.vue'
+import api from '~api'
 
 export default {
   components: {
@@ -15,24 +16,15 @@ export default {
   },
   data () {
     return {
-      groups: [
-        {
-          id: 1,
-          title: 'financeiro',
-          items: ['office', 'powerbi']
-        },
-        {
-          id: 2,
-          title: 'people',
-          items: ['office', 'powerbi', 'jazzhr']
-        },
-        {
-          id: 3,
-          title: 'dev',
-          items: ['pycharm']
-        }
-      ]
     }
+  },
+  asyncData () {
+    return api.list_groups().then(result => {
+      console.log(result)
+      return {
+        groups: result.data
+      }
+    })
   }
 }
 </script>

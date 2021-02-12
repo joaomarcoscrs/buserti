@@ -1,15 +1,15 @@
 <template>
   <div>
-    <v-layout class="table" align-center>
+    <v-layout class="table" align-center v-for="employee in employees" :key="employee.id">
       <div class="table-nome" style="height: 100%;">
-        <h3 class="table-title-text-nome">Tamires Érvila</h3>
+        <h3 class="table-title-text-nome">{{employee.name}}</h3>
       </div>
       <v-layout class="table" justify-space-between align-center>
         <div class="table-title" style="height: 100%;">
           <v-text-field class="table-title-text"
                         full-width
                         placeholder="slack"
-                        value="tamires.cunha"
+                        v-model="employee.slack"
                         filled
                         rounded
                         dense
@@ -21,7 +21,7 @@
           <v-text-field class="table-title-text"
                         full-width
                         placeholder="email"
-                        value="tamires.cunha@buser.com.br"
+                        v-model="employee.buser_email"
                         filled
                         rounded
                         dense
@@ -32,8 +32,8 @@
         <div class="table-title" style="height: 100%;">
           <v-text-field class="table-title-text"
                         full-width
-                        placeholder="computador"
-                        value=""
+                        placeholder="Computador"
+                        v-model="employee.computer"
                         filled
                         rounded
                         dense
@@ -57,7 +57,7 @@
               </template>
               <v-list light>
                 <v-list-item
-                  v-for="(software) in softwares"
+                  v-for="(software) in employee.softwares"
                   :key="software"
                 >
                   <v-list-item-title>{{ software }}</v-list-item-title>
@@ -82,7 +82,7 @@
               </template>
               <v-list light>
                 <v-list-item
-                  v-for="permissao in permissoes"
+                  v-for="permissao in employee.permissions"
                   :key="permissao"
                 >
                   <v-list-item-title>{{ permissao }}</v-list-item-title>
@@ -100,11 +100,13 @@
 <script>
 
 export default {
+  props: ['employees'],
   data () {
     return {
-      softwares: ['Office', 'PowerBI', 'JazzHR'],
-      permissoes: ['metabase r/w', 'Jazz admin', 'gdrive']
     }
+  },
+  mounted () {
+    console.log('RESULT: ', this.employees)
   }
 }
 </script>
@@ -125,6 +127,8 @@ export default {
   .table {
     height: 35px;
     position: relative;
+    padding-bottom: 30px;
+    padding-top: 30px;
   }
   .table-nome {
       display: flex;
