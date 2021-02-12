@@ -23,12 +23,12 @@ export default {
             {
               id: 1,
               name: 'office',
-              image: '~/assets/software_imgs/office.png'
+              image: 'office.png'
             },
             {
               id: 2,
               name: 'powerbi',
-              image: '~/assets/software_imgs/powerbi.png'
+              image: 'powerbi.png'
             }
           ]
         },
@@ -39,17 +39,17 @@ export default {
             {
               id: 1,
               name: 'office',
-              image: '~/assets/software_imgs/office.png'
+              image: 'office.png'
             },
             {
               id: 2,
               name: 'powerbi',
-              image: '~/assets/software_imgs/powerbi.png'
+              image: 'powerbi.png'
             },
             {
               id: 3,
               name: 'jazzhr',
-              image: '~/assets/software_imgs/jazzhr.png'
+              image: 'jazzhr.png'
             }
           ]
         },
@@ -60,7 +60,7 @@ export default {
             {
               id: 4,
               name: 'pycharm',
-              image: '~/assets/software_imgs/pycharm.png'
+              image: 'pycharm.png'
             }
           ]
         }
