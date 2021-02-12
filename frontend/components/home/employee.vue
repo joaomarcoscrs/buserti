@@ -123,7 +123,7 @@ export default {
     font-weight: 700;
   }
   .table {
-    height: 35px;
+    height: 45px;
     position: relative;
   }
   .table-nome {
@@ -147,7 +147,7 @@ export default {
   .table-title-text {
       font-weight: 400;
       font-size: 14px;
-      color: #5B5B5B;
+      color: #5B5B5B !important;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
