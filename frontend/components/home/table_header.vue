@@ -1,28 +1,32 @@
 <template>
-  <v-layout justify-center align-start>
-    <v-layout class="table" justify-space-around align-center>
-      <div class="table-title" style="height: 100%;">
-        <img class="table-title-logo" src="~/static/slack_logo.png">
-        <h3 class="table-title-text">slack</h3>
-      </div>
-      <div class="table-title" style="height: 100%;">
-        <img class="table-title-logo" src="~/static/gmail.png">
-        <h3 class="table-title-text">e-mail</h3>
-      </div>
-      <div class="table-title" style="height: 100%;">
-        <img class="table-title-logo" src="~/static/laptop.png">
-        <h3 class="table-title-text">computador</h3>
-      </div>
-      <div class="table-title" style="height: 100%;">
-        <img class="table-title-logo" src="~/static/software_icon.png">
-        <h3 class="table-title-text">softwares</h3>
-      </div>
-      <div class="table-title" style="height: 100%;">
-        <img class="table-title-logo" src="~/static/padlock.png">
-        <h3 class="table-title-text">permissões</h3>
-      </div>
+  <div>
+    <v-layout justify-center align-start>
+      <v-layout class="table" justify-space-around align-center>
+          <v-spacer />
+        <div class="table-title" style="height: 100%;">
+          <img class="table-title-logo" src="~/static/slack_logo.png">
+          <h3 class="table-title-text">slack</h3>
+        </div>
+        <div class="table-title" style="height: 100%;">
+          <img class="table-title-logo" src="~/static/gmail.png">
+          <h3 class="table-title-text">e-mail</h3>
+        </div>
+        <div class="table-title" style="height: 100%;">
+          <img class="table-title-logo" src="~/static/laptop.png">
+          <h3 class="table-title-text">computador</h3>
+        </div>
+        <div class="table-title" style="height: 100%;">
+          <img class="table-title-logo" src="~/static/software_icon.png">
+          <h3 class="table-title-text">softwares</h3>
+        </div>
+        <div class="table-title" style="height: 100%;">
+          <img class="table-title-logo" src="~/static/padlock.png">
+          <h3 class="table-title-text">permissões</h3>
+        </div>
+      </v-layout>
     </v-layout>
-  </v-layout>
+    <v-divider color="#969696" class="ml-5 mr-5 mt-2 mb-2" />
+  </div>
 </template>
 
 <script>
@@ -36,7 +40,7 @@ export default {
 
 <style scoped>
   .table {
-    height: 80px;
+    height: 60px;
     position: relative;
   }
   .table-title {
@@ -46,7 +50,7 @@ export default {
       width: 18%;
   }
   .table-title-logo {
-      max-height: 35%;
+      max-height: 45%;
       margin: 10px;
   }
   .table-title-text {

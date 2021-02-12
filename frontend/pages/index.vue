@@ -1,7 +1,7 @@
 <template>
   <div>
     <tableHeader />
-    <employeesTable />
+    <employeesTable class="ml-5 mr-5" />
   </div>
 </template>
 
