@@ -25,9 +25,6 @@ export default {
     toolbar
   },
   data: () => ({
-    layout: {
-      drawer: false
-    }
   }),
   computed: {
     snack () {
