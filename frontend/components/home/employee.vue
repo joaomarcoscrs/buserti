@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-layout class="table" align-center v-for="employee in employees" :key="employee.id">
-      <div class="table-nome" style="height: 100%;">
+      <div v-if="employee.name" class="table-nome" style="height: 100%;">
         <h3 class="table-title-text-nome">{{employee.name}}</h3>
       </div>
-      <v-layout class="table" justify-space-between align-center>
+      <v-layout v-if="employee.name" class="table" justify-space-between align-center>
         <div class="table-title" style="height: 100%;">
           <v-text-field class="table-title-text"
                         full-width
@@ -30,7 +30,7 @@
           />
         </div>
         <div class="table-title" style="height: 100%;">
-          <v-text-field class="table-title-text"
+          <!-- <v-text-field class="table-title-text"
                         full-width
                         placeholder="Computador"
                         v-model="employee.computer"
@@ -39,7 +39,21 @@
                         dense
                         light
                         hide-details
-          />
+          /> -->
+          <v-select
+            class="table-title-text"
+            :items="computers"
+            v-model="employee.computer"
+            item-text="_str"
+            placeholder="computador"
+            :item-value="id"
+            filled
+            rounded
+            dense
+            light
+            hide-details
+            solo
+          ></v-select>
         </div>
         <div class="table-title" style="height: 100%;">
           <div class="text-center">
@@ -92,21 +106,68 @@
           </div>
         </div>
       </v-layout>
+      <v-layout v-if="!employee.name" class="table" justify-space-between align-center>
+        <div class="table-nome" style="height: 100%;">
+          <v-text-field class="table-title-text"
+                        full-width
+                        placeholder="nome"
+                        filled
+                        v-model="new_name"
+                        rounded
+                        dense
+                        light
+                        hide-details
+                        @keyup.enter="add_employee_name(employee)"
+          />
+        </div>
+      </v-layout>
     </v-layout>
     <v-divider color="#969696" class="mt-2 mb-2" />
+    <v-btn
+      v-if="!adding_employee"
+      class="mx-2"
+      dark
+      flat
+      @click="add_employee()"
+      color="transparent"
+    >
+      <v-icon color="pink" dark>
+        mdi-plus
+      </v-icon>
+    </v-btn>
   </div>
 </template>
 
 <script>
 
+import api from '~api'
+
 export default {
   props: ['employees'],
   data () {
     return {
+      new_name: '',
+      adding_employee: false,
+      computers: []
     }
   },
   mounted () {
-    console.log('RESULT: ', this.employees)
+    api.list_computers().then(result => {
+      this.computers = result.data
+    })
+  },
+  methods: {
+    add_employee () {
+      if (!this.adding_employee) {
+        this.employees.push({name: ''})
+        this.adding_employee = true
+      }
+    },
+    add_employee_name (employee) {
+      employee.name = this.new_name
+      this.new_name = ''
+      this.adding_employee = false
+    }
   }
 }
 </script>
@@ -125,7 +186,7 @@ export default {
     font-weight: 700;
   }
   .table {
-    height: 35px;
+    height: 45px;
     position: relative;
     padding-bottom: 30px;
     padding-top: 30px;
@@ -151,7 +212,7 @@ export default {
   .table-title-text {
       font-weight: 400;
       font-size: 14px;
-      color: #5B5B5B;
+      color: #5B5B5B !important;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
