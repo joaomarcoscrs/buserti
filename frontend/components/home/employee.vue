@@ -53,7 +53,7 @@
             light
             hide-details
             solo
-          ></v-select>
+          />
         </div>
         <div class="table-title" style="height: 100%;">
           <div class="text-center">
@@ -127,11 +127,12 @@
       v-if="!adding_employee"
       class="mx-2"
       dark
+      text
       flat
       @click="add_employee()"
       color="transparent"
     >
-      <v-icon color="pink" dark>
+      <v-icon class="cor-rosa-buser" dark large>
         mdi-plus
       </v-icon>
     </v-btn>
