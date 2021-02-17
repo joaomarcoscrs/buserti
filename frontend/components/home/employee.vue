@@ -46,7 +46,7 @@
             v-model="employee.computer"
             item-text="patrimonio"
             placeholder="computador"
-            :item-value="id"
+            @input="afterselection(employee)"
             filled
             rounded
             dense
@@ -148,12 +148,12 @@ export default {
     return {
       new_name: '',
       adding_employee: false,
-      computers: []
+      computers: ['']
     }
   },
   mounted () {
     api.list_computers().then(result => {
-      this.computers = result.data
+      this.computers = this.computers.concat(result.data)
     })
   },
   methods: {
@@ -167,6 +167,13 @@ export default {
       employee.name = this.new_name
       this.new_name = ''
       this.adding_employee = false
+    },
+    afterselection (employee) {
+      this.$nextTick(() => {
+        if (employee.computer === '') {
+          employee.computer = null
+        }
+      })
     }
   }
 }
