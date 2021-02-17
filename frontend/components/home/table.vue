@@ -1,5 +1,5 @@
 <template>
-  <employee />
+  <employee :employees="employees" />
 </template>
 
 <script>
@@ -8,6 +8,7 @@ export default {
   components: {
     employee
   },
+  props: ['employees'],
   data () {
     return {}
   }

@@ -1,15 +1,15 @@
 <template>
   <div>
-    <v-layout class="table" align-center>
-      <div class="table-nome" style="height: 100%;">
-        <h3 class="table-title-text-nome">Tamires Érvila</h3>
+    <v-layout class="table" align-center v-for="employee in employees" :key="employee.id">
+      <div v-if="employee.name" class="table-nome" style="height: 100%;">
+        <h3 class="table-title-text-nome">{{employee.name}}</h3>
       </div>
-      <v-layout class="table" justify-space-between align-center>
+      <v-layout v-if="employee.name" class="table" justify-space-between align-center>
         <div class="table-title" style="height: 100%;">
           <v-text-field class="table-title-text"
                         full-width
                         placeholder="slack"
-                        value="tamires.cunha"
+                        v-model="employee.slack"
                         filled
                         rounded
                         dense
@@ -21,7 +21,7 @@
           <v-text-field class="table-title-text"
                         full-width
                         placeholder="email"
-                        value="tamires.cunha@buser.com.br"
+                        v-model="employee.buser_email"
                         filled
                         rounded
                         dense
@@ -30,15 +30,29 @@
           />
         </div>
         <div class="table-title" style="height: 100%;">
-          <v-text-field class="table-title-text"
+          <!-- <v-text-field class="table-title-text"
                         full-width
-                        placeholder="computador"
-                        value=""
+                        placeholder="Computador"
+                        v-model="employee.computer"
                         filled
                         rounded
                         dense
                         light
                         hide-details
+          /> -->
+          <v-select
+            class="table-title-text"
+            :items="computers"
+            v-model="employee.computer"
+            item-text="_str"
+            placeholder="computador"
+            :item-value="id"
+            filled
+            rounded
+            dense
+            light
+            hide-details
+            solo
           />
         </div>
         <div class="table-title" style="height: 100%;">
@@ -57,7 +71,7 @@
               </template>
               <v-list light>
                 <v-list-item
-                  v-for="(software) in softwares"
+                  v-for="(software) in employee.softwares"
                   :key="software"
                 >
                   <v-list-item-title>{{ software }}</v-list-item-title>
@@ -82,7 +96,7 @@
               </template>
               <v-list light>
                 <v-list-item
-                  v-for="permissao in permissoes"
+                  v-for="permissao in employee.permissions"
                   :key="permissao"
                 >
                   <v-list-item-title>{{ permissao }}</v-list-item-title>
@@ -92,18 +106,68 @@
           </div>
         </div>
       </v-layout>
+      <v-layout v-if="!employee.name" class="table" justify-space-between align-center>
+        <div class="table-nome" style="height: 100%;">
+          <v-text-field class="table-title-text"
+                        full-width
+                        placeholder="nome"
+                        filled
+                        v-model="new_name"
+                        rounded
+                        dense
+                        light
+                        hide-details
+                        @keyup.enter="add_employee_name(employee)"
+          />
+        </div>
+      </v-layout>
     </v-layout>
     <v-divider color="#969696" class="mt-2 mb-2" />
+    <v-btn
+      v-if="!adding_employee"
+      class="mx-2"
+      dark
+      text
+      flat
+      @click="add_employee()"
+      color="transparent"
+    >
+      <v-icon class="cor-rosa-buser" dark large>
+        mdi-plus
+      </v-icon>
+    </v-btn>
   </div>
 </template>
 
 <script>
 
+import api from '~api'
+
 export default {
+  props: ['employees'],
   data () {
     return {
-      softwares: ['Office', 'PowerBI', 'JazzHR'],
-      permissoes: ['metabase r/w', 'Jazz admin', 'gdrive']
+      new_name: '',
+      adding_employee: false,
+      computers: []
+    }
+  },
+  mounted () {
+    api.list_computers().then(result => {
+      this.computers = result.data
+    })
+  },
+  methods: {
+    add_employee () {
+      if (!this.adding_employee) {
+        this.employees.push({name: ''})
+        this.adding_employee = true
+      }
+    },
+    add_employee_name (employee) {
+      employee.name = this.new_name
+      this.new_name = ''
+      this.adding_employee = false
     }
   }
 }
@@ -125,6 +189,8 @@ export default {
   .table {
     height: 45px;
     position: relative;
+    padding-bottom: 30px;
+    padding-top: 30px;
   }
   .table-nome {
       display: flex;
