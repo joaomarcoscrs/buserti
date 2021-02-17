@@ -20,7 +20,6 @@ export default {
   },
   asyncData () {
     return api.list_groups().then(result => {
-      console.log(result)
       return {
         groups: result.data
       }

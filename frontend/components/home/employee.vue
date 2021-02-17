@@ -44,25 +44,24 @@
             class="table-title-text"
             :items="computers"
             v-model="employee.computer"
-            item-text="_str"
+            item-text="patrimonio"
             placeholder="computador"
-            :item-value="id"
+            @input="afterselection(employee)"
             filled
             rounded
             dense
             light
             hide-details
             solo
-          ></v-select>
+          />
         </div>
         <div class="table-title" style="height: 100%;">
           <div class="text-center">
             <v-menu offset-y>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn text
-                       color="#5B5B5B"
-                       class="container-gaveta-soft-perms"
-                       dark
+                       class="container-gaveta-soft-perms cor-cinza-escuro"
+                       light
                        v-bind="attrs"
                        v-on="on"
                 >
@@ -127,11 +126,12 @@
       v-if="!adding_employee"
       class="mx-2"
       dark
+      text
       flat
       @click="add_employee()"
       color="transparent"
     >
-      <v-icon color="pink" dark>
+      <v-icon class="cor-rosa-buser" dark large>
         mdi-plus
       </v-icon>
     </v-btn>
@@ -148,12 +148,12 @@ export default {
     return {
       new_name: '',
       adding_employee: false,
-      computers: []
+      computers: ['']
     }
   },
   mounted () {
     api.list_computers().then(result => {
-      this.computers = result.data
+      this.computers = this.computers.concat(result.data)
     })
   },
   methods: {
@@ -167,6 +167,13 @@ export default {
       employee.name = this.new_name
       this.new_name = ''
       this.adding_employee = false
+    },
+    afterselection (employee) {
+      this.$nextTick(() => {
+        if (employee.computer === '') {
+          employee.computer = null
+        }
+      })
     }
   }
 }
