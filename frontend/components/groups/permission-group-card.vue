@@ -84,11 +84,11 @@ export default {
   .permission-text {
       font-weight: 400;
       font-size: 12px;
+      color: #5B5B5B;
   }
   .permission-text-refers {
-      font-weight: 600;
+      font-weight: 500;
       font-size: 12px;
-      color: #5B5B5B;
   }
   .staff {
       color: #5d2085;

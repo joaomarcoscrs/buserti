@@ -65,12 +65,12 @@ export default {
       text-transform: lowercase;
       font-weight: 300;
       font-size: 16px;
+      color: #5B5B5B;
   }
   .permission-text-refers {
       text-transform: lowercase;
       font-weight: 500;
       font-size: 16px;
-      color: #5B5B5B;
   }
   .staff {
       color: #5d2085;
