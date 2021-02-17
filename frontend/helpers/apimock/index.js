@@ -121,29 +121,47 @@ export default {
       data: [
         {
           id: 1,
+          patrimonio: '000123',
+          service_tag: '20GMD93',
           ram: 8,
           hd: 0,
           ssd: 240,
           marca: 'Dell',
           modelo: 'Vostro 14',
+          os_original: 'Ubuntu 18',
+          os_atual: 'Mint 20',
+          observacoes: 's/ carregador',
+          garantia_expira: '2020-01-03',
           _str: 'Dell Vostro 14 8gb RAM 240gb SSD'
         },
         {
           id: 2,
+          patrimonio: '000939',
+          service_tag: '20GMD92',
           ram: 4,
           hd: 500,
           ssd: 0,
           marca: 'Dell',
           modelo: 'Inspiron 13',
+          os_original: 'Windows 10 Home',
+          os_atual: 'Mint 20',
+          observacoes: null,
+          garantia_expira: '2021-01-03',
           _str: 'Dell Inspiron 13 4gb RAM 500gb HD'
         },
         {
           id: 3,
+          patrimonio: '000056',
+          service_tag: '20FMD93',
           ram: 16,
           hd: 1000,
           ssd: 512,
           marca: 'Dell',
           modelo: 'G5',
+          os_original: 'Ubuntu 18',
+          os_atual: 'Windows 10 Pro',
+          observacoes: null,
+          garantia_expira: '2022-01-03',
           _str: 'Dell G5 16gb RAM 512gb SSD 1000gb HD'
         }
       ]

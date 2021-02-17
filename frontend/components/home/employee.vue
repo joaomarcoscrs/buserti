@@ -44,7 +44,7 @@
             class="table-title-text"
             :items="computers"
             v-model="employee.computer"
-            item-text="_str"
+            item-text="patrimonio"
             placeholder="computador"
             :item-value="id"
             filled
@@ -60,9 +60,8 @@
             <v-menu offset-y>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn text
-                       color="#5B5B5B"
-                       class="container-gaveta-soft-perms"
-                       dark
+                       class="container-gaveta-soft-perms cor-cinza-escuro"
+                       light
                        v-bind="attrs"
                        v-on="on"
                 >
