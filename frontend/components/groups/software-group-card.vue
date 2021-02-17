@@ -6,7 +6,7 @@
         <img class="pa-0 card-subtitle" src="~/static/software_icon.png">
         <span class="pa-2 card-subtitle">softwares</span>
       </v-card-subtitle>
-      <v-layout column>
+      <v-layout column class="container-grupo">
         <div @add-software="add_software" class="ma-0 pt-0 pb-1 pl-7 pr-7" v-for="software in group.items" :key="software.id">
           <v-layout justify-start>
             <img class="software-logo" :src="software.image">
@@ -73,5 +73,12 @@ export default {
   }
   .botao-add {
     width: 100px;
+  }
+  .container-grupo {
+    height: 200px;
+    flex-flow: column wrap;
+    padding-bottom: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
   }
 </style>
