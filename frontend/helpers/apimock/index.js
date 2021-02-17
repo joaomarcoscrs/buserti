@@ -192,5 +192,125 @@ export default {
         }
       ]
     })
+  },
+  list_permission_groups () {
+    return mockasync({
+      data: [
+        {
+          id: 1,
+          title: 'financeiro',
+          items: [
+            {
+              id: 1,
+              subgroup: null,
+              refers_to: 'metabase',
+              level: 'read'
+            },
+            {
+              id: 2,
+              subgroup: 'powerbi-fin',
+              refers_to: 'powerbi',
+              level: 'general'
+            },
+            {
+              id: 3,
+              subgroup: 'powerbi-fin',
+              refers_to: 'powerbi',
+              level: 'OKR'
+            },
+            {
+              id: 4,
+              subgroup: 'powerbi-fin',
+              refers_to: 'powerbi',
+              level: 'financeiro'
+            }
+          ]
+        },
+        {
+          id: 2,
+          title: 'dev',
+          items: [
+            {
+              id: 5,
+              subgroup: null,
+              refers_to: 'metabase',
+              level: 'read/write'
+            },
+            {
+              id: 6,
+              subgroup: 'staff-dev',
+              refers_to: 'staff',
+              level: 'criar grupo'
+            },
+            {
+              id: 7,
+              subgroup: 'staff-dev',
+              refers_to: 'staff',
+              level: 'cancelar grupo'
+            },
+            {
+              id: 8,
+              subgroup: 'staff-dev',
+              refers_to: 'staff',
+              level: 'alterar reserva'
+            }
+          ]
+        }
+      ]
+    })
+  },
+  list_permissions () {
+    return mockasync({
+      data: [
+        {
+          id: 1,
+          subgroup: null,
+          refers_to: 'metabase',
+          level: 'read'
+        },
+        {
+          id: 2,
+          subgroup: 'powerbi',
+          refers_to: 'powerbi',
+          level: 'general'
+        },
+        {
+          id: 3,
+          subgroup: 'powerbi',
+          refers_to: 'powerbi',
+          level: 'OKR'
+        },
+        {
+          id: 4,
+          subgroup: 'powerbi',
+          refers_to: 'powerbi',
+          level: 'financeiro'
+        },
+        {
+          id: 5,
+          subgroup: null,
+          refers_to: 'metabase',
+          level: 'read/write'
+        },
+        {
+          id: 6,
+          subgroup: 'staff',
+          refers_to: 'staff',
+          level: 'criar grupo'
+        },
+        {
+          id: 7,
+          subgroup: 'staff',
+          refers_to: 'staff',
+          level: 'cancelar grupo'
+        },
+        {
+          id: 8,
+          subgroup: 'staff',
+          refers_to: 'staff',
+          level: 'alterar reserva'
+        }
+      ]
+    })
   }
 }

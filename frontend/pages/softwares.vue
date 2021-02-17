@@ -1,7 +1,7 @@
 <template>
   <v-layout justify-start align-start wrap class="container-grupos">
     <div v-for="group in groups" :key="group.id">
-      <groupcard :group="group" :softwareList="softwareList" />
+      <softwareGroupcard :group="group" :softwareList="softwareList" />
     </div>
     <v-btn height="300" width="400" light plain class="ma-3 botao-card" @click="add_software_group()">
       <v-card light class="ma-3" height="300" width="400" hover>
@@ -13,12 +13,12 @@
 </template>
 
 <script>
-import groupcard from '~/components/groups/group_card.vue'
+import softwareGroupcard from '~/components/groups/software-group-card.vue'
 import api from '~api'
 
 export default {
   components: {
-    groupcard
+    softwareGroupcard
   },
   data () {
     return {
