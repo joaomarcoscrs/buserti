@@ -47,6 +47,47 @@ export default {
             modelo: 'Vostro 14',
             _str: 'Dell Vostro 14 8gb RAM 240gb SSD'
           },
+          software_groups: [
+            {
+              id: 2,
+              name: 'people',
+              softwares: [
+                {
+                  id: 1,
+                  name: 'office',
+                  image: 'office.png',
+                  installed: false
+                },
+                {
+                  id: 2,
+                  name: 'powerbi',
+                  image: 'powerbi.png',
+                  installed: true
+                }
+              ]
+            },
+            {
+              id: 1,
+              name: 'financeiro',
+              softwares: [
+                {
+                  id: 1,
+                  name: 'office',
+                  image: 'office.png'
+                },
+                {
+                  id: 2,
+                  name: 'powerbi',
+                  image: 'powerbi.png'
+                },
+                {
+                  id: 3,
+                  name: 'jazzhr',
+                  image: 'jazzhr.png'
+                }
+              ]
+            }
+          ],
           softwares: ['Office', 'PowerBI', 'JazzHR'],
           permissions: ['metabase r/w', 'Jazz admin', 'Google Drive']
         },
@@ -56,6 +97,26 @@ export default {
           slack: 'tony.lampada',
           buser_email: 'tony.lampada@buser.com.br',
           computer: null,
+          software_groups: [
+            {
+              id: 3,
+              title: 'dev',
+              softwares: [
+                {
+                  id: 4,
+                  name: 'pycharm',
+                  image: 'pycharm.png',
+                  installed: true
+                },
+                {
+                  id: 5,
+                  name: 'VSCode',
+                  image: 'vscode.png',
+                  installed: false
+                }
+              ]
+            }
+          ],
           softwares: ['VS Code'],
           permissions: ['metabase r/w', 'aws ec3']
         }

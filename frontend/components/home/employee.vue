@@ -68,14 +68,22 @@
                   <span class="texto-gaveta">ver softwares</span>
                 </v-btn>
               </template>
-              <v-list light>
+              <!-- <v-list light>
                 <v-list-item
-                  v-for="(software) in employee.softwares"
-                  :key="software"
+                  v-for="(software_group) in employee.software_groups"
+                  :key="software_group.id"
                 >
-                  <v-list-item-title>{{ software }}</v-list-item-title>
+                  <v-list-item-title>{{ software_group.name }}</v-list-item-title>
                 </v-list-item>
-              </v-list>
+              </v-list> -->
+              <div class="gaveta">
+                <div class="fundo-rosa-buser">
+                  softwares e licenças
+                </div>
+                <div class="fundo-branco" style="color: black;">
+                  Mostrar aqui os grupos
+                </div>
+              </div>
             </v-menu>
           </div>
         </div>
