@@ -1,5 +1,5 @@
 <template>
-  <v-layout justify-start align-start>
+  <v-layout justify-start align-start wrap class="container-grupos">
     <div v-for="group in groups" :key="group.id">
       <groupcard :group="group" />
     </div>
@@ -30,4 +30,7 @@ export default {
 </script>
 
 <style scoped>
+.container-grupos {
+  overflow-x: hidden;
+}
 </style>
