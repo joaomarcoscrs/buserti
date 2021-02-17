@@ -62,7 +62,7 @@ export default {
       ]
     })
   },
-  list_groups () {
+  list_software_groups () {
     return mockasync({
       data: [
         {
@@ -123,16 +123,16 @@ export default {
           id: 1,
           patrimonio: '000123',
           service_tag: '20GMD93',
-          ram: 8,
-          hd: 0,
-          ssd: 240,
+          ram: 4,
+          hd: 500,
+          ssd: 0,
           marca: 'Dell',
-          modelo: 'Vostro 14',
-          os_original: 'Ubuntu 18',
+          modelo: 'Inspiron 13',
+          os_original: 'Windows 10 Home',
           os_atual: 'Mint 20',
-          observacoes: 's/ carregador',
-          garantia_expira: '2020-01-03',
-          _str: 'Dell Vostro 14 8gb RAM 240gb SSD'
+          observacoes: 'Está sem carregador',
+          garantia_expira: '2021-01-03',
+          _str: 'Dell Inspiron 13 4gb RAM 500gb HD'
         },
         {
           id: 2,
@@ -163,6 +163,32 @@ export default {
           observacoes: null,
           garantia_expira: '2022-01-03',
           _str: 'Dell G5 16gb RAM 512gb SSD 1000gb HD'
+        }
+      ]
+    })
+  },
+  list_softwares () {
+    return mockasync({
+      data: [
+        {
+          id: 1,
+          name: 'office',
+          image: 'office.png'
+        },
+        {
+          id: 2,
+          name: 'powerbi',
+          image: 'powerbi.png'
+        },
+        {
+          id: 3,
+          name: 'jazzhr',
+          image: 'jazzhr.png'
+        },
+        {
+          id: 4,
+          name: 'pycharm',
+          image: 'pycharm.png'
         }
       ]
     })
