@@ -123,7 +123,7 @@ export default {
       ]
     })
   },
-  list_groups () {
+  list_software_groups () {
     return mockasync({
       data: [
         {
@@ -184,16 +184,16 @@ export default {
           id: 1,
           patrimonio: '000123',
           service_tag: '20GMD93',
-          ram: 8,
-          hd: 0,
-          ssd: 240,
+          ram: 4,
+          hd: 500,
+          ssd: 0,
           marca: 'Dell',
-          modelo: 'Vostro 14',
-          os_original: 'Ubuntu 18',
+          modelo: 'Inspiron 13',
+          os_original: 'Windows 10 Home',
           os_atual: 'Mint 20',
-          observacoes: 's/ carregador',
-          garantia_expira: '2020-01-03',
-          _str: 'Dell Vostro 14 8gb RAM 240gb SSD'
+          observacoes: 'Está sem carregador',
+          garantia_expira: '2021-01-03',
+          _str: 'Dell Inspiron 13 4gb RAM 500gb HD'
         },
         {
           id: 2,
@@ -224,6 +224,152 @@ export default {
           observacoes: null,
           garantia_expira: '2022-01-03',
           _str: 'Dell G5 16gb RAM 512gb SSD 1000gb HD'
+        }
+      ]
+    })
+  },
+  list_softwares () {
+    return mockasync({
+      data: [
+        {
+          id: 1,
+          name: 'office',
+          image: 'office.png'
+        },
+        {
+          id: 2,
+          name: 'powerbi',
+          image: 'powerbi.png'
+        },
+        {
+          id: 3,
+          name: 'jazzhr',
+          image: 'jazzhr.png'
+        },
+        {
+          id: 4,
+          name: 'pycharm',
+          image: 'pycharm.png'
+        }
+      ]
+    })
+  },
+  list_permission_groups () {
+    return mockasync({
+      data: [
+        {
+          id: 1,
+          title: 'financeiro',
+          items: [
+            {
+              id: 1,
+              subgroup: null,
+              refers_to: 'metabase',
+              level: 'read'
+            },
+            {
+              id: 2,
+              subgroup: 'powerbi-fin',
+              refers_to: 'powerbi',
+              level: 'general'
+            },
+            {
+              id: 3,
+              subgroup: 'powerbi-fin',
+              refers_to: 'powerbi',
+              level: 'OKR'
+            },
+            {
+              id: 4,
+              subgroup: 'powerbi-fin',
+              refers_to: 'powerbi',
+              level: 'financeiro'
+            }
+          ]
+        },
+        {
+          id: 2,
+          title: 'dev',
+          items: [
+            {
+              id: 5,
+              subgroup: null,
+              refers_to: 'metabase',
+              level: 'read/write'
+            },
+            {
+              id: 6,
+              subgroup: 'staff-dev',
+              refers_to: 'staff',
+              level: 'criar grupo'
+            },
+            {
+              id: 7,
+              subgroup: 'staff-dev',
+              refers_to: 'staff',
+              level: 'cancelar grupo'
+            },
+            {
+              id: 8,
+              subgroup: 'staff-dev',
+              refers_to: 'staff',
+              level: 'alterar reserva'
+            }
+          ]
+        }
+      ]
+    })
+  },
+  list_permissions () {
+    return mockasync({
+      data: [
+        {
+          id: 1,
+          subgroup: null,
+          refers_to: 'metabase',
+          level: 'read'
+        },
+        {
+          id: 2,
+          subgroup: 'powerbi',
+          refers_to: 'powerbi',
+          level: 'general'
+        },
+        {
+          id: 3,
+          subgroup: 'powerbi',
+          refers_to: 'powerbi',
+          level: 'OKR'
+        },
+        {
+          id: 4,
+          subgroup: 'powerbi',
+          refers_to: 'powerbi',
+          level: 'financeiro'
+        },
+        {
+          id: 5,
+          subgroup: null,
+          refers_to: 'metabase',
+          level: 'read/write'
+        },
+        {
+          id: 6,
+          subgroup: 'staff',
+          refers_to: 'staff',
+          level: 'criar grupo'
+        },
+        {
+          id: 7,
+          subgroup: 'staff',
+          refers_to: 'staff',
+          level: 'cancelar grupo'
+        },
+        {
+          id: 8,
+          subgroup: 'staff',
+          refers_to: 'staff',
+          level: 'alterar reserva'
         }
       ]
     })
