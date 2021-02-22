@@ -2,11 +2,7 @@
   <div>
     <v-layout justify-center align-start>
       <v-layout class="table" justify-space-around align-center>
-          <v-spacer />
-        <div class="table-title" style="height: 100%;">
-          <img class="table-title-logo" src="~/static/slack_logo.png">
-          <h3 class="table-title-text">slack</h3>
-        </div>
+        <v-spacer />
         <div class="table-title" style="height: 100%;">
           <img class="table-title-logo" src="~/static/gmail.png">
           <h3 class="table-title-text">e-mail</h3>
@@ -47,7 +43,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 18%;
+      width: 20.5%;
   }
   .table-title-logo {
       max-height: 45%;
