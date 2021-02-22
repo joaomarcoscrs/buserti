@@ -1,341 +1,426 @@
 <template>
   <div>
-    <v-layout class="table" align-center v-for="employee in employees" :key="employee.id">
-      <div v-if="employee.name" class="table-nome" style="height: 100%;">
-        <h3 class="table-title-text-nome">{{employee.name}}</h3>
-      </div>
-      <v-layout v-if="employee.name" class="table" justify-space-between align-center>
-        <div class="table-title" style="height: 100%;">
-          <v-text-field class="table-title-text"
-                        full-width
-                        placeholder="slack"
-                        v-model="employee.slack"
-                        filled
-                        rounded
-                        dense
-                        light
-                        hide-details
-          />
-        </div>
-        <div class="table-title" style="height: 100%;">
-          <v-text-field class="table-title-text"
-                        full-width
-                        placeholder="email"
-                        v-model="employee.buser_email"
-                        filled
-                        rounded
-                        dense
-                        light
-                        hide-details
-          />
-        </div>
-        <div class="table-title" style="height: 100%;">
-          <!-- <v-text-field class="table-title-text"
-                        full-width
-                        placeholder="Computador"
-                        v-model="employee.computer"
-                        filled
-                        rounded
-                        dense
-                        light
-                        hide-details
-          /> -->
-          <v-select
-            class="table-title-text"
-            :items="computers"
-            v-model="employee.computer"
-            item-text="patrimonio"
-            placeholder="computador"
-            @input="afterselection(employee)"
-            filled
-            rounded
-            dense
-            light
-            hide-details
-            solo
-          />
-        </div>
-        <div class="table-title" style="height: 100%;">
-          <div class="text-center">
-            <v-menu offset-y :close-on-content-click="false" class="gaveta" max-height="300" max-width="400" min-width="400">
+    <div v-for="employee in employees" :key="employee.id">
+      <v-layout class="table" align-center row-wrap>
+        <div v-if="employee.name" class="table-nome" style="height: 100%;">
+          <div class="table-slack" style="height: 100%;">
+            <v-tooltip top>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn text
-                       class="container-gaveta-soft-perms cor-cinza-escuro"
-                       light
-                       v-bind="attrs"
-                       v-on="on"
-                >
-                  <span class="texto-gaveta">ver softwares</span>
-                </v-btn>
+                <img class="slack-logo ma-2" src="slack_logo.png" v-bind="attrs" v-on="on">
               </template>
-              <!-- <v-list light>
-                <v-list-item
-                  v-for="(software_group) in employee.software_groups"
-                  :key="software_group.id"
-                >
-                  <v-list-item-title>{{ software_group.name }}</v-list-item-title>
-                </v-list-item>
-              </v-list> -->
-              <div class="gaveta">
-                <div class="fundo-rosa-buser title-gaveta">
-                  softwares e licenças
-                </div>
-                <div class="fundo-branco">
-                  <!-- <v-select
-                    return-object
-                    :items="groups"
-                    v-model="employee.software_groups"
-                    attach
-                    item-text="title"
-                    @change="add_group(employee)"
-                    chips
-                    solo
-                    label="Grupos"
-                    multiple
-                  ></v-select> -->
-                  <v-autocomplete
-                    return-object
-                    :items="groups"
-                    class="select-group"
-                    filled
-                    v-model="employee.software_groups"
-                    placeholder="Grupos"
-                    chips
-                    solo
-                    color="blue-grey lighten-2"
-                    item-text="title"
-                    @change="add_group(employee)"
-                    item-value="title"
-                    multiple
+              <span>slack: {{employee.slack}}</span>
+            </v-tooltip>
+            <h3 class="table-title-text-nome">{{employee.name}}</h3>
+          </div>
+        </div>
+        <v-layout v-if="employee.name" class="table" justify-space-between align-center>
+          <div class="table-title" style="height: 100%;">
+            <v-text-field class="table-title-text"
+                          full-width
+                          placeholder="email"
+                          v-model="employee.buser_email"
+                          filled
+                          rounded
+                          dense
+                          light
+                          hide-details
+            />
+          </div>
+          <div class="table-title" style="height: 100%;">
+            <v-select
+              class="table-title-text"
+              :items="computers"
+              v-model="employee.computer"
+              item-text="patrimonio"
+              placeholder="computador"
+              @input="afterselection(employee)"
+              filled
+              rounded
+              dense
+              light
+              hide-details
+              solo
+            />
+          </div>
+          <div class="table-title" style="height: 100%;">
+            <div class="text-center">
+              <v-menu offset-y :close-on-content-click="false" class="gaveta" max-height="300" max-width="400" min-width="400">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn text
+                        class="container-gaveta-soft-perms cor-cinza-escuro"
+                        light
+                        v-bind="attrs"
+                        v-on="on"
                   >
-                    <template v-slot:selection="data">
-                      <v-chip
-                        v-bind="data.attrs"
-                        :input-value="data.selected"
-                        close
-                        @click="data.select"
-                        @click:close="remove_group(data.item, employee)"
-                      >
-                        {{ data.item.title }}
-                      </v-chip>
-                    </template>
-                    <template v-slot:item="data">
-                      <template>
-                        <v-list-item-content>
-                          <v-list-item-title
-                            v-html="data.item.title"
-                          ></v-list-item-title>
-                        </v-list-item-content>
+                    <span class="texto-gaveta">ver softwares</span>
+                  </v-btn>
+                </template>
+                <!-- <v-list light>
+                  <v-list-item
+                    v-for="(software_group) in employee.software_groups"
+                    :key="software_group.id"
+                  >
+                    <v-list-item-title>{{ software_group.name }}</v-list-item-title>
+                  </v-list-item>
+                </v-list> -->
+                <div class="gaveta">
+                  <div class="fundo-rosa-buser title-gaveta">
+                    softwares e licenças
+                  </div>
+                  <div class="fundo-branco">
+                    <!-- <v-select
+                      return-object
+                      :items="groups"
+                      v-model="employee.software_groups"
+                      attach
+                      item-text="title"
+                      @change="add_software_group(employee)"
+                      chips
+                      solo
+                      label="Grupos"
+                      multiple
+                    ></v-select> -->
+                    <v-autocomplete
+                      return-object
+                      :items="software_groups"
+                      class="select-group"
+                      filled
+                      v-model="employee.software_groups"
+                      placeholder="Grupos"
+                      chips
+                      solo
+                      color="blue-grey lighten-2"
+                      item-text="title"
+                      @change="add_software_group(employee)"
+                      item-value="title"
+                      multiple
+                      hide-details
+                    >
+                      <template v-slot:selection="data">
+                        <v-chip
+                          v-bind="data.attrs"
+                          :input-value="data.selected"
+                          close
+                          @click="data.select"
+                          @click:close="remove_software_group(data.item, employee)"
+                        >
+                          {{ data.item.title }}
+                        </v-chip>
                       </template>
-                    </template>
-                  </v-autocomplete>
-                  <v-list light class="software-list">
-                    <div v-for="(software) in employee.softwares" :key="software.id" class="software-item">
-                      <div class="software-logo" ><a><img class="logo" v-bind:class=" !is_on_list(software, employee.installed_softwares) ? 'not-installed' : '' " :src="software.image" @click="install_software(software, employee)"></a></div>
-                      <v-icon small color="green" class="installed-icon" v-if="is_on_list(software, employee.installed_softwares)">mdi-check</v-icon>
-                      <v-icon small v-else color="red" class="installed-icon">mdi-close</v-icon>
-                      <!-- <v-btn @click="install_software(software, employee)" ><v-icon v-if="!is_on_list(software, employee.installed_softwares)">mdi-close</v-icon></v-btn> -->
-                    </div>
-                  </v-list>
+                      <template v-slot:item="data">
+                        <template>
+                          <v-list-item-content>
+                            <v-list-item-title
+                              v-html="data.item.title"
+                            ></v-list-item-title>
+                          </v-list-item-content>
+                        </template>
+                      </template>
+                    </v-autocomplete>
+                    <v-list light class="software-list">
+                      <div v-for="(software) in employee.softwares" :key="software.id" class="software-item">
+                        <div class="software-logo" ><a><img class="logo" v-bind:class=" !is_on_list(software, employee.installed_softwares) ? 'not-installed' : '' " :src="software.image" @click="install_software(software, employee)"></a></div>
+                        <v-icon small color="green" class="installed-icon" v-if="is_on_list(software, employee.installed_softwares)">mdi-check</v-icon>
+                        <v-icon small v-else color="red" class="installed-icon">mdi-close</v-icon>
+                        <!-- <v-btn @click="install_software(software, employee)" ><v-icon v-if="!is_on_list(software, employee.installed_softwares)">mdi-close</v-icon></v-btn> -->
+                      </div>
+                    </v-list>
+                  </div>
                 </div>
-              </div>
-            </v-menu>
+              </v-menu>
+            </div>
           </div>
-        </div>
-        <div class="table-title" style="height: 100%;">
-          <div class="text-center">
-            <v-menu offset-y>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn text
-                       color="#5B5B5B"
-                       class="container-gaveta-soft-perms"
-                       dark
-                       v-bind="attrs"
-                       v-on="on"
-                >
-                  <span class="texto-gaveta">ver permissões</span>
-                </v-btn>
-              </template>
-              <v-list light>
-                <v-list-item
-                  v-for="permissao in employee.permissions"
-                  :key="permissao"
-                >
-                  <v-list-item-title>{{ permissao }}</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
+          <div class="table-title" style="height: 100%;">
+            <div class="text-center">
+              <v-menu offset-y :close-on-content-click="false" class="gaveta" max-height="300" max-width="400" min-width="400">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn text
+                         color="#5B5B5B"
+                         class="container-gaveta-soft-perms"
+                         dark
+                         v-bind="attrs"
+                         v-on="on"
+                  >
+                    <span class="texto-gaveta">ver permissões</span>
+                  </v-btn>
+                </template>
+                <div class="gaveta">
+                  <div class="fundo-rosa-buser title-gaveta">
+                    permissões
+                  </div>
+                  <div class="fundo-branco">
+                    <!-- <v-select
+                      return-object
+                      :items="groups"
+                      v-model="employee.software_groups"
+                      attach
+                      item-text="title"
+                      @change="add_software_group(employee)"
+                      chips
+                      solo
+                      label="Grupos"
+                      multiple
+                    ></v-select> -->
+                    <v-autocomplete
+                      return-object
+                      :items="permission_groups"
+                      class="select-group"
+                      filled
+                      v-model="employee.permission_groups"
+                      placeholder="Grupos"
+                      chips
+                      solo
+                      color="blue-grey lighten-2"
+                      item-text="title"
+                      @change="add_permission_group(employee)"
+                      item-value="title"
+                      multiple
+                      hide-details
+                    >
+                      <template v-slot:selection="data">
+                        <v-chip
+                          v-bind="data.attrs"
+                          :input-value="data.selected"
+                          close
+                          @click="data.select"
+                          @click:close="remove_permission_group(data.item, employee)"
+                        >
+                          {{ data.item.title }}
+                        </v-chip>
+                      </template>
+                      <template v-slot:item="data">
+                        <template>
+                          <v-list-item-content>
+                            <v-list-item-title
+                              v-html="data.item.title"
+                            ></v-list-item-title>
+                          </v-list-item-content>
+                        </template>
+                      </template>
+                    </v-autocomplete>
+                    <v-list light>
+                      <v-list-item v-for="(permission, index) in employee.permissions" :key="index" class="permission-list">
+                        <a @click="give_permission(permission, employee)"><span class="permission-text-refers" :class="permission.refers_to">{{ permission.refers_to }}</span>&nbsp;<span class="permission-text">{{ permission.level }}</span></a>
+                        <v-btn @click="give_permission(permission, employee)">
+                          <v-icon color="green" v-if="is_on_list(permission, employee.acquired_permissions)">mdi-check</v-icon>
+                          <v-icon v-else color="red" >mdi-close</v-icon>
+                        </v-btn>
+                      </v-list-item>
+                    </v-list>
+                  </div>
+                </div>
+              </v-menu>
+            </div>
           </div>
-        </div>
+        </v-layout>
+        <v-layout v-if="!employee.name" class="table" justify-space-between align-center>
+          <div class="table-nome" style="height: 100%;">
+            <v-text-field class="table-title-text"
+                          full-width
+                          placeholder="nome"
+                          filled
+                          v-model="new_name"
+                          rounded
+                          dense
+                          light
+                          hide-details
+                          @keyup.enter="add_employee_name(employee)"
+            />
+          </div>
+        </v-layout>
       </v-layout>
-      <v-layout v-if="!employee.name" class="table" justify-space-between align-center>
-        <div class="table-nome" style="height: 100%;">
-          <v-text-field class="table-title-text"
-                        full-width
-                        placeholder="nome"
-                        filled
-                        v-model="new_name"
-                        rounded
-                        dense
-                        light
-                        hide-details
-                        @keyup.enter="add_employee_name(employee)"
-          />
-        </div>
-      </v-layout>
-    </v-layout>
-    <v-divider color="#969696" class="mt-2 mb-2" />
+      <v-divider color="#969696" class="mt-2 mb-2" />
+    </div>
     <v-btn
       v-if="!adding_employee"
       class="mx-2"
       dark
+      icon
       text
       @click="add_employee()"
-      color="transparent"
     >
-      <v-icon class="cor-rosa-buser" dark large>
-        mdi-plus
+      <v-icon class="cor-cinza" dark size="27">
+        mdi-account-plus
       </v-icon>
     </v-btn>
   </div>
 </template>
 
 <script>
-
-import api from '~api'
+import api from "~api";
 
 export default {
-  props: ['employees'],
-  data () {
+  props: ["employees"],
+  data() {
     return {
-      new_name: '',
+      new_name: "",
       adding_employee: false,
-      computers: [''],
-      groups: [],
-      permissions: []
-    }
+      computers: [""],
+      software_groups: [],
+      permission_groups: [],
+    };
   },
-  mounted () {
-    api.list_computers().then(result => {
-      this.computers = this.computers.concat(result.data)
-    })
-    api.list_software_groups().then(result => {
-      this.groups = result.data
-    })
-     api.list_permission_groups().then(result => {
-      this.permissions = result.data
-    })
+  mounted() {
+    api.list_computers().then((result) => {
+      this.computers = this.computers.concat(result.data);
+    });
+    api.list_software_groups().then((result) => {
+      this.software_groups = result.data;
+    });
+    api.list_permission_groups().then((result) => {
+      this.permission_groups = result.data;
+    });
   },
   methods: {
-    add_employee () {
+    add_employee() {
       if (!this.adding_employee) {
-        this.employees.push({name: ''})
-        this.adding_employee = true
+        this.employees.push({ name: "" });
+        this.adding_employee = true;
       }
     },
-    add_employee_name (employee) {
-      employee.name = this.new_name
-      this.new_name = ''
-      this.adding_employee = false
+    add_employee_name(employee) {
+      employee.name = this.new_name;
+      this.new_name = "";
+      this.adding_employee = false;
     },
-    afterselection (employee) {
+    afterselection(employee) {
       this.$nextTick(() => {
-        if (employee.computer === '') {
-          employee.computer = null
+        if (employee.computer === "") {
+          employee.computer = null;
         }
-      })
+      });
     },
-    add_group (employee) {
-      employee.softwares = []
-      employee.software_groups.forEach(group => {
-        employee.softwares = employee.softwares.concat(group.items)
-      })
-      employee.softwares = employee.softwares.filter((software, index, self) => index === self.findIndex((s) => (s.id === software.id)))
-    },
-    is_on_list (elem, list) {
-      if (list.find((e) => (e.id === elem.id))) {
-        return true
+    is_on_list(elem, list) {
+      if (list.find((e) => e.id === elem.id)) {
+        return true;
       } else {
-        return false
+        return false;
       }
     },
-    install_software (software, employee) {
-      const index = (employee.installed_softwares.findIndex((e) => (e.id === software.id)))
+    install_software(software, employee) {
+      const index = employee.installed_softwares.findIndex(
+        (e) => e.id === software.id
+      );
       if (index === -1) {
-        employee.installed_softwares.push(software)
+        employee.installed_softwares.push(software);
       } else {
-        employee.installed_softwares.splice(index, 1)
+        employee.installed_softwares.splice(index, 1);
       }
     },
-    remove_group(item, employee) {
-      const index = (employee.software_groups.findIndex((e) => (e.id === item.id)))
-      if (index >= 0) employee.software_groups.splice(index, 1)
-      employee.softwares = []
-      employee.software_groups.forEach(group => {
-        employee.softwares = employee.softwares.concat(group.items)
-      })
-      employee.softwares = employee.softwares.filter((software, index, self) => index === self.findIndex((s) => (s.id === software.id)))
+    give_permission(permission, employee) {
+      const index = employee.acquired_permissions.findIndex(
+        (e) => e.id === permission.id
+      );
+      if (index === -1) {
+        employee.acquired_permissions.push(permission);
+      } else {
+        employee.acquired_permissions.splice(index, 1);
+      }
     },
-  }
-}
+    add_software_group(employee) {
+      employee.softwares = [];
+      employee.software_groups.forEach((group) => {
+        employee.softwares = employee.softwares.concat(group.items);
+      });
+      employee.softwares = employee.softwares.filter(
+        (software, index, self) =>
+          index === self.findIndex((s) => s.id === software.id)
+      );
+    },
+    remove_software_group(item, employee) {
+      const index = employee.software_groups.findIndex((e) => e.id === item.id);
+      if (index >= 0) employee.software_groups.splice(index, 1);
+      employee.softwares = [];
+      employee.software_groups.forEach((group) => {
+        employee.softwares = employee.softwares.concat(group.items);
+      });
+      employee.softwares = employee.softwares.filter(
+        (software, index, self) =>
+          index === self.findIndex((s) => s.id === software.id)
+      );
+    },
+    add_permission_group(employee) {
+      employee.permissions = [];
+      employee.permission_groups.forEach((group) => {
+        employee.permissions = employee.permissions.concat(group.items);
+      });
+      employee.permissions = employee.permissions.filter(
+        (permission, index, self) =>
+          index === self.findIndex((s) => s.id === permission.id)
+      );
+    },
+    remove_permission_group(item, employee) {
+      const index = employee.permission_groups.findIndex((e) => e.id === item.id);
+      if (index >= 0) employee.permission_groups.splice(index, 1);
+      employee.permissions = [];
+      employee.permission_groups.forEach((group) => {
+        employee.permissions = employee.permissions.concat(group.items);
+      });
+      employee.permissions = employee.permissions.filter(
+        (permission, index, self) =>
+          index === self.findIndex((s) => s.id === permission.id)
+      );
+    },
+  },
+};
 </script>
 
 <style scoped>
   .container-gaveta-soft-perms {
-    display:flex;
+    display: flex;
     align-items: center;
   }
   .texto-gaveta {
     font-size: 15px;
     padding-top: 5px;
     padding-left: 2px;
-    font-family: 'Quicksand' !important;
+    font-family: "Quicksand" !important;
     text-transform: lowercase;
     font-weight: 700;
   }
   .table {
     height: 45px;
     position: relative;
-    padding-bottom: 30px;
-    padding-top: 30px;
   }
   .table-nome {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      width: 14%;
-      margin-right: 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-flow: column wrap;
+    width: 20%;
+    margin-right: 5px;
   }
   .table-title {
-      display: flex;
-      align-items: center;
-      position: relative;
-      justify-content: center;
-      width: 15%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+    width: 20%;
   }
   .table-title-logo {
-      max-height: 45%;
-      margin: 10px;
+    max-height: 45%;
+    margin: 10px;
   }
   .table-title-text {
-      font-weight: 400;
-      font-size: 14px;
-      color: #5B5B5B !important;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    font-weight: 300;
+    font-size: 14px;
+    color: #5b5b5b !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .table-title-text-nome {
-      font-weight: 500;
-      font-size: 16px;
-      color: #5B5B5B;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    width: 100%;
+    font-weight: 400;
+    font-size: 16px;
+    color: #5b5b5b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .software-logo {
-      height: 30px;
+    height: 30px;
   }
 
   .gaveta {
@@ -381,4 +466,53 @@ export default {
     height: 100%;
   }
 
+  .table-slack {
+    margin-top: 2px;
+    width: 220px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+  }
+  .slack-employee {
+    width: 100px;
+    font-weight: 400;
+    font-size: 14px;
+    color: #969696;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .slack-logo {
+    height: 18px;
+    width: auto;
+  }
+  .debug-azul {
+    background-color: lightblue;
+  }
+  .debug-vermelho {
+    background-color: lightcoral;
+  }
+  .permission-text {
+      font-weight: 400;
+      font-size: 12px;
+      color: #5B5B5B;
+  }
+  .permission-text-refers {
+      font-weight: 500;
+      font-size: 12px;
+  }
+  .staff {
+      color: #5d2085;
+  }
+  .metabase {
+      color: #207685;
+  }
+  .powerbi {
+      color: #bda000;
+  }
+  .permission-list {
+    display: flex;
+    justify-content: space-between;
+  }
 </style>

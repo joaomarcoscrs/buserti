@@ -110,7 +110,78 @@ export default {
               image: 'powerbi.png'
             }
           ],
-          permissions: ['metabase r/w', 'Jazz admin', 'Google Drive']
+          permission_groups: [
+            {
+              id: 1,
+              title: 'financeiro',
+              items: [
+                {
+                  id: 1,
+                  subgroup: null,
+                  refers_to: 'metabase',
+                  level: 'read'
+                },
+                {
+                  id: 2,
+                  subgroup: 'powerbi-fin',
+                  refers_to: 'powerbi',
+                  level: 'general'
+                },
+                {
+                  id: 3,
+                  subgroup: 'powerbi-fin',
+                  refers_to: 'powerbi',
+                  level: 'OKR'
+                },
+                {
+                  id: 4,
+                  subgroup: 'powerbi-fin',
+                  refers_to: 'powerbi',
+                  level: 'financeiro'
+                }
+              ]
+            }
+          ],
+          permissions: [
+            {
+              id: 1,
+              subgroup: null,
+              refers_to: 'metabase',
+              level: 'read'
+            },
+            {
+              id: 2,
+              subgroup: 'powerbi-fin',
+              refers_to: 'powerbi',
+              level: 'general'
+            },
+            {
+              id: 3,
+              subgroup: 'powerbi-fin',
+              refers_to: 'powerbi',
+              level: 'OKR'
+            },
+            {
+              id: 4,
+              subgroup: 'powerbi-fin',
+              refers_to: 'powerbi',
+              level: 'financeiro'
+            }
+          ],
+          acquired_permissions: [
+            {
+              id: 2,
+              subgroup: 'powerbi-fin',
+              refers_to: 'powerbi',
+              level: 'general'
+            },
+            {
+              id: 4,
+              subgroup: 'powerbi-fin',
+              refers_to: 'powerbi',
+              level: 'financeiro'
+            }
+          ]
         },
         {
           id: 2,
@@ -150,7 +221,84 @@ export default {
               image: 'vscode.png'
             }
           ],
-          permissions: ['metabase r/w', 'aws ec3']
+          permission_groups: [
+            {
+              id: 2,
+              title: 'dev',
+              items: [
+                {
+                  id: 5,
+                  subgroup: null,
+                  refers_to: 'metabase',
+                  level: 'read/write'
+                },
+                {
+                  id: 6,
+                  subgroup: 'staff-dev',
+                  refers_to: 'staff',
+                  level: 'criar grupo'
+                },
+                {
+                  id: 7,
+                  subgroup: 'staff-dev',
+                  refers_to: 'staff',
+                  level: 'cancelar grupo'
+                },
+                {
+                  id: 8,
+                  subgroup: 'staff-dev',
+                  refers_to: 'staff',
+                  level: 'alterar reserva'
+                }
+              ]
+            }
+          ],
+          permissions: [
+            {
+              id: 5,
+              subgroup: null,
+              refers_to: 'metabase',
+              level: 'read/write'
+            },
+            {
+              id: 6,
+              subgroup: 'staff-dev',
+              refers_to: 'staff',
+              level: 'criar grupo'
+            },
+            {
+              id: 7,
+              subgroup: 'staff-dev',
+              refers_to: 'staff',
+              level: 'cancelar grupo'
+            },
+            {
+              id: 8,
+              subgroup: 'staff-dev',
+              refers_to: 'staff',
+              level: 'alterar reserva'
+            }
+          ],
+          acquired_permissions: [
+            {
+              id: 5,
+              subgroup: null,
+              refers_to: 'metabase',
+              level: 'read/write'
+            },
+            {
+              id: 6,
+              subgroup: 'staff-dev',
+              refers_to: 'staff',
+              level: 'criar grupo'
+            },
+            {
+              id: 7,
+              subgroup: 'staff-dev',
+              refers_to: 'staff',
+              level: 'cancelar grupo'
+            }
+          ]
         }
       ]
     })
