@@ -57,7 +57,7 @@
         </div>
         <div class="table-title" style="height: 100%;">
           <div class="text-center">
-            <v-menu offset-y>
+            <v-menu offset-y :close-on-content-click="false" class="gaveta" max-height="300" max-width="400" min-width="400">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn text
                        class="container-gaveta-soft-perms cor-cinza-escuro"
@@ -77,11 +77,66 @@
                 </v-list-item>
               </v-list> -->
               <div class="gaveta">
-                <div class="fundo-rosa-buser">
+                <div class="fundo-rosa-buser title-gaveta">
                   softwares e licenças
                 </div>
-                <div class="fundo-branco" style="color: black;">
-                  Mostrar aqui os grupos
+                <div class="fundo-branco">
+                  <!-- <v-select
+                    return-object
+                    :items="groups"
+                    v-model="employee.software_groups"
+                    attach
+                    item-text="title"
+                    @change="add_group(employee)"
+                    chips
+                    solo
+                    label="Grupos"
+                    multiple
+                  ></v-select> -->
+                  <v-autocomplete
+                    return-object
+                    :items="groups"
+                    class="select-group"
+                    filled
+                    v-model="employee.software_groups"
+                    placeholder="Grupos"
+                    chips
+                    solo
+                    color="blue-grey lighten-2"
+                    item-text="title"
+                    @change="add_group(employee)"
+                    item-value="title"
+                    multiple
+                  >
+                    <template v-slot:selection="data">
+                      <v-chip
+                        v-bind="data.attrs"
+                        :input-value="data.selected"
+                        close
+                        @click="data.select"
+                        @click:close="remove_group(data.item, employee)"
+                      >
+                        {{ data.item.title }}
+                      </v-chip>
+                    </template>
+                    <template v-slot:item="data">
+                      <template>
+                        <v-list-item-content>
+                          <v-list-item-title
+                            v-html="data.item.title"
+                          ></v-list-item-title>
+                        </v-list-item-content>
+                      </template>
+                    </template>
+                  </v-autocomplete>
+                  <v-list light class="software-list">
+                    <div v-for="(software) in employee.softwares" :key="software.id" class="software-item">
+                      <div class="software-logo" ><a><img class="logo" v-bind:class=" !is_on_list(software, employee.installed_softwares) ? 'not-installed' : '' " :src="software.image" @click="install_software(software, employee)"></a></div>
+                      <v-icon small color="green" class="installed-icon" v-if="is_on_list(software, employee.installed_softwares)">mdi-check</v-icon>
+                      <v-icon small v-else color="red" class="installed-icon">mdi-close</v-icon>
+                      <!-- <v-btn @click="install_software(software, employee)" ><v-icon v-if="!is_on_list(software, employee.installed_softwares)">mdi-close</v-icon></v-btn> -->
+                    </div>
+                  </v-list>
                 </div>
               </div>
             </v-menu>
@@ -135,7 +190,6 @@
       class="mx-2"
       dark
       text
-      flat
       @click="add_employee()"
       color="transparent"
     >
@@ -156,12 +210,20 @@ export default {
     return {
       new_name: '',
       adding_employee: false,
-      computers: ['']
+      computers: [''],
+      groups: [],
+      permissions: []
     }
   },
   mounted () {
     api.list_computers().then(result => {
       this.computers = this.computers.concat(result.data)
+    })
+    api.list_software_groups().then(result => {
+      this.groups = result.data
+    })
+     api.list_permission_groups().then(result => {
+      this.permissions = result.data
     })
   },
   methods: {
@@ -182,7 +244,38 @@ export default {
           employee.computer = null
         }
       })
-    }
+    },
+    add_group (employee) {
+      employee.softwares = []
+      employee.software_groups.forEach(group => {
+        employee.softwares = employee.softwares.concat(group.items)
+      })
+      employee.softwares = employee.softwares.filter((software, index, self) => index === self.findIndex((s) => (s.id === software.id)))
+    },
+    is_on_list (elem, list) {
+      if (list.find((e) => (e.id === elem.id))) {
+        return true
+      } else {
+        return false
+      }
+    },
+    install_software (software, employee) {
+      const index = (employee.installed_softwares.findIndex((e) => (e.id === software.id)))
+      if (index === -1) {
+        employee.installed_softwares.push(software)
+      } else {
+        employee.installed_softwares.splice(index, 1)
+      }
+    },
+    remove_group(item, employee) {
+      const index = (employee.software_groups.findIndex((e) => (e.id === item.id)))
+      if (index >= 0) employee.software_groups.splice(index, 1)
+      employee.softwares = []
+      employee.software_groups.forEach(group => {
+        employee.softwares = employee.softwares.concat(group.items)
+      })
+      employee.softwares = employee.softwares.filter((software, index, self) => index === self.findIndex((s) => (s.id === software.id)))
+    },
   }
 }
 </script>
@@ -240,4 +333,52 @@ export default {
       overflow: hidden;
       text-overflow: ellipsis;
   }
+
+  .software-logo {
+      height: 30px;
+  }
+
+  .gaveta {
+    width: 100%;
+  }
+
+  .title-gaveta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    font-size: large;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .software-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 10px;
+  }
+
+  .software-item {
+    padding: 0px 10px;
+    align-items: flex-start;
+    display: flex;
+    height: 30px;
+  }
+
+  .select-group {
+    color: black;
+  }
+
+  .not-installed {
+    opacity: 50%;
+  }
+
+  .installed-icon {
+    padding-bottom: 20px;
+  }
+
+  .logo {
+    height: 100%;
+  }
+
 </style>

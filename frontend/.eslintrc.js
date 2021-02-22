@@ -20,6 +20,7 @@ module.exports = {
     'vue/require-prop-types': 0,
     'arrow-parens': 0,
     'object-curly-spacing': 0,
-    'camelcase': 0
+    'camelcase': 0,
+    'quotes': ['single', 'double']
   }
 }

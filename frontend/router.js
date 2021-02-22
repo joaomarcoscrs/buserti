@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Index from '~/pages/index.vue'
 import Softwares from '~/pages/softwares.vue'
 import Permissoes from '~/pages/permissoes.vue'
-
+import TestPage from '~/pages/test-page.vue'
 Vue.use(Router)
 
 export const routerOptions = {
@@ -11,7 +11,8 @@ export const routerOptions = {
   routes: [
     {path: '/', component: Index, name: 'index'},
     {path: '/softwares', component: Softwares, name: 'softwares'},
-    {path: '/permissoes', component: Permissoes, name: 'permissoes'}
+    {path: '/permissoes', component: Permissoes, name: 'permissoes'},
+    {path: '/test-page', component: TestPage, name: 'test-page'}
   ]
 }
 

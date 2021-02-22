@@ -50,26 +50,24 @@ export default {
           software_groups: [
             {
               id: 2,
-              name: 'people',
-              softwares: [
+              title: 'people',
+              items: [
                 {
                   id: 1,
                   name: 'office',
-                  image: 'office.png',
-                  installed: false
+                  image: 'office.png'
                 },
                 {
                   id: 2,
                   name: 'powerbi',
-                  image: 'powerbi.png',
-                  installed: true
+                  image: 'powerbi.png'
                 }
               ]
             },
             {
               id: 1,
-              name: 'financeiro',
-              softwares: [
+              title: 'financeiro',
+              items: [
                 {
                   id: 1,
                   name: 'office',
@@ -88,7 +86,30 @@ export default {
               ]
             }
           ],
-          softwares: ['Office', 'PowerBI', 'JazzHR'],
+          softwares: [
+            {
+              id: 1,
+              name: 'office',
+              image: 'office.png'
+            },
+            {
+              id: 2,
+              name: 'powerbi',
+              image: 'powerbi.png'
+            },
+            {
+              id: 3,
+              name: 'jazzhr',
+              image: 'jazzhr.png'
+            }
+          ],
+          installed_softwares: [
+            {
+              id: 2,
+              name: 'powerbi',
+              image: 'powerbi.png'
+            }
+          ],
           permissions: ['metabase r/w', 'Jazz admin', 'Google Drive']
         },
         {
@@ -101,23 +122,34 @@ export default {
             {
               id: 3,
               title: 'dev',
-              softwares: [
+              items: [
                 {
                   id: 4,
                   name: 'pycharm',
-                  image: 'pycharm.png',
-                  installed: true
+                  image: 'pycharm.png'
                 },
                 {
                   id: 5,
                   name: 'VSCode',
-                  image: 'vscode.png',
-                  installed: false
+                  image: 'vscode.png'
                 }
               ]
             }
           ],
-          softwares: ['VS Code'],
+          softwares: [
+            {
+              id: 1,
+              name: 'VSCode',
+              image: 'vscode.png'
+            }
+          ],
+          installed_softwares: [
+            {
+              id: 1,
+              name: 'VSCode',
+              image: 'vscode.png'
+            }
+          ],
           permissions: ['metabase r/w', 'aws ec3']
         }
       ]
@@ -171,6 +203,22 @@ export default {
               id: 4,
               name: 'pycharm',
               image: 'pycharm.png'
+            },
+            {
+              id: 6,
+              name: 'VSCode',
+              image: 'vscode.png'
+            }
+          ]
+        },
+        {
+          id: 4,
+          title: 'Grupo com nome bem grande',
+          items: [
+            {
+              id: 5,
+              name: 'software com nome grandao',
+              image: 'imagemgrandona.png'
             }
           ]
         }
