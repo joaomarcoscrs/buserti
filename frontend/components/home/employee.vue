@@ -274,7 +274,16 @@ export default {
   methods: {
     add_employee() {
       if (!this.adding_employee) {
-        this.employees.push({ name: "" });
+        this.employees.push({
+          name: "",
+          computer: null,
+          software_groups: [],
+          permission_groups: [],
+          softwares: [],
+          permissons: [],
+          installed_softwares: [],
+          acquired_permissions: []
+        });
         this.adding_employee = true;
       }
     },
