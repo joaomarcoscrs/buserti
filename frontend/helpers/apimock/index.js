@@ -40,12 +40,18 @@ export default {
           buser_email: 'tamires.cunha@buser.com.br',
           computer: {
             id: 1,
-            ram: 8,
-            hd: 0,
-            ssd: 240,
+            patrimonio: '000123',
+            service_tag: '20GMD93',
+            ram: 4,
+            hd: 500,
+            ssd: 0,
             marca: 'Dell',
-            modelo: 'Vostro 14',
-            _str: 'Dell Vostro 14 8gb RAM 240gb SSD'
+            modelo: 'Inspiron 13',
+            os_original: 'Windows 10 Home',
+            os_atual: 'Mint 20',
+            observacoes: 'Está sem carregador',
+            garantia_expira: '2021-01-03',
+            _str: 'Dell Inspiron 13 4gb RAM 500gb HD'
           },
           software_groups: [
             {

@@ -170,7 +170,6 @@
                       placeholder="Grupos"
                       chips
                       solo
-                      color="blue-grey lighten-2"
                       item-text="title"
                       @change="add_permission_group(employee)"
                       item-value="title"

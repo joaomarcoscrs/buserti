@@ -1,6 +1,6 @@
 <template>
   <div>
-    <tableHeader />
+    <tableHeader :employees="employees"/>
     <employeesTable :employees="employees" class="ml-5 mr-5" />
   </div>
 </template>
