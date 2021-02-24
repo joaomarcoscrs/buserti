@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="employee in employees" :key="employee.id">
-      <v-layout class="table" v-bind:class=" employee.edited ? 'teste' : '' " align-center row-wrap>
+      <v-layout class="table" align-center row-wrap>
         <div v-if="employee.name" class="table-nome" style="height: 100%;">
           <div class="table-slack" style="height: 100%;">
             <v-tooltip top>
@@ -19,7 +19,7 @@
                           full-width
                           placeholder="email"
                           v-model="employee.buser_email"
-                          @change="change_input(employee)"
+                          @change="edit_employee(employee)"
                           filled
                           rounded
                           dense
@@ -229,6 +229,11 @@
             />
           </div>
         </v-layout>
+        <div class="save-icon">
+          <v-icon v-if="employee.state == state.MODIFIED" @click="save_one(employee)" color="red">mdi-content-save</v-icon>
+          <v-progress-circular v-if="employee.state == state.LOADING" indeterminate color="primary"></v-progress-circular>
+          <v-icon v-if="employee.state == state.SAVED" color="green">mdi-check-bold</v-icon>
+        </div>
       </v-layout>
       <v-divider color="#969696" class="mt-2 mb-2" />
     </div>
@@ -245,7 +250,7 @@
           mdi-account-plus
         </v-icon>
       </v-btn>
-      <v-btn v-if="something_edited" @click="save_all()">Salvar Todos</v-btn>
+      <v-btn v-if="edit_count > 0" @click="save_all()"><v-icon color="red">mdi-content-save-all</v-icon></v-btn>
     </div>
   </div>
 </template>
@@ -262,7 +267,14 @@ export default {
       computers: [""],
       software_groups: [],
       permission_groups: [],
-      something_edited: false
+      something_edited: false,
+      edit_count: 0,
+      state: {
+          NONE: 0,
+          MODIFIED: 1,
+          LOADING: 2,
+          SAVED: 3
+      }
     };
   },
   mounted() {
@@ -288,14 +300,10 @@ export default {
           permissons: [],
           installed_softwares: [],
           acquired_permissions: [],
-          edited: false
+          state: 0
         });
         this.adding_employee = true;
       }
-    },
-    change_input(employee) {
-      employee.edited = true
-      this.something_edited = true
     },
     add_employee_name(employee) {
       employee.name = this.new_name;
@@ -308,8 +316,7 @@ export default {
           employee.computer = null;
         }
       });
-      employee.edited = true
-      this.something_edited = true
+      this.edit_employee(employee)
     },
     is_on_list(elem, list) {
       if (list.find((e) => e.id === elem.id)) {
@@ -327,8 +334,7 @@ export default {
       } else {
         employee.installed_softwares.splice(index, 1);
       }
-      employee.edited = true
-      this.something_edited = true
+      this.edit_employee(employee)
     },
     give_permission(permission, employee) {
       const index = employee.acquired_permissions.findIndex(
@@ -339,8 +345,7 @@ export default {
       } else {
         employee.acquired_permissions.splice(index, 1);
       }
-      employee.edited = true
-      this.something_edited = true
+      this.edit_employee(employee)
     },
     add_software_group(employee) {
       employee.softwares = [];
@@ -351,8 +356,7 @@ export default {
         (software, index, self) =>
           index === self.findIndex((s) => s.id === software.id)
       );
-      employee.edited = true
-      this.something_edited = true
+      this.edit_employee(employee)
     },
     remove_software_group(item, employee) {
       const index = employee.software_groups.findIndex((e) => e.id === item.id);
@@ -365,8 +369,7 @@ export default {
         (software, index, self) =>
           index === self.findIndex((s) => s.id === software.id)
       );
-      employee.edited = true
-      this.something_edited = true
+      this.edit_employee(employee)
     },
     add_permission_group(employee) {
       employee.permissions = [];
@@ -377,8 +380,7 @@ export default {
         (permission, index, self) =>
           index === self.findIndex((s) => s.id === permission.id)
       );
-      employee.edited = true
-      this.something_edited = true
+      this.edit_employee(employee)
     },
     remove_permission_group(item, employee) {
       const index = employee.permission_groups.findIndex((e) => e.id === item.id);
@@ -391,20 +393,39 @@ export default {
         (permission, index, self) =>
           index === self.findIndex((s) => s.id === permission.id)
       );
-      employee.edited = true
-      this.something_edited = true
+      this.edit_employee(employee)
     },
     save_all() {
       this.employees.forEach(employee => {
         if (employee.edited) {
+          employee.state = this.state.LOADING
           api.save_employee(employee).then(response => {
             if (response.status === 200) {
               employee.edited = false
+              employee.state = this.state.SAVED
+              this.edit_count--
             }
           })
         }
       })
       this.something_edited = false
+    },
+    save_one(employee) {
+      employee.state = this.state.LOADING
+      api.save_employee(employee).then(response => {
+        if (response.status === 200) {
+          employee.edited = false
+          employee.state = this.state.SAVED
+          this.edit_count--
+        }
+      })
+    },
+    edit_employee(employee) {
+      if (!employee.edited) {
+        employee.edited = true
+        employee.state = this.state.MODIFIED
+        this.edit_count++
+      }
     }
   },
 };
@@ -560,11 +581,13 @@ export default {
     display: flex;
     justify-content: space-between;
   }
-  .teste {
-    background-color: red;
-  }
   .actions {
     display: flex;
     justify-content: space-between;
+  }
+  .save-icon {
+    width: 5%;
+    display: flex;
+    justify-content: center;
   }
 </style>

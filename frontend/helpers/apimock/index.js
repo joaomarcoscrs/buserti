@@ -38,6 +38,7 @@ export default {
           name: 'Tamires Érvila',
           slack: 'tamires.cunha',
           buser_email: 'tamires.cunha@buser.com.br',
+          state: 0,
           edited: false,
           computer: {
             id: 1,
@@ -195,6 +196,7 @@ export default {
           name: 'Tony Lâmpada',
           slack: 'tony.lampada',
           buser_email: 'tony.lampada@buser.com.br',
+          state: 0,
           edited: false,
           computer: null,
           software_groups: [
