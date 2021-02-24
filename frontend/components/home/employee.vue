@@ -30,7 +30,7 @@
             <!-- <v-text-field class="table-title-text"
                         full-width
                         placeholder="Computador"
-                        v-model="employee.computer"
+                        v-model="employee.device"
                         filled
                         rounded
                         dense
@@ -39,8 +39,8 @@
           /> -->
             <v-select
               class="table-title-text"
-              :items="computers"
-              v-model="employee.computer"
+              :items="devices"
+              v-model="employee.device"
               item-text="patrimonio"
               placeholder="computador"
               @input="afterselection(employee)"
@@ -146,12 +146,12 @@ export default {
     return {
       new_name: '',
       adding_employee: false,
-      computers: ['']
+      devices: ['']
     }
   },
   mounted () {
-    api.list_computers().then(result => {
-      this.computers = this.computers.concat(result.data)
+    api.list_devices().then(result => {
+      this.devices = this.devices.concat(result.data)
     })
   },
   methods: {
@@ -168,8 +168,8 @@ export default {
     },
     afterselection (employee) {
       this.$nextTick(() => {
-        if (employee.computer === '') {
-          employee.computer = null
+        if (employee.device === '') {
+          employee.device = null
         }
       })
     }

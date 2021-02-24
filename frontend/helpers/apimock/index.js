@@ -38,7 +38,7 @@ export default {
           name: 'Tamires Érvila',
           slack: 'tamires.cunha',
           buser_email: 'tamires.cunha@buser.com.br',
-          computer: {
+          device: {
             id: 1,
             ram: 8,
             hd: 0,
@@ -55,7 +55,7 @@ export default {
           name: 'Tony Lâmpada',
           slack: 'tony.lampada',
           buser_email: 'tony.lampada@buser.com.br',
-          computer: null,
+          device: null,
           softwares: ['VS Code'],
           permissions: ['metabase r/w', 'aws ec3']
         }
@@ -116,11 +116,12 @@ export default {
       ]
     })
   },
-  list_computers () {
+  list_devices () {
     return mockasync({
       data: [
         {
           id: 1,
+          kind: 'computer',
           patrimonio: '000123',
           service_tag: '20GMD93',
           ram: 4,
@@ -136,6 +137,7 @@ export default {
         },
         {
           id: 2,
+          kind: 'computer',
           patrimonio: '000939',
           service_tag: '20GMD92',
           ram: 4,
@@ -151,6 +153,7 @@ export default {
         },
         {
           id: 3,
+          kind: 'computer',
           patrimonio: '000056',
           service_tag: '20FMD93',
           ram: 16,

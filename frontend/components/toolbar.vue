@@ -31,6 +31,15 @@
       <v-icon size="30" class="mx-1 my-0 cor-branco">mdi-lock-open-variant</v-icon>
       <span class="texto-toolbar cor-branco">grupos & permissões</span>
     </v-btn>
+
+    <v-btn v-if="currentRoute=='devices'" text color="#F11076" class="container-pages-toolbar" :to="{name: 'grupos_permissoes'}">
+      <v-icon size="30" class="mx-1 my-0 cor-rosa-escuro">mdi-devices</v-icon>
+      <span class="texto-toolbar cor-rosa-escuro">devices</span>
+    </v-btn>
+    <v-btn v-else text color="#F11076" class="container-pages-toolbar" :to="{name: 'devices'}">
+      <v-icon size="30" class="mx-1 my-0 cor-branco">mdi-devices</v-icon>
+      <span class="texto-toolbar cor-branco">devices</span>
+    </v-btn>
     <v-spacer />
     <v-btn v-if="!logged_user" text dark ripple class="ma-0 ml-5" @click="open_login_dialog($event)">Login</v-btn>
     <!-- <template v-slot:activator="{ on }"><v-btn v-on="on"> -->
@@ -79,7 +88,6 @@ export default {
   components: {
     loginDialog
   },
-  props: ['state'],
   computed: {
     logged_user () {
       return this.$store.state.auth.currentUser
