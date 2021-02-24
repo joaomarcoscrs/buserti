@@ -1,6 +1,6 @@
 <template>
   <div>
-    <tableHeader />
+    <tableHeader :employees="employees"/>
     <employeesTable :employees="employees" class="ml-5 mr-5" />
   </div>
 </template>
@@ -25,7 +25,18 @@ export default {
         employees: result.data
       }
     })
-  }
+  },
+  mounted() {
+    api.list_computers().then((result) => {
+      this.$store.commit('computers/setComputers', result.data)
+    });
+    api.list_software_groups().then((result) => {
+      this.$store.commit('groups/setSoftwareGroups', result.data)
+    });
+    api.list_permission_groups().then((result) => {
+      this.$store.commit('groups/setPermissionGroups', result.data)
+    });
+  },
 }
 </script>
 

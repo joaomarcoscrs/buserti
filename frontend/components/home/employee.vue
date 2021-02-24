@@ -264,9 +264,6 @@ export default {
     return {
       new_name: "",
       adding_employee: false,
-      computers: [""],
-      software_groups: [],
-      permission_groups: [],
       something_edited: false,
       edit_count: 0,
       state: {
@@ -277,16 +274,17 @@ export default {
       }
     };
   },
-  mounted() {
-    api.list_computers().then((result) => {
-      this.computers = this.computers.concat(result.data);
-    });
-    api.list_software_groups().then((result) => {
-      this.software_groups = result.data;
-    });
-    api.list_permission_groups().then((result) => {
-      this.permission_groups = result.data;
-    });
+  computed: {
+    computers () {
+      return this.$store.state.computers.computers
+    },
+    software_groups () {
+      return this.$store.state.groups.software_groups
+    },
+    permission_groups () {
+      return this.$store.state.groups.permission_groups
+    }
+
   },
   methods: {
     add_employee() {
