@@ -38,6 +38,7 @@ export default {
           name: 'Tamires Érvila',
           slack: 'tamires.cunha',
           buser_email: 'tamires.cunha@buser.com.br',
+          edited: false,
           computer: {
             id: 1,
             patrimonio: '000123',
@@ -194,6 +195,7 @@ export default {
           name: 'Tony Lâmpada',
           slack: 'tony.lampada',
           buser_email: 'tony.lampada@buser.com.br',
+          edited: false,
           computer: null,
           software_groups: [
             {
@@ -574,6 +576,11 @@ export default {
           level: 'alterar reserva'
         }
       ]
+    })
+  },
+  save_employee (employee) {
+    return mockasync({
+      status: 200
     })
   }
 }

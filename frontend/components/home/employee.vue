@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="employee in employees" :key="employee.id">
-      <v-layout class="table" align-center row-wrap>
+      <v-layout class="table" v-bind:class=" employee.edited ? 'teste' : '' " align-center row-wrap>
         <div v-if="employee.name" class="table-nome" style="height: 100%;">
           <div class="table-slack" style="height: 100%;">
             <v-tooltip top>
@@ -19,6 +19,7 @@
                           full-width
                           placeholder="email"
                           v-model="employee.buser_email"
+                          @change="change_input(employee)"
                           filled
                           rounded
                           dense
@@ -231,18 +232,21 @@
       </v-layout>
       <v-divider color="#969696" class="mt-2 mb-2" />
     </div>
-    <v-btn
-      v-if="!adding_employee"
-      class="mx-2"
-      dark
-      icon
-      text
-      @click="add_employee()"
-    >
-      <v-icon class="cor-cinza" dark size="27">
-        mdi-account-plus
-      </v-icon>
-    </v-btn>
+    <div class="actions">
+      <v-btn
+        v-if="!adding_employee"
+        class="mx-2"
+        dark
+        icon
+        text
+        @click="add_employee()"
+      >
+        <v-icon class="cor-cinza" dark size="27">
+          mdi-account-plus
+        </v-icon>
+      </v-btn>
+      <v-btn v-if="something_edited" @click="save_all()">Salvar Todos</v-btn>
+    </div>
   </div>
 </template>
 
@@ -258,6 +262,7 @@ export default {
       computers: [""],
       software_groups: [],
       permission_groups: [],
+      something_edited: false
     };
   },
   mounted() {
@@ -282,10 +287,15 @@ export default {
           softwares: [],
           permissons: [],
           installed_softwares: [],
-          acquired_permissions: []
+          acquired_permissions: [],
+          edited: false
         });
         this.adding_employee = true;
       }
+    },
+    change_input(employee) {
+      employee.edited = true
+      this.something_edited = true
     },
     add_employee_name(employee) {
       employee.name = this.new_name;
@@ -298,6 +308,8 @@ export default {
           employee.computer = null;
         }
       });
+      employee.edited = true
+      this.something_edited = true
     },
     is_on_list(elem, list) {
       if (list.find((e) => e.id === elem.id)) {
@@ -315,6 +327,8 @@ export default {
       } else {
         employee.installed_softwares.splice(index, 1);
       }
+      employee.edited = true
+      this.something_edited = true
     },
     give_permission(permission, employee) {
       const index = employee.acquired_permissions.findIndex(
@@ -325,6 +339,8 @@ export default {
       } else {
         employee.acquired_permissions.splice(index, 1);
       }
+      employee.edited = true
+      this.something_edited = true
     },
     add_software_group(employee) {
       employee.softwares = [];
@@ -335,6 +351,8 @@ export default {
         (software, index, self) =>
           index === self.findIndex((s) => s.id === software.id)
       );
+      employee.edited = true
+      this.something_edited = true
     },
     remove_software_group(item, employee) {
       const index = employee.software_groups.findIndex((e) => e.id === item.id);
@@ -347,6 +365,8 @@ export default {
         (software, index, self) =>
           index === self.findIndex((s) => s.id === software.id)
       );
+      employee.edited = true
+      this.something_edited = true
     },
     add_permission_group(employee) {
       employee.permissions = [];
@@ -357,6 +377,8 @@ export default {
         (permission, index, self) =>
           index === self.findIndex((s) => s.id === permission.id)
       );
+      employee.edited = true
+      this.something_edited = true
     },
     remove_permission_group(item, employee) {
       const index = employee.permission_groups.findIndex((e) => e.id === item.id);
@@ -369,7 +391,21 @@ export default {
         (permission, index, self) =>
           index === self.findIndex((s) => s.id === permission.id)
       );
+      employee.edited = true
+      this.something_edited = true
     },
+    save_all() {
+      this.employees.forEach(employee => {
+        if (employee.edited) {
+          api.save_employee(employee).then(response => {
+            if (response.status === 200) {
+              employee.edited = false
+            }
+          })
+        }
+      })
+      this.something_edited = false
+    }
   },
 };
 </script>
@@ -521,6 +557,13 @@ export default {
       color: #bda000;
   }
   .permission-list {
+    display: flex;
+    justify-content: space-between;
+  }
+  .teste {
+    background-color: red;
+  }
+  .actions {
     display: flex;
     justify-content: space-between;
   }
