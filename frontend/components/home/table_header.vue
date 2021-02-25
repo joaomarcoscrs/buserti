@@ -67,7 +67,14 @@
         <div class="infos">
           <div class="table-slack">
             <img class="slack-logo ma-2" src="~/static/gmail.png">
-            <span>{{selected_employee.buser_email}}</span>
+            <v-text-field
+              style="font-size: 14px; color: white;"
+              v-model="selected_employee.buser_email"
+              @change="edit_employee()"
+              dense
+              light
+              hide-details
+            />
           </div>
           <div class="table-slack">
             <img class="slack-logo ma-2" src="slack_logo.png">
@@ -206,7 +213,7 @@
           color="grey darken-3"
           @click="close_employee()"
         >
-          Clear
+          Limpar
           <v-icon right>
             mdi-close-circle
           </v-icon>
