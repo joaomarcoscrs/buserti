@@ -36,6 +36,7 @@
               placeholder="computador"
               @input="afterselection(employee)"
               filled
+              return-object
               rounded
               dense
               light
@@ -283,7 +284,6 @@ export default {
     permission_groups () {
       return this.$store.state.groups.permission_groups
     }
-
   },
   methods: {
     add_employee() {

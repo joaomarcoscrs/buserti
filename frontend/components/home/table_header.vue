@@ -59,7 +59,21 @@
             <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
                   <img class="slack-logo ma-2" src="~/static/laptop.png" v-bind="attrs" v-on="on">
-                  <span v-if="selected_employee.computer">{{selected_employee.computer.patrimonio}}</span>
+                  <v-select
+                    return-object
+                    class="table-title-text"
+                    :items="computers"
+                    v-model="selected_employee.computer"
+                    item-text="patrimonio"
+                    placeholder="computador"
+                    @input="afterselection()"
+                    filled
+                    rounded
+                    dense
+                    light
+                    hide-details
+                    solo
+                  />
                 </template>
                 <div v-if="selected_employee.computer">
                   <span>{{selected_employee.computer._str}}</span> <br />
@@ -82,6 +96,7 @@
             v-model="selected_employee.software_groups"
             placeholder="Grupos"
             chips
+            rounded
             solo
             color="blue-grey lighten-2"
             item-text="title"
@@ -130,6 +145,7 @@
             placeholder="Grupos"
             chips
             solo
+            rounded
             item-text="title"
             @change="add_permission_group()"
             item-value="title"
@@ -189,22 +205,19 @@ export default {
   data () {
     return {
       show_employee: false,
-      selected_employee: null,
-      computers: [""],
-      software_groups: [],
-      permission_groups: [],
+      selected_employee: null
     }
   },
-  mounted() {
-    api.list_computers().then((result) => {
-      this.computers = this.computers.concat(result.data);
-    });
-    api.list_software_groups().then((result) => {
-      this.software_groups = result.data;
-    });
-    api.list_permission_groups().then((result) => {
-      this.permission_groups = result.data;
-    });
+  computed: {
+    computers () {
+      return this.$store.state.computers.computers
+    },
+    software_groups () {
+      return this.$store.state.groups.software_groups
+    },
+    permission_groups () {
+      return this.$store.state.groups.permission_groups
+    }
   },
   methods: {
     select_employee () {
@@ -285,6 +298,14 @@ export default {
         (permission, index, self) =>
           index === self.findIndex((s) => s.id === permission.id)
       );
+    },
+    afterselection() {
+      this.$nextTick(() => {
+        if (this.selected_employee.computer === "") {
+          this.selected_employee.computer = null;
+        }
+      });
+      console.log("COMPUTER = ", this.selected_employee.computer)
     }
   }
 }
@@ -357,5 +378,8 @@ export default {
   }
   .not-installed {
     opacity: 50%;
+  }
+  .select-group {
+    width: 80%;
   }
 </style>
