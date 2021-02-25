@@ -316,12 +316,12 @@
           </div>
         </v-layout>
         <div class="save-icon">
-          <v-icon
+          <a><v-icon
             v-if="employee.state == state.MODIFIED"
-            @click="save_one(employee)"
+            @click.native="save_one(employee)"
             color="red"
             >mdi-content-save</v-icon
-          >
+          ></a>
           <v-progress-circular
             v-if="employee.state == state.LOADING"
             indeterminate
