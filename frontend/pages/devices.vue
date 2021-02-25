@@ -3,38 +3,38 @@
 </template>
 
 <script>
-import api from '~api'
-import computers from '~/components/devices/computers.vue'
+import api from "~api";
+import computers from "~/components/devices/computers.vue";
 
 export default {
   components: {
-    computers
+    computers,
   },
   data: () => ({
     selectedItem: null,
     adding_device: false,
-    new_patrimonio: '',
-    devices: [{}]
+    new_patrimonio: "",
+    devices: [{}],
   }),
-  mounted () {
+  mounted() {
     api.list_devices().then((result) => {
-      this.devices = result.data
-    })
+      this.devices = result.data;
+    });
   },
   methods: {
-    add_device () {
+    add_device() {
       if (!this.adding_device) {
-        this.devices.push({ patrimonio: '' })
-        this.adding_device = true
+        this.devices.push({ patrimonio: "" });
+        this.adding_device = true;
       }
     },
-    add_device_patrimonio (device) {
-      device.patrimonio = this.new_patrimonio
-      this.new_patrimonio = ''
-      this.adding_device = false
-    }
-  }
-}
+    add_device_patrimonio(device) {
+      device.patrimonio = this.new_patrimonio;
+      this.new_patrimonio = "";
+      this.adding_device = false;
+    },
+  },
+};
 </script>
 
 <style scoped>
