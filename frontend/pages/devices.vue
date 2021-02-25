@@ -1,38 +1,34 @@
 <template>
-  <computers :computers="devices" />
+  <div>
+    <v-card light color="#ECECEC" elevation="4" class="pa-2 ma-1 mb-4">
+      <computers :computers="computers" />
+    </v-card>
+    <v-card light color="#ECECEC" elevation="4" class="pa-2 ma-1 my-4">
+      <cellphones :cellphones="cellphones" />
+    </v-card>
+  </div>
 </template>
 
 <script>
 import api from "~api";
 import computers from "~/components/devices/computers.vue";
+import cellphones from "~/components/devices/cellphones.vue";
 
 export default {
   components: {
     computers,
+    cellphones,
   },
   data: () => ({
     selectedItem: null,
-    adding_device: false,
-    new_patrimonio: "",
-    devices: [{}],
+    computers: [{}],
+    cellphones: [{}],
   }),
   mounted() {
     api.list_devices().then((result) => {
-      this.devices = result.data;
+      this.computers = result.data.filter((d) => d.kind === "computer");
+      this.cellphones = result.data.filter((d) => d.kind === "cellphone");
     });
-  },
-  methods: {
-    add_device() {
-      if (!this.adding_device) {
-        this.devices.push({ patrimonio: "" });
-        this.adding_device = true;
-      }
-    },
-    add_device_patrimonio(device) {
-      device.patrimonio = this.new_patrimonio;
-      this.new_patrimonio = "";
-      this.adding_device = false;
-    },
   },
 };
 </script>
