@@ -41,8 +41,8 @@
           <div class="table-title" style="height: 100%">
             <v-select
               class="table-title-text"
-              :items="computers"
-              v-model="employee.computer"
+              :items="devices"
+              v-model="employee.device"
               item-text="patrimonio"
               placeholder="computador"
               @input="afterselection(employee)"
@@ -371,23 +371,22 @@ export default {
     };
   },
   computed: {
-    computers () {
-      return this.$store.state.computers.computers
+    devices() {
+      return this.$store.state.devices.devices;
     },
-    software_groups () {
-      return this.$store.state.groups.software_groups
+    software_groups() {
+      return this.$store.state.groups.software_groups;
     },
-    permission_groups () {
-      return this.$store.state.groups.permission_groups
-    }
-
+    permission_groups() {
+      return this.$store.state.groups.permission_groups;
+    },
   },
   methods: {
     add_employee() {
       if (!this.adding_employee) {
         this.employees.push({
           name: "",
-          computer: null,
+          device: null,
           software_groups: [],
           permission_groups: [],
           softwares: [],
@@ -406,8 +405,8 @@ export default {
     },
     afterselection(employee) {
       this.$nextTick(() => {
-        if (employee.computer === "") {
-          employee.computer = null;
+        if (employee.device === "") {
+          employee.device = null;
         }
       });
       this.edit_employee(employee);

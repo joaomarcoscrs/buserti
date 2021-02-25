@@ -13,7 +13,7 @@ urlpatterns = [
     # path('api/all-permissions', views.all_permissions),
     # path('api/all-softwares', views.all_softwares),
     # path('api/employes-by-group/<int:group_id>', views.employees_by_group),
-    # path('api/list-computers', views.list_computers),
+    # path('api/list-devices', views.list_devices),
     # path('api/permissions-by-employee/<int:employee_id>', views.permissions_by_employee),
     # path('api/softwares-by-employee/<int:employee_id>', views.softwares_by_employee),
 ]
