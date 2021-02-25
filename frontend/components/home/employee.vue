@@ -6,12 +6,13 @@
           <div class="table-slack" style="height: 100%">
             <v-tooltip top>
               <template v-slot:activator="{ on, attrs }">
-                <img
-                  class="slack-logo ma-2"
-                  src="slack_logo.png"
-                  v-bind="attrs"
-                  v-on="on"
-                />
+                <v-avatar color="indigo" class="avatar" size="36">
+                  <img
+                    src="https://ca.slack-edge.com/T8DJ2DE76-U01J4EFL96G-e8a154481d42-512"
+                    v-bind="attrs"
+                    v-on="on"
+                  />
+                </v-avatar>
               </template>
               <span>slack: {{ employee.slack }}</span>
             </v-tooltip>
@@ -685,5 +686,8 @@ export default {
   width: 5%;
   display: flex;
   justify-content: center;
+}
+.avatar {
+  margin-right: 5px;
 }
 </style>
