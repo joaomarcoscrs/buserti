@@ -4,7 +4,6 @@
       <v-layout class="table" justify-space-around align-center>
         <v-autocomplete
           :items="employees"
-          :search-input.sync="search"
           v-model="selected_employee"
           color="white"
           hide-no-data
@@ -46,6 +45,25 @@
         {{selected_employee.name}}
       </v-card-title>
       <v-card-text class="flex-card">
+        <div class="employee-avatar">
+          <v-img
+            class="avatar-photo"
+            :src="selected_employee.slack_image"
+          >
+            <template v-slot:placeholder>
+              <v-row
+                class="fill-height ma-0"
+                align="center"
+                justify="center"
+              >
+                <v-progress-circular
+                  indeterminate
+                  color="grey lighten-5"
+                ></v-progress-circular>
+              </v-row>
+            </template>
+          </v-img>
+        </div>
         <div class="infos">
           <div class="table-slack">
             <img class="slack-logo ma-2" src="~/static/gmail.png">
@@ -61,7 +79,7 @@
                   <img class="slack-logo ma-2" src="~/static/laptop.png" v-bind="attrs" v-on="on">
                   <v-select
                     return-object
-                    class="table-title-text"
+                    class="select-computer"
                     :items="computers"
                     v-model="selected_employee.computer"
                     item-text="patrimonio"
@@ -86,7 +104,7 @@
               </v-tooltip>
           </div>
         </div>
-        <div style="width: 30%">
+        <div class="software-permission">
           <h2>Softwares</h2>
           <v-autocomplete
             return-object
@@ -97,6 +115,7 @@
             placeholder="Grupos"
             chips
             rounded
+            dense
             solo
             color="blue-grey lighten-2"
             item-text="title"
@@ -134,13 +153,14 @@
             </div>
           </div>
         </div>
-        <div style="width: 30%">
+        <div class="software-permission">
           <h2>Permissions</h2>
           <v-autocomplete
             return-object
             :items="permission_groups"
             class="select-group"
             filled
+            dense
             v-model="selected_employee.permission_groups"
             placeholder="Grupos"
             chips
@@ -191,6 +211,17 @@
             mdi-close-circle
           </v-icon>
         </v-btn>
+        <v-btn
+          v-if="selected_employee.edited"
+          color="green"
+          @click="save()"
+        >
+          SAVE
+          <v-icon
+            @click="save()"
+            >mdi-content-save</v-icon
+          >
+        </v-btn>
       </v-card-actions>
     </v-card>
     <v-divider v-if="show_employee" color="#969696" class="ml-5 mr-5 mt-2 mb-2" />
@@ -205,7 +236,14 @@ export default {
   data () {
     return {
       show_employee: false,
-      selected_employee: null
+      selected_employee: null,
+      edit_count: 0,
+      state: {
+          NONE: 0,
+          MODIFIED: 1,
+          LOADING: 2,
+          SAVED: 3
+      }
     }
   },
   computed: {
@@ -244,6 +282,7 @@ export default {
       } else {
         this.selected_employee.installed_softwares.splice(index, 1);
       }
+      this.edit_employee()
     },
     give_permission(permission) {
       const index = this.selected_employee.acquired_permissions.findIndex(
@@ -254,6 +293,7 @@ export default {
       } else {
         this.selected_employee.acquired_permissions.splice(index, 1);
       }
+      this.edit_employee()
     },
     add_software_group() {
       this.selected_employee.softwares = [];
@@ -264,6 +304,7 @@ export default {
         (software, index, self) =>
           index === self.findIndex((s) => s.id === software.id)
       );
+      this.edit_employee()
     },
     remove_software_group(item) {
       const index = this.selected_employee.software_groups.findIndex((e) => e.id === item.id);
@@ -276,6 +317,7 @@ export default {
         (software, index, self) =>
           index === self.findIndex((s) => s.id === software.id)
       );
+      this.edit_employee()
     },
     add_permission_group() {
       this.selected_employee.permissions = [];
@@ -286,6 +328,7 @@ export default {
         (permission, index, self) =>
           index === self.findIndex((s) => s.id === permission.id)
       );
+      this.edit_employee()
     },
     remove_permission_group(item) {
       const index = this.selected_employee.permission_groups.findIndex((e) => e.id === item.id);
@@ -298,6 +341,7 @@ export default {
         (permission, index, self) =>
           index === self.findIndex((s) => s.id === permission.id)
       );
+      this.edit_employee()
     },
     afterselection() {
       this.$nextTick(() => {
@@ -305,8 +349,25 @@ export default {
           this.selected_employee.computer = null;
         }
       });
-      console.log("COMPUTER = ", this.selected_employee.computer)
-    }
+      this.edit_employee()
+    },
+    edit_employee() {
+      if (!this.selected_employee.edited) {
+        this.selected_employee.edited = true
+        this.selected_employee.state = this.state.MODIFIED
+        this.edit_count++
+      }
+    },
+    save() {
+      this.selected_employee.state = this.state.LOADING;
+      api.save_employee(this.selected_employee).then((response) => {
+        if (response.status === 200) {
+          this.selected_employee.edited = false;
+          this.selected_employee.state = this.state.SAVED;
+          this.edit_count--;
+        }
+      });
+    },
   }
 }
 </script>
@@ -347,17 +408,21 @@ export default {
     position: relative;
     justify-content: flex-start;
   }
+  .employee-avatar {
+    width: 20%;
+  }
   .infos {
-    width: 40%;
+    width: 30%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
   }
   .softwares {
     display: inline;
-    width: 30%;
+    width: 25%;
   }
   .permissions {
-    width: 30%;
+    width: 25%;
   }
   .software-logo {
     height: 30px;
@@ -380,6 +445,21 @@ export default {
     opacity: 50%;
   }
   .select-group {
-    width: 80%;
+    width: 90%;
+    margin: 0 5% 0 5% !important;
+    justify-content: center;
+    align-items: center;
+  }
+  .avatar-photo {
+    border-radius: 50%;
+    margin: 10%;
+  }
+  .software-permission {
+    width: 30%;
+    align-content: center;
+    text-align: center;
+  }
+  .select-computer {
+    flex-grow: 1;
   }
 </style>

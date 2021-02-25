@@ -40,6 +40,7 @@ export default {
           buser_email: 'tamires.cunha@buser.com.br',
           state: 0,
           edited: false,
+          slack_image: "https://ca.slack-edge.com/T8DJ2DE76-USVSDBSG0-a1cef74b740b-512",
           computer: {
             id: 1,
             patrimonio: '000123',
@@ -198,6 +199,7 @@ export default {
           buser_email: 'tony.lampada@buser.com.br',
           state: 0,
           edited: false,
+          slack_image: "https://ca.slack-edge.com/T8DJ2DE76-U91N3C1EV-3db45ef4ba15-512",
           computer: null,
           software_groups: [
             {
