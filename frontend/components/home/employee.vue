@@ -311,7 +311,7 @@
               dense
               light
               hide-details
-              @keyup.enter="add_employee_name(employee)"
+              @change="add_employee_name(employee)"
             />
           </div>
         </v-layout>

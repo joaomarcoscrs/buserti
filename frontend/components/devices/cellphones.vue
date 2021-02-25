@@ -1,12 +1,12 @@
 <template>
   <div>
     <v-layout class="my-3">
-      <img class="table-title-logo mx-2" src="~/static/laptop.png" />
+      <img class="table-title-logo mx-2" src="~/static/smartphone.png" />
       <h1
         class="table-title-text-nome"
         style="font-size: 30px; font-weight: 300"
       >
-        computadores
+        celulares
       </h1>
     </v-layout>
     <v-layout class="table mb-4 mx-3" align-center row-wrap justify-start>
@@ -65,7 +65,7 @@
             class="table-title-text"
             style="font-size: 16px; font-weight: 400"
             disabled
-            value="service-tag"
+            value="IMEI"
             dense
             light
             hide-details
@@ -73,6 +73,24 @@
         </div>
       </v-layout>
       <v-layout class="container-linha" justify-start align-center>
+        <div class="table-title" style="height: 100%">
+          <v-text-field
+            class="table-title-text"
+            style="font-size: 16px; font-weight: 400"
+            disabled
+            value="número"
+            dense
+            light
+            hide-details
+          />
+        </div>
+      </v-layout>
+      <v-layout
+        class="container-linha"
+        style="max-width: 50px"
+        justify-start
+        align-center
+      >
         <div class="table-title" style="height: 100%; width: 35px">
           <v-text-field
             class="table-title-text"
@@ -85,52 +103,18 @@
           />
         </div>
       </v-layout>
-      <v-layout class="container-linha" justify-start align-center>
+      <v-layout
+        class="container-linha"
+        style="max-width: 50px"
+        justify-start
+        align-center
+      >
         <div class="table-title" style="height: 100%; width: 40px">
           <v-text-field
             class="table-title-text"
             style="font-size: 16px; font-weight: 400"
             disabled
-            value="ssd"
-            dense
-            light
-            hide-details
-          />
-        </div>
-      </v-layout>
-      <v-layout class="container-linha" justify-start align-center>
-        <div class="table-title" style="height: 100%; width: 40px">
-          <v-text-field
-            class="table-title-text"
-            style="font-size: 16px; font-weight: 400"
-            disabled
-            value="hd"
-            dense
-            light
-            hide-details
-          />
-        </div>
-      </v-layout>
-      <v-layout class="container-linha" justify-start align-center>
-        <div class="table-title" style="height: 100%">
-          <v-text-field
-            class="table-title-text"
-            style="font-size: 16px; font-weight: 400"
-            disabled
-            value="OS original"
-            dense
-            light
-            hide-details
-          />
-        </div>
-      </v-layout>
-      <v-layout class="container-linha" justify-start align-center>
-        <div class="table-title" style="height: 100%">
-          <v-text-field
-            class="table-title-text"
-            style="font-size: 16px; font-weight: 400"
-            disabled
-            value="OS atual"
+            value="rom"
             dense
             light
             hide-details
@@ -139,19 +123,19 @@
       </v-layout>
     </v-layout>
     <div class="overflow-box mx-3">
-      <div v-for="computer in computers" :key="computer.id">
+      <div v-for="cellphone in cellphones" :key="cellphone.id">
         <v-layout class="table" align-center row-wrap justify-start>
           <div
-            v-if="computer.patrimonio"
+            v-if="cellphone.patrimonio"
             class="table-nome"
             style="height: 100%"
           >
             <div class="table-slack" style="height: 100%">
-              <h3 class="table-title-text-nome">{{ computer.patrimonio }}</h3>
+              <h3 class="table-title-text-nome">{{ cellphone.patrimonio }}</h3>
             </div>
           </div>
           <v-layout
-            v-if="computer.patrimonio"
+            v-if="cellphone.patrimonio"
             class="container-linha"
             justify-start
             align-center
@@ -160,7 +144,7 @@
               <v-text-field
                 class="table-title-text"
                 placeholder="marca"
-                v-model="computer.marca"
+                v-model="cellphone.marca"
                 dense
                 light
                 hide-details
@@ -168,7 +152,7 @@
             </div>
           </v-layout>
           <v-layout
-            v-if="computer.patrimonio"
+            v-if="cellphone.patrimonio"
             class="container-linha"
             justify-start
             align-center
@@ -177,7 +161,7 @@
               <v-text-field
                 class="table-title-text"
                 placeholder="modelo"
-                v-model="computer.modelo"
+                v-model="cellphone.modelo"
                 dense
                 light
                 hide-details
@@ -185,7 +169,7 @@
             </div>
           </v-layout>
           <v-layout
-            v-if="computer.patrimonio"
+            v-if="cellphone.patrimonio"
             class="container-linha"
             justify-start
             align-center
@@ -194,7 +178,7 @@
               <v-text-field
                 class="table-title-text"
                 placeholder="garantia_expira"
-                v-model="computer.garantia_expira"
+                v-model="cellphone.garantia_expira"
                 dense
                 light
                 hide-details
@@ -202,7 +186,7 @@
             </div>
           </v-layout>
           <v-layout
-            v-if="computer.patrimonio"
+            v-if="cellphone.patrimonio"
             class="container-linha"
             justify-start
             align-center
@@ -210,8 +194,8 @@
             <div class="table-title" style="height: 100%">
               <v-text-field
                 class="table-title-text"
-                placeholder="service-tag"
-                v-model="computer.service_tag"
+                placeholder="IMEI"
+                v-model="cellphone.imei"
                 dense
                 light
                 hide-details
@@ -219,15 +203,57 @@
             </div>
           </v-layout>
           <v-layout
-            v-if="computer.patrimonio"
+            v-if="cellphone.patrimonio"
             class="container-linha"
             justify-start
             align-center
+          >
+            <div class="table-title" style="height: 100%">
+              <v-text-field
+                v-if="editing_phone_number"
+                @change="editou_celular()"
+                @keyup.enter="editou_celular()"
+                class="table-title-text"
+                placeholder="número"
+                v-model="cellphone.phone_number"
+                dense
+                light
+                hide-details
+              />
+              <v-text-field
+                v-else-if="editing_phone_number && !cel_so_numeros"
+                @blur="atualiza_erro_cel(cellphone.phone_number)"
+                @keyup.enter="editou_celular()"
+                class="table-title-text"
+                placeholder="número"
+                v-model="cellphone.phone_number"
+                dense
+                light
+                hide-details
+              />
+              <v-btn
+                v-else
+                text
+                class="table-title-text-nome pa-0 ma-0"
+                color="#4A4A4A"
+                style="font-size: 12px; text-transform: lowercase"
+                @click="editar_celular()"
+              >
+                {{ cellphone.phone_number | celular }}</v-btn
+              >
+            </div>
+          </v-layout>
+          <v-layout
+            v-if="cellphone.patrimonio"
+            class="container-linha"
+            justify-start
+            align-center
+            style="max-width: 50px"
           >
             <div class="table-title" style="height: 100%; width: 35px">
               <v-text-field
                 class="table-title-text"
-                v-model="computer.ram"
+                v-model="cellphone.ram"
                 dense
                 light
                 hide-details
@@ -236,16 +262,17 @@
             </div>
           </v-layout>
           <v-layout
-            v-if="computer.patrimonio"
+            v-if="cellphone.patrimonio"
             class="container-linha"
             justify-start
             align-center
+            style="max-width: 50px"
           >
             <div class="table-title" style="height: 100%; width: 40px">
               <v-text-field
                 class="table-title-text"
-                placeholder="ssd"
-                v-model="computer.ssd"
+                placeholder="rom"
+                v-model="cellphone.rom"
                 dense
                 light
                 hide-details
@@ -254,59 +281,7 @@
             </div>
           </v-layout>
           <v-layout
-            v-if="computer.patrimonio"
-            class="container-linha"
-            justify-start
-            align-center
-          >
-            <div class="table-title" style="height: 100%; width: 40px">
-              <v-text-field
-                class="table-title-text"
-                placeholder="hd"
-                v-model="computer.hd"
-                dense
-                light
-                hide-details
-              />
-              <span class="suffix-text cor-cinza-escuro">&nbsp;gb</span>
-            </div>
-          </v-layout>
-          <v-layout
-            v-if="computer.patrimonio"
-            class="container-linha"
-            justify-start
-            align-center
-          >
-            <div class="table-title" style="height: 100%">
-              <v-text-field
-                class="table-title-text"
-                placeholder="OS original"
-                v-model="computer.os_original"
-                dense
-                light
-                hide-details
-              />
-            </div>
-          </v-layout>
-          <v-layout
-            v-if="computer.patrimonio"
-            class="container-linha"
-            justify-start
-            align-center
-          >
-            <div class="table-title" style="height: 100%">
-              <v-text-field
-                class="table-title-text"
-                placeholder="OS atual"
-                v-model="computer.os_atual"
-                dense
-                light
-                hide-details
-              />
-            </div>
-          </v-layout>
-          <v-layout
-            v-if="!computer.patrimonio"
+            v-if="!cellphone.patrimonio"
             class="table"
             justify-start
             align-center
@@ -315,11 +290,11 @@
               <v-text-field
                 class="table-title-text"
                 placeholder="patrimônio"
-                v-model="new_patrimonio_computer"
+                v-model="new_patrimonio_cell"
                 dense
                 light
                 hide-details
-                @change="add_computer_patrimonio(computer)"
+                @change="add_cellphone_patrimonio(cellphone)"
               />
             </div>
           </v-layout>
@@ -327,13 +302,13 @@
         <v-divider color="#969696" class="mt-2 mb-2" />
       </div>
       <v-btn
-        v-if="!adding_computer"
+        v-if="!adding_cellphone"
         class="mx-2"
         dark
         icon
         text
         flat
-        @click="add_computer()"
+        @click="add_cellphone()"
       >
         <v-icon class="cor-cinza" dark size="27"> mdi-plus </v-icon>
       </v-btn>
@@ -343,27 +318,45 @@
 
 <script>
 export default {
-  props: ["computers"],
+  props: ["cellphones"],
   data: () => ({
     selectedItem: null,
-    adding_computer: false,
-    new_patrimonio_computer: "",
+    adding_cellphone: false,
+    new_patrimonio_cell: "",
+    editing_phone_number: false,
+    erro_celular: false,
+    cel_so_numeros: true,
+    cel_11_numeros: false,
   }),
   methods: {
-    add_computer() {
-      if (!this.adding_computer) {
-        this.computers.push({ patrimonio: "" });
-        this.adding_computer = true;
+    add_cellphone() {
+      if (!this.adding_cellphone) {
+        this.cellphones.push({ patrimonio: "" });
+        this.adding_cellphone = true;
       }
     },
-    add_computer_patrimonio(computer) {
-      computer.patrimonio = this.new_patrimonio_computer;
-      this.new_patrimonio_computer = "";
-      this.adding_computer = false;
+    add_cellphone_patrimonio(cellphone) {
+      cellphone.patrimonio = this.new_patrimonio_cell;
+      this.new_patrimonio_cell = "";
+      this.adding_cellphone = false;
     },
     go_back() {
-      this.new_patrimonio_computer = "";
-      this.adding_computer = false;
+      this.new_patrimonio_cell = "";
+      this.adding_cellphone = false;
+    },
+    editar_celular() {
+      this.editing_phone_number = true;
+    },
+    editou_celular() {
+      this.editing_phone_number = false;
+    },
+  },
+  filters: {
+    celular: function (value) {
+      let ddd = value.slice(0, 2);
+      let primeira_parte = value.slice(2, 7);
+      let segunda_parte = value.slice(7);
+      return "(" + ddd + ") " + primeira_parte + "-" + segunda_parte;
     },
   },
 };
@@ -371,7 +364,7 @@ export default {
 
 <style scoped>
 .container-linha {
-  min-width: 50px;
+  width: 70px;
   margin-left: 5px;
   margin-right: 5px;
 }
@@ -434,7 +427,7 @@ export default {
   position: relative;
   justify-content: center;
 }
-.slack-computer {
+.slack-cellphone {
   width: 100px;
   font-weight: 400;
   font-size: 14px;
