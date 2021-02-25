@@ -79,7 +79,6 @@ export default {
   components: {
     loginDialog
   },
-  props: ['state'],
   computed: {
     logged_user () {
       return this.$store.state.auth.currentUser

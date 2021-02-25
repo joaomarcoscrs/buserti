@@ -1,6 +1,6 @@
 <template>
   <v-app style="background-color: #DCDCDC">
-    <toolbar :state="layout" />
+    <toolbar />
     <v-content>
       <v-container fluid>
         <nuxt />
