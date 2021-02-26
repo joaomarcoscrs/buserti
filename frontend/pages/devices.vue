@@ -3,9 +3,32 @@
     <v-card light color="#ECECEC" elevation="4" class="pa-2 ma-1 mb-4">
       <computers :computers="computers" />
     </v-card>
-    <v-card light color="#ECECEC" elevation="4" class="pa-2 ma-1 my-4">
-      <cellphones :cellphones="cellphones" />
-    </v-card>
+    <div class="devices-lower-box">
+      <v-card
+        light
+        color="#ECECEC"
+        elevation="4"
+        class="pa-2 ma-1 mr-2 lower-box-element"
+      >
+        <cellphones :cellphones="cellphones" />
+      </v-card>
+      <v-card
+        light
+        color="#ECECEC"
+        elevation="4"
+        class="pa-2 ma-1 ml-2 lower-box-element"
+      >
+        <chips :chips="chips" />
+      </v-card>
+      <v-card
+        light
+        color="#ECECEC"
+        elevation="4"
+        class="pa-2 ma-1 ml-2 lower-box-element"
+      >
+        <others :devices="other_devices" />
+      </v-card>
+    </div>
   </div>
 </template>
 
@@ -13,109 +36,55 @@
 import api from "~api";
 import computers from "~/components/devices/computers.vue";
 import cellphones from "~/components/devices/cellphones.vue";
+import chips from "~/components/devices/chips.vue";
+import others from "~/components/devices/other_devices.vue";
 
 export default {
   components: {
     computers,
     cellphones,
+    chips,
+    others,
   },
   data: () => ({
     selectedItem: null,
     computers: [{}],
     cellphones: [{}],
+    chips: [{}],
+    other_devices: [{}],
   }),
   mounted() {
     api.list_devices().then((result) => {
       this.computers = result.data.filter((d) => d.kind === "computer");
       this.cellphones = result.data.filter((d) => d.kind === "cellphone");
+      this.other_devices = result.data.filter(
+        (d) =>
+          d.kind !== "computer" && d.kind !== "cellphone" && d.kind !== "chip"
+      );
+      const chips = result.data.filter((d) => d.kind === "chip");
+      var i;
+      for (i = 0; i < chips.length; i++) {
+        chips[i]["phonenumber_error"] = false;
+        chips[i]["phonenumber_tem_letras"] = false;
+        chips[i]["phonenumber_tem_11_digitos"] = false;
+        chips[i]["editing_phone_number"] = false;
+        chips[i]["altura_linha"] = "table";
+      }
+      this.chips = chips;
     });
   },
 };
 </script>
 
 <style scoped>
-.container-linha {
-  min-width: 50px;
-  margin-left: 5px;
-  margin-right: 5px;
-}
-.texto-gaveta {
-  font-size: 16px;
-  font-weight: 500;
-  padding-top: 5px;
-  padding-left: 2px;
-  font-family: "Quicksand" !important;
-  text-transform: lowercase;
-  font-weight: 700;
-}
-.table {
-  height: 25px;
-  position: relative;
-}
-.table-nome {
+.devices-lower-box {
   display: flex;
-  align-items: flex-start;
   justify-content: center;
-  flex-flow: column wrap;
-  width: 100px;
-  margin-right: 5px;
-}
-.table-title {
-  display: flex;
-  align-items: center;
   position: relative;
-  justify-content: center;
-}
-.table-title-logo {
-  max-height: 45%;
-  margin: 10px;
-}
-.table-title-text {
-  font-weight: 300;
-  font-size: 13px;
-  color: #5b5b5b !important;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.suffix-text {
-  font-weight: 300;
-  font-size: 13px;
-}
-.table-title-text-nome {
   width: 100%;
-  font-weight: 400;
-  font-size: 13px;
-  color: #5b5b5b;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
-.table-slack {
-  margin-top: 2px;
-  width: 220px;
-  display: flex;
-  align-items: center;
-  position: relative;
-  justify-content: center;
-}
-.slack-device {
-  width: 100px;
-  font-weight: 400;
-  font-size: 14px;
-  color: #969696;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.slack-logo {
-  height: 18px;
-  width: auto;
-}
-.debug-azul {
-  background-color: lightblue;
-}
-.debug-vermelho {
-  background-color: lightcoral;
+.lower-box-element {
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 </style>
