@@ -354,6 +354,7 @@
 
 <script>
 import api from "~api";
+import employeehelper from "./../../helpers/employees/employeehelper"
 
 export default {
   props: ["employees"],
@@ -362,13 +363,7 @@ export default {
       new_name: "",
       adding_employee: false,
       something_edited: false,
-      edit_count: 0,
-      state: {
-        NONE: 0,
-        MODIFIED: 1,
-        LOADING: 2,
-        SAVED: 3,
-      },
+      state: employeehelper.state
     };
   },
   computed: {
@@ -380,8 +375,10 @@ export default {
     },
     permission_groups () {
       return this.$store.state.groups.permission_groups
+    },
+    edit_count () {
+      return this.$store.state.employees.edit_count
     }
-
   },
   methods: {
     add_employee() {
@@ -421,109 +418,61 @@ export default {
       }
     },
     install_software(software, employee) {
-      const index = employee.installed_softwares.findIndex(
-        (e) => e.id === software.id
-      );
-      if (index === -1) {
-        employee.installed_softwares.push(software);
-      } else {
-        employee.installed_softwares.splice(index, 1);
-      }
-      this.edit_employee(employee);
+      employeehelper.install_software(software, employee)
+      this.edit_employee(employee)
     },
     give_permission(permission, employee) {
-      const index = employee.acquired_permissions.findIndex(
-        (e) => e.id === permission.id
-      );
-      if (index === -1) {
-        employee.acquired_permissions.push(permission);
-      } else {
-        employee.acquired_permissions.splice(index, 1);
-      }
-      this.edit_employee(employee);
+      employeehelper.give_permission(permission, employee)
+      this.edit_employee(employee)
     },
     add_software_group(employee) {
-      employee.softwares = [];
-      employee.software_groups.forEach((group) => {
-        employee.softwares = employee.softwares.concat(group.items);
-      });
-      employee.softwares = employee.softwares.filter(
-        (software, index, self) =>
-          index === self.findIndex((s) => s.id === software.id)
-      );
-      this.edit_employee(employee);
+      employeehelper.add_software_group(employee)
+      this.edit_employee(employee)
     },
     remove_software_group(item, employee) {
-      const index = employee.software_groups.findIndex((e) => e.id === item.id);
-      if (index >= 0) employee.software_groups.splice(index, 1);
-      employee.softwares = [];
-      employee.software_groups.forEach((group) => {
-        employee.softwares = employee.softwares.concat(group.items);
-      });
-      employee.softwares = employee.softwares.filter(
-        (software, index, self) =>
-          index === self.findIndex((s) => s.id === software.id)
-      );
-      this.edit_employee(employee);
+      employeehelper.remove_software_group(item, employee)
+      this.edit_employee(employee)
     },
     add_permission_group(employee) {
-      employee.permissions = [];
-      employee.permission_groups.forEach((group) => {
-        employee.permissions = employee.permissions.concat(group.items);
-      });
-      employee.permissions = employee.permissions.filter(
-        (permission, index, self) =>
-          index === self.findIndex((s) => s.id === permission.id)
-      );
-      this.edit_employee(employee);
+      employeehelper.add_permission_group(employee)
+      this.edit_employee(employee)
     },
     remove_permission_group(item, employee) {
-      const index = employee.permission_groups.findIndex(
-        (e) => e.id === item.id
-      );
-      if (index >= 0) employee.permission_groups.splice(index, 1);
-      employee.permissions = [];
-      employee.permission_groups.forEach((group) => {
-        employee.permissions = employee.permissions.concat(group.items);
-      });
-      employee.permissions = employee.permissions.filter(
-        (permission, index, self) =>
-          index === self.findIndex((s) => s.id === permission.id)
-      );
-      this.edit_employee(employee);
+      employeehelper.remove_permission_group(item, employee)
+      this.edit_employee(employee)
     },
     save_all() {
-      this.employees.forEach((employee) => {
-        if (employee.edited) {
-          employee.state = this.state.LOADING;
-          api.save_employee(employee).then((response) => {
-            if (response.status === 200) {
-              employee.edited = false;
-              employee.state = this.state.SAVED;
-              this.edit_count--;
+        this.employees.forEach((employee) => {
+            if (employee.edited) {
+                employee.state = this.state.LOADING;
+                api.save_employee(employee).then((response) => {
+                    if (response.status === 200) {
+                        employee.edited = false
+                        employee.state = this.state.SAVED
+                        this.$store.commit('employees/decrement')
+                    }
+                });
             }
-          });
-        }
-      });
-      this.something_edited = false;
+        });
+        this.something_edited = false
     },
     save_one(employee) {
-      employee.state = this.state.LOADING;
-      api.save_employee(employee).then((response) => {
-        if (response.status === 200) {
-          employee.edited = false;
-          employee.state = this.state.SAVED;
-          this.edit_count--;
-        }
-      });
+        employee.state = this.state.LOADING;
+        api.save_employee(employee).then((response) => {
+            if (response.status === 200) {
+                employee.edited = false
+                employee.state = this.state.SAVED
+                this.$store.commit('employees/decrement')
+            }
+        });
     },
     edit_employee(employee) {
-      if (!employee.edited) {
-        employee.edited = true;
-        employee.state = this.state.MODIFIED;
-        this.edit_count++;
-      }
-    },
+        if (!employee.edited) {
+            employee.edited = true;
+            employee.state = this.state.MODIFIED;
+            this.$store.commit('employees/increment')
+        }
+    }
   },
 };
 </script>

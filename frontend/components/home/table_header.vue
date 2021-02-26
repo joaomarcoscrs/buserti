@@ -117,12 +117,9 @@
             return-object
             :items="software_groups"
             class="select-group"
-            filled
             v-model="selected_employee.software_groups"
             placeholder="Grupos"
             chips
-            rounded
-            dense
             solo
             color="blue-grey lighten-2"
             item-text="title"
@@ -166,13 +163,10 @@
             return-object
             :items="permission_groups"
             class="select-group"
-            filled
-            dense
             v-model="selected_employee.permission_groups"
             placeholder="Grupos"
             chips
             solo
-            rounded
             item-text="title"
             @change="add_permission_group()"
             item-value="title"
@@ -213,7 +207,7 @@
           color="grey darken-3"
           @click="close_employee()"
         >
-          Limpar
+          Limpar Busca
           <v-icon right>
             mdi-close-circle
           </v-icon>
@@ -237,6 +231,7 @@
 
 <script>
 import api from "~api";
+import employeehelper from '../../helpers/employees/employeehelper';
 
 export default {
   props: ['employees'],
@@ -244,13 +239,7 @@ export default {
     return {
       show_employee: false,
       selected_employee: null,
-      edit_count: 0,
-      state: {
-          NONE: 0,
-          MODIFIED: 1,
-          LOADING: 2,
-          SAVED: 3
-      }
+      state: employeehelper.state
     }
   },
   computed: {
@@ -262,6 +251,9 @@ export default {
     },
     permission_groups () {
       return this.$store.state.groups.permission_groups
+    },
+    edit_count () {
+      return this.$store.state.employees.edit_count
     }
   },
   methods: {
@@ -280,76 +272,6 @@ export default {
         return false;
       }
     },
-    install_software(software) {
-      const index = this.selected_employee.installed_softwares.findIndex(
-        (e) => e.id === software.id
-      );
-      if (index === -1) {
-        this.selected_employee.installed_softwares.push(software);
-      } else {
-        this.selected_employee.installed_softwares.splice(index, 1);
-      }
-      this.edit_employee()
-    },
-    give_permission(permission) {
-      const index = this.selected_employee.acquired_permissions.findIndex(
-        (e) => e.id === permission.id
-      );
-      if (index === -1) {
-        this.selected_employee.acquired_permissions.push(permission);
-      } else {
-        this.selected_employee.acquired_permissions.splice(index, 1);
-      }
-      this.edit_employee()
-    },
-    add_software_group() {
-      this.selected_employee.softwares = [];
-      this.selected_employee.software_groups.forEach((group) => {
-        this.selected_employee.softwares = this.selected_employee.softwares.concat(group.items);
-      });
-      this.selected_employee.softwares = this.selected_employee.softwares.filter(
-        (software, index, self) =>
-          index === self.findIndex((s) => s.id === software.id)
-      );
-      this.edit_employee()
-    },
-    remove_software_group(item) {
-      const index = this.selected_employee.software_groups.findIndex((e) => e.id === item.id);
-      if (index >= 0) this.selected_employee.software_groups.splice(index, 1);
-      this.selected_employee.softwares = [];
-      this.selected_employee.software_groups.forEach((group) => {
-        this.selected_employee.softwares = this.selected_employee.softwares.concat(group.items);
-      });
-      this.selected_employee.softwares = this.selected_employee.softwares.filter(
-        (software, index, self) =>
-          index === self.findIndex((s) => s.id === software.id)
-      );
-      this.edit_employee()
-    },
-    add_permission_group() {
-      this.selected_employee.permissions = [];
-      this.selected_employee.permission_groups.forEach((group) => {
-        this.selected_employee.permissions = this.selected_employee.permissions.concat(group.items);
-      });
-      this.selected_employee.permissions = this.selected_employee.permissions.filter(
-        (permission, index, self) =>
-          index === self.findIndex((s) => s.id === permission.id)
-      );
-      this.edit_employee()
-    },
-    remove_permission_group(item) {
-      const index = this.selected_employee.permission_groups.findIndex((e) => e.id === item.id);
-      if (index >= 0) this.selected_employee.permission_groups.splice(index, 1);
-      this.selected_employee.permissions = [];
-      this.selected_employee.permission_groups.forEach((group) => {
-        this.selected_employee.permissions = this.selected_employee.permissions.concat(group.items);
-      });
-      this.selected_employee.permissions = this.selected_employee.permissions.filter(
-        (permission, index, self) =>
-          index === self.findIndex((s) => s.id === permission.id)
-      );
-      this.edit_employee()
-    },
     afterselection() {
       this.$nextTick(() => {
         if (this.selected_employee.computer === "") {
@@ -358,11 +280,35 @@ export default {
       });
       this.edit_employee()
     },
+    install_software(software) {
+      employeehelper.install_software(software, this.selected_employee)
+      this.edit_employee()
+    },
+    give_permission(permission) {
+      employeehelper.give_permission(permission, this.selected_employee)
+      this.edit_employee()
+    },
+    add_software_group() {
+      employeehelper.add_software_group(this.selected_employee)
+      this.edit_employee()
+    },
+    remove_software_group(item) {
+      employeehelper.remove_software_group(item, this.selected_employee)
+      this.edit_employee()
+    },
+    add_permission_group() {
+      employeehelper.add_permission_group(this.selected_employee)
+      this.edit_employee()
+    },
+    remove_permission_group(item) {
+      employeehelper.remove_permission_group(item, this.selected_employee)
+      this.edit_employee()
+    },
     edit_employee() {
       if (!this.selected_employee.edited) {
         this.selected_employee.edited = true
         this.selected_employee.state = this.state.MODIFIED
-        this.edit_count++
+        this.$store.commit('employees/increment')
       }
     },
     save() {
@@ -371,7 +317,7 @@ export default {
         if (response.status === 200) {
           this.selected_employee.edited = false;
           this.selected_employee.state = this.state.SAVED;
-          this.edit_count--;
+          this.$store.commit('employees/decrement')
         }
       });
     },

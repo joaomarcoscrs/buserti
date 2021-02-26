@@ -1,19 +1,13 @@
 import api from '~api'
 
 export const state = () => ({
-  employees: [],
   computers: [],
   software_groups: [],
-  permission_groups: []
+  permission_groups: [],
+  edit_count: 0
 })
 
 export const mutations = {
-  setEmployees (state, employees) {
-    state.employees = employees
-  },
-  setComputers (state, computers) {
-    state.computers = computers
-  },
   setSoftwareGroups (state, software_groups) {
     state.software_groups = software_groups
   },
@@ -22,6 +16,13 @@ export const mutations = {
   },
   addEmployee (state, employee) {
     state.employees.push(employee)
+  },
+  increment (state) {
+    state.edit_count++
+    console.log("edit_count = ", state.edit_count)
+  },
+  decrement (state) {
+    state.edit_count--
   }
 }
 
@@ -33,9 +34,6 @@ export const actions = {
 }
 
 export const getters = {
-  getEmployees(state) {
-      return state.employees
-  },
   getComputers(state) {
       return state.computers
   },
