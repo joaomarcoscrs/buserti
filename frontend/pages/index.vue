@@ -20,6 +20,28 @@ export default {
   },
   asyncData() {
     return api.list_employees().then((result) => {
+      if (result.data) {
+        result.data.forEach(element => {
+          element.state = 0 // state = NONE | sem modificação
+          element.edited = false // não editado
+          element.softwares = [];
+          element.software_groups.forEach((group) => {
+              element.softwares = element.softwares.concat(group.items);
+          });
+          element.softwares = element.softwares.filter(
+              (software, index, self) =>
+                  index === self.findIndex((s) => s.id === software.id)
+          );
+          element.permissions = [];
+          element.permission_groups.forEach((group) => {
+              element.permissions = element.permissions.concat(group.items);
+          });
+          element.permissions = element.permissions.filter(
+              (permission, index, self) =>
+                  index === self.findIndex((s) => s.id === permission.id)
+          );
+        });
+      }
       return {
         employees: result.data,
       };

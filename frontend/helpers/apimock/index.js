@@ -38,8 +38,7 @@ export default {
           name: "Tamires Érvila",
           slack: "tamires.cunha",
           buser_email: "tamires.cunha@buser.com.br",
-          state: 0,
-          edited: false,
+          slack_image: "https://ca.slack-edge.com/T8DJ2DE76-USVSDBSG0-a1cef74b740b-512",
           device: {
             id: 1,
             patrimonio: "000123",
@@ -94,23 +93,6 @@ export default {
               ],
             },
           ],
-          softwares: [
-            {
-              id: 1,
-              name: "office",
-              image: "office.png",
-            },
-            {
-              id: 2,
-              name: "powerbi",
-              image: "powerbi.png",
-            },
-            {
-              id: 3,
-              name: "jazzhr",
-              image: "jazzhr.png",
-            },
-          ],
           installed_softwares: [
             {
               id: 2,
@@ -150,32 +132,6 @@ export default {
               ],
             },
           ],
-          permissions: [
-            {
-              id: 1,
-              subgroup: null,
-              refers_to: "metabase",
-              level: "read",
-            },
-            {
-              id: 2,
-              subgroup: "powerbi-fin",
-              refers_to: "powerbi",
-              level: "general",
-            },
-            {
-              id: 3,
-              subgroup: "powerbi-fin",
-              refers_to: "powerbi",
-              level: "OKR",
-            },
-            {
-              id: 4,
-              subgroup: "powerbi-fin",
-              refers_to: "powerbi",
-              level: "financeiro",
-            },
-          ],
           acquired_permissions: [
             {
               id: 2,
@@ -196,9 +152,8 @@ export default {
           name: "Tony Lâmpada",
           slack: "tony.lampada",
           buser_email: "tony.lampada@buser.com.br",
-          state: 0,
-          edited: false,
           device: null,
+          slack_image: "https://ca.slack-edge.com/T8DJ2DE76-U91N3C1EV-3db45ef4ba15-512",
           software_groups: [
             {
               id: 3,
@@ -215,13 +170,6 @@ export default {
                   image: "vscode.png",
                 },
               ],
-            },
-          ],
-          softwares: [
-            {
-              id: 1,
-              name: "VSCode",
-              image: "vscode.png",
             },
           ],
           installed_softwares: [
@@ -261,32 +209,6 @@ export default {
                   level: "alterar reserva",
                 },
               ],
-            },
-          ],
-          permissions: [
-            {
-              id: 5,
-              subgroup: null,
-              refers_to: "metabase",
-              level: "read/write",
-            },
-            {
-              id: 6,
-              subgroup: "staff-dev",
-              refers_to: "staff",
-              level: "criar grupo",
-            },
-            {
-              id: 7,
-              subgroup: "staff-dev",
-              refers_to: "staff",
-              level: "cancelar grupo",
-            },
-            {
-              id: 8,
-              subgroup: "staff-dev",
-              refers_to: "staff",
-              level: "alterar reserva",
             },
           ],
           acquired_permissions: [
