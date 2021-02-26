@@ -117,7 +117,7 @@
             <div class="table-nome ma-0 pa-0" style="height: 100%">
               <v-text-field
                 class="table-title-text"
-                placeholder="patrimônio"
+                placeholder="ICCID"
                 v-model="new_iccid_chip"
                 dense
                 light
@@ -154,7 +154,15 @@ export default {
   methods: {
     add_chip() {
       if (!this.adding_chip) {
-        this.chips.push({ iccid: "" });
+        this.chips.push({
+          iccid: "",
+          phone_number: "",
+          phonenumber_error: false,
+          phonenumber_tem_letras: false,
+          phonenumber_tem_11_digitos: false,
+          editing_phone_number: true,
+          altura_linha: "table",
+        });
         this.adding_chip = true;
       }
     },
