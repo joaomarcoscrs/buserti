@@ -108,6 +108,19 @@
           />
         </div>
       </v-layout>
+      <v-layout class="container-linha" justify-start align-center>
+        <div class="table-title slack-atribuido" style="height: 100%">
+          <v-text-field
+            class="table-title-text"
+            style="font-size: 16px; font-weight: 400"
+            disabled
+            value="atribuído a"
+            dense
+            light
+            hide-details
+          />
+        </div>
+      </v-layout>
     </v-layout>
     <div class="overflow-box mx-3">
       <div v-for="cellphone in cellphones" :key="cellphone.id">
@@ -224,6 +237,18 @@
                 hide-details
               />
               <span class="suffix-text cor-cinza-escuro">&nbsp;gb</span>
+            </div>
+          </v-layout>
+          <v-layout
+            v-if="cellphone.patrimonio"
+            class="container-linha"
+            justify-start
+            align-center
+          >
+            <div class="table-title" style="height: 100%">
+              <div class="table-title-text slack-atribuido">
+                {{ cellphone.assigned_to }}
+              </div>
             </div>
           </v-layout>
           <v-layout
@@ -366,6 +391,9 @@ export default {
 .slack-logo {
   height: 18px;
   width: auto;
+}
+.slack-atribuido {
+  width: 100px;
 }
 .debug-azul {
   background-color: lightblue;

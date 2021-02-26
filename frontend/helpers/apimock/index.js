@@ -396,6 +396,7 @@ export default {
           admin_local: "admin",
           senha_admin: "senha123",
           observacoes: "Está sem carregador",
+          assigned_to: null,
           garantia_expira: "2021-01-03",
         },
         {
@@ -414,6 +415,7 @@ export default {
           admin_local: "admin",
           senha_admin: "senha123",
           observacoes: null,
+          assigned_to: "tamires.cunha",
           garantia_expira: "2021-01-03",
         },
         {
@@ -432,6 +434,7 @@ export default {
           admin_local: "admin",
           senha_admin: "senha123",
           observacoes: null,
+          assigned_to: "tony.lampada",
           garantia_expira: "2022-01-03",
         },
         {
@@ -444,6 +447,7 @@ export default {
           marca: "Samsumg",
           modelo: "A20",
           observacoes: null,
+          assigned_to: null,
           garantia_expira: "2022-01-03",
         },
         {
@@ -456,6 +460,7 @@ export default {
           marca: "Samsumg",
           modelo: "A20",
           observacoes: null,
+          assigned_to: "tamires.cunha",
           garantia_expira: "2023-01-03",
         },
         {
@@ -464,6 +469,7 @@ export default {
           phone_number: "12998761775",
           iccid: "20FMD93001238NASMDJ1",
           observacoes: null,
+          assigned_to: "tamires.cunha",
         },
         {
           id: 7,
@@ -471,6 +477,7 @@ export default {
           phone_number: "12991188462",
           iccid: "20FMD93001238N123551",
           observacoes: null,
+          assigned_to: null,
         },
         {
           id: 8,
@@ -480,6 +487,7 @@ export default {
           marca: "Dell",
           modelo: "P2721Q",
           observacoes: null,
+          assigned_to: "xico.carvalho",
         },
         {
           id: 9,
@@ -489,6 +497,7 @@ export default {
           marca: "Wacom",
           modelo: "Intuos Pro PTH460",
           observacoes: null,
+          assigned_to: "designer.1",
         },
         {
           id: 10,
@@ -498,6 +507,7 @@ export default {
           marca: "Apple",
           modelo: "Magic mouse 2",
           observacoes: null,
+          assigned_to: "designer.1",
         },
       ],
     });

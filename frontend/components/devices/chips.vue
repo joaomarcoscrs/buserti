@@ -33,6 +33,19 @@
           />
         </div>
       </v-layout>
+      <v-layout class="container-linha" justify-start align-center>
+        <div class="table-title slack-atribuido" style="height: 100%">
+          <v-text-field
+            class="table-title-text"
+            style="font-size: 16px; font-weight: 400"
+            disabled
+            value="atribuído a"
+            dense
+            light
+            hide-details
+          />
+        </div>
+      </v-layout>
     </v-layout>
     <div class="overflow-box mx-3">
       <div v-for="chip in chips" :key="chip.id">
@@ -111,6 +124,18 @@
               >
                 {{ chip.phone_number | celular }}</v-btn
               >
+            </div>
+          </v-layout>
+          <v-layout
+            v-if="chip.iccid"
+            class="container-linha"
+            justify-start
+            align-center
+          >
+            <div class="table-title" style="height: 100%">
+              <div class="table-title-text slack-atribuido">
+                {{ chip.assigned_to }}
+              </div>
             </div>
           </v-layout>
           <v-layout v-if="!chip.iccid" class="table" justify-start align-center>
@@ -302,6 +327,9 @@ export default {
 .slack-logo {
   height: 18px;
   width: auto;
+}
+.slack-atribuido {
+  width: 100px;
 }
 .debug-azul {
   background-color: lightblue;

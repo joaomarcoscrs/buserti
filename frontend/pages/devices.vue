@@ -16,7 +16,7 @@
         light
         color="#ECECEC"
         elevation="4"
-        class="pa-2 ma-1 ml-2 lower-box-element"
+        class="pa-2 ma-1 mx-2 lower-box-element"
       >
         <chips :chips="chips" />
       </v-card>
