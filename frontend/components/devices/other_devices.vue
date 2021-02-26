@@ -1,12 +1,12 @@
 <template>
   <div>
     <v-layout class="my-3">
-      <img class="table-title-logo mx-2" src="~/static/smartphone.png" />
+      <img class="table-title-logo mx-2" src="~/static/other_devices.png" />
       <h1
         class="table-title-text-nome"
         style="font-size: 30px; font-weight: 300"
       >
-        celulares
+        outros
       </h1>
     </v-layout>
     <v-layout class="table mb-4 mx-3" align-center row-wrap justify-start>
@@ -20,6 +20,19 @@
           </h3>
         </div>
       </div>
+      <v-layout class="container-linha" justify-start align-center>
+        <div class="table-title" style="height: 100%">
+          <v-text-field
+            class="table-title-text"
+            style="font-size: 16px; font-weight: 400"
+            disabled
+            value="kind"
+            dense
+            light
+            hide-details
+          />
+        </div>
+      </v-layout>
       <v-layout class="container-linha" justify-start align-center>
         <div class="table-title" style="height: 100%">
           <v-text-field
@@ -52,56 +65,7 @@
             class="table-title-text"
             style="font-size: 16px; font-weight: 400"
             disabled
-            value="garantia"
-            dense
-            light
-            hide-details
-          />
-        </div>
-      </v-layout>
-      <v-layout class="container-linha" justify-start align-center>
-        <div class="table-title" style="height: 100%">
-          <v-text-field
-            class="table-title-text"
-            style="font-size: 16px; font-weight: 400"
-            disabled
-            value="IMEI"
-            dense
-            light
-            hide-details
-          />
-        </div>
-      </v-layout>
-      <v-layout
-        class="container-linha"
-        style="max-width: 50px"
-        justify-start
-        align-center
-      >
-        <div class="table-title" style="height: 100%; width: 35px">
-          <v-text-field
-            class="table-title-text"
-            style="font-size: 16px; font-weight: 400"
-            value="ram"
-            disabled
-            dense
-            light
-            hide-details
-          />
-        </div>
-      </v-layout>
-      <v-layout
-        class="container-linha"
-        style="max-width: 50px"
-        justify-start
-        align-center
-      >
-        <div class="table-title" style="height: 100%; width: 40px">
-          <v-text-field
-            class="table-title-text"
-            style="font-size: 16px; font-weight: 400"
-            disabled
-            value="rom"
+            value="num. série"
             dense
             light
             hide-details
@@ -123,19 +87,32 @@
       </v-layout>
     </v-layout>
     <div class="overflow-box mx-3">
-      <div v-for="cellphone in cellphones" :key="cellphone.id">
+      <div v-for="device in devices" :key="device.id">
         <v-layout class="table" align-center row-wrap justify-start>
-          <div
-            v-if="cellphone.patrimonio"
-            class="table-nome"
-            style="height: 100%"
-          >
+          <div v-if="device.patrimonio" class="table-nome" style="height: 100%">
             <div class="table-slack" style="height: 100%">
-              <h3 class="table-title-text-nome">{{ cellphone.patrimonio }}</h3>
+              <h3 class="table-title-text-nome">{{ device.patrimonio }}</h3>
             </div>
           </div>
           <v-layout
-            v-if="cellphone.patrimonio"
+            v-if="device.patrimonio"
+            class="container-linha"
+            justify-start
+            align-center
+          >
+            <div class="table-title" style="height: 100%">
+              <v-text-field
+                class="table-title-text"
+                placeholder="kind"
+                v-model="device.kind"
+                dense
+                light
+                hide-details
+              />
+            </div>
+          </v-layout>
+          <v-layout
+            v-if="device.patrimonio"
             class="container-linha"
             justify-start
             align-center
@@ -144,7 +121,7 @@
               <v-text-field
                 class="table-title-text"
                 placeholder="marca"
-                v-model="cellphone.marca"
+                v-model="device.marca"
                 dense
                 light
                 hide-details
@@ -152,7 +129,7 @@
             </div>
           </v-layout>
           <v-layout
-            v-if="cellphone.patrimonio"
+            v-if="device.patrimonio"
             class="container-linha"
             justify-start
             align-center
@@ -161,7 +138,7 @@
               <v-text-field
                 class="table-title-text"
                 placeholder="modelo"
-                v-model="cellphone.modelo"
+                v-model="device.modelo"
                 dense
                 light
                 hide-details
@@ -169,7 +146,7 @@
             </div>
           </v-layout>
           <v-layout
-            v-if="cellphone.patrimonio"
+            v-if="device.patrimonio"
             class="container-linha"
             justify-start
             align-center
@@ -177,8 +154,8 @@
             <div class="table-title" style="height: 100%">
               <v-text-field
                 class="table-title-text"
-                placeholder="garantia_expira"
-                v-model="cellphone.garantia_expira"
+                placeholder="num. série"
+                v-model="device.serial_number"
                 dense
                 light
                 hide-details
@@ -186,73 +163,19 @@
             </div>
           </v-layout>
           <v-layout
-            v-if="cellphone.patrimonio"
-            class="container-linha"
-            justify-start
-            align-center
-          >
-            <div class="table-title" style="height: 100%">
-              <v-text-field
-                class="table-title-text"
-                placeholder="IMEI"
-                v-model="cellphone.imei"
-                dense
-                light
-                hide-details
-              />
-            </div>
-          </v-layout>
-          <v-layout
-            v-if="cellphone.patrimonio"
-            class="container-linha"
-            justify-start
-            align-center
-            style="max-width: 50px"
-          >
-            <div class="table-title" style="height: 100%; width: 35px">
-              <v-text-field
-                class="table-title-text"
-                v-model="cellphone.ram"
-                dense
-                light
-                hide-details
-              />
-              <span class="suffix-text cor-cinza-escuro">&nbsp;gb</span>
-            </div>
-          </v-layout>
-          <v-layout
-            v-if="cellphone.patrimonio"
-            class="container-linha"
-            justify-start
-            align-center
-            style="max-width: 50px"
-          >
-            <div class="table-title" style="height: 100%; width: 40px">
-              <v-text-field
-                class="table-title-text"
-                placeholder="rom"
-                v-model="cellphone.rom"
-                dense
-                light
-                hide-details
-              />
-              <span class="suffix-text cor-cinza-escuro">&nbsp;gb</span>
-            </div>
-          </v-layout>
-          <v-layout
-            v-if="cellphone.patrimonio"
+            v-if="device.patrimonio"
             class="container-linha"
             justify-start
             align-center
           >
             <div class="table-title" style="height: 100%">
               <div class="table-title-text slack-atribuido">
-                {{ cellphone.assigned_to }}
+                {{ device.assigned_to }}
               </div>
             </div>
           </v-layout>
           <v-layout
-            v-if="!cellphone.patrimonio"
+            v-if="!device.patrimonio"
             class="table"
             justify-start
             align-center
@@ -261,11 +184,11 @@
               <v-text-field
                 class="table-title-text"
                 placeholder="patrimônio"
-                v-model="new_patrimonio_cell"
+                v-model="new_patrimonio_device"
                 dense
                 light
                 hide-details
-                @change="add_cellphone_patrimonio(cellphone)"
+                @change="add_device_patrimonio(device)"
               />
             </div>
           </v-layout>
@@ -273,12 +196,12 @@
         <v-divider color="#969696" class="mt-2 mb-2" />
       </div>
       <v-btn
-        v-if="!adding_cellphone"
+        v-if="!adding_device"
         class="mx-2"
         dark
         icon
         text
-        @click="add_cellphone()"
+        @click="add_device()"
       >
         <v-icon class="cor-cinza" dark size="27"> mdi-plus </v-icon>
       </v-btn>
@@ -288,23 +211,23 @@
 
 <script>
 export default {
-  props: ["cellphones"],
+  props: ["devices"],
   data: () => ({
     selectedItem: null,
-    adding_cellphone: false,
-    new_patrimonio_cell: "",
+    adding_device: false,
+    new_patrimonio_device: "",
   }),
   methods: {
-    add_cellphone() {
-      if (!this.adding_cellphone) {
-        this.cellphones.push({ patrimonio: "" });
-        this.adding_cellphone = true;
+    add_device() {
+      if (!this.adding_device) {
+        this.devices.push({ patrimonio: "" });
+        this.adding_device = true;
       }
     },
-    add_cellphone_patrimonio(cellphone) {
-      cellphone.patrimonio = this.new_patrimonio_cell;
-      this.new_patrimonio_cell = "";
-      this.adding_cellphone = false;
+    add_device_patrimonio(device) {
+      device.patrimonio = this.new_patrimonio_device;
+      this.new_patrimonio_device = "";
+      this.adding_device = false;
     },
   },
 };
@@ -347,9 +270,6 @@ export default {
   position: relative;
   justify-content: center;
 }
-.table-title-logo {
-  max-height: 45%;
-}
 .table-title-text {
   font-weight: 300;
   font-size: 13px;
@@ -379,7 +299,7 @@ export default {
   position: relative;
   justify-content: center;
 }
-.slack-cellphone {
+.slack-device {
   width: 100px;
   font-weight: 400;
   font-size: 14px;

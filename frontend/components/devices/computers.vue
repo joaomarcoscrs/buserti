@@ -26,20 +26,7 @@
             class="table-title-text"
             style="font-size: 16px; font-weight: 400"
             disabled
-            value="marca"
-            dense
-            light
-            hide-details
-          />
-        </div>
-      </v-layout>
-      <v-layout class="container-linha" justify-start align-center>
-        <div class="table-title" style="height: 100%">
-          <v-text-field
-            class="table-title-text"
-            style="font-size: 16px; font-weight: 400"
-            disabled
-            value="modelo"
+            value="service-tag"
             dense
             light
             hide-details
@@ -65,7 +52,20 @@
             class="table-title-text"
             style="font-size: 16px; font-weight: 400"
             disabled
-            value="service-tag"
+            value="marca"
+            dense
+            light
+            hide-details
+          />
+        </div>
+      </v-layout>
+      <v-layout class="container-linha" justify-start align-center>
+        <div class="table-title" style="height: 100%">
+          <v-text-field
+            class="table-title-text"
+            style="font-size: 16px; font-weight: 400"
+            disabled
+            value="modelo"
             dense
             light
             hide-details
@@ -99,12 +99,12 @@
         </div>
       </v-layout>
       <v-layout class="container-linha" justify-start align-center>
-        <div class="table-title" style="height: 100%; width: 40px">
+        <div class="table-title" style="height: 100%">
           <v-text-field
             class="table-title-text"
             style="font-size: 16px; font-weight: 400"
             disabled
-            value="hd"
+            value="processador"
             dense
             light
             hide-details
@@ -117,7 +117,7 @@
             class="table-title-text"
             style="font-size: 16px; font-weight: 400"
             disabled
-            value="OS original"
+            value="OS fábrica"
             dense
             light
             hide-details
@@ -131,6 +131,58 @@
             style="font-size: 16px; font-weight: 400"
             disabled
             value="OS atual"
+            dense
+            light
+            hide-details
+          />
+        </div>
+      </v-layout>
+      <v-layout class="container-linha" justify-start align-center>
+        <div class="table-title" style="height: 100%">
+          <v-text-field
+            class="table-title-text"
+            style="font-size: 16px; font-weight: 400"
+            disabled
+            value="host"
+            dense
+            light
+            hide-details
+          />
+        </div>
+      </v-layout>
+      <v-layout class="container-linha" justify-start align-center>
+        <div class="table-title" style="height: 100%">
+          <v-text-field
+            class="table-title-text"
+            style="font-size: 16px; font-weight: 400"
+            disabled
+            value="admin"
+            dense
+            light
+            hide-details
+          />
+        </div>
+      </v-layout>
+      <v-layout class="container-linha" justify-start align-center>
+        <div class="table-title" style="height: 100%">
+          <v-text-field
+            class="table-title-text"
+            style="font-size: 16px; font-weight: 400"
+            disabled
+            value="senha"
+            dense
+            light
+            hide-details
+          />
+        </div>
+      </v-layout>
+      <v-layout class="container-linha" justify-start align-center>
+        <div class="table-title slack-atribuido" style="height: 100%">
+          <v-text-field
+            class="table-title-text"
+            style="font-size: 16px; font-weight: 400"
+            disabled
+            value="atribuído a"
             dense
             light
             hide-details
@@ -159,6 +211,40 @@
             <div class="table-title" style="height: 100%">
               <v-text-field
                 class="table-title-text"
+                placeholder="service-tag"
+                v-model="computer.service_tag"
+                dense
+                light
+                hide-details
+              />
+            </div>
+          </v-layout>
+          <v-layout
+            v-if="computer.patrimonio"
+            class="container-linha"
+            justify-start
+            align-center
+          >
+            <div class="table-title" style="height: 100%">
+              <v-text-field
+                class="table-title-text"
+                placeholder="garantia até"
+                v-model="computer.garantia_expira"
+                dense
+                light
+                hide-details
+              />
+            </div>
+          </v-layout>
+          <v-layout
+            v-if="computer.patrimonio"
+            class="container-linha"
+            justify-start
+            align-center
+          >
+            <div class="table-title" style="height: 100%">
+              <v-text-field
+                class="table-title-text"
                 placeholder="marca"
                 v-model="computer.marca"
                 dense
@@ -178,40 +264,6 @@
                 class="table-title-text"
                 placeholder="modelo"
                 v-model="computer.modelo"
-                dense
-                light
-                hide-details
-              />
-            </div>
-          </v-layout>
-          <v-layout
-            v-if="computer.patrimonio"
-            class="container-linha"
-            justify-start
-            align-center
-          >
-            <div class="table-title" style="height: 100%">
-              <v-text-field
-                class="table-title-text"
-                placeholder="garantia_expira"
-                v-model="computer.garantia_expira"
-                dense
-                light
-                hide-details
-              />
-            </div>
-          </v-layout>
-          <v-layout
-            v-if="computer.patrimonio"
-            class="container-linha"
-            justify-start
-            align-center
-          >
-            <div class="table-title" style="height: 100%">
-              <v-text-field
-                class="table-title-text"
-                placeholder="service-tag"
-                v-model="computer.service_tag"
                 dense
                 light
                 hide-details
@@ -259,16 +311,15 @@
             justify-start
             align-center
           >
-            <div class="table-title" style="height: 100%; width: 40px">
+            <div class="table-title" style="height: 100%">
               <v-text-field
                 class="table-title-text"
-                placeholder="hd"
-                v-model="computer.hd"
+                placeholder="processador"
+                v-model="computer.processador"
                 dense
                 light
                 hide-details
               />
-              <span class="suffix-text cor-cinza-escuro">&nbsp;gb</span>
             </div>
           </v-layout>
           <v-layout
@@ -280,7 +331,7 @@
             <div class="table-title" style="height: 100%">
               <v-text-field
                 class="table-title-text"
-                placeholder="OS original"
+                placeholder="OS fábrica"
                 v-model="computer.os_original"
                 dense
                 light
@@ -303,6 +354,69 @@
                 light
                 hide-details
               />
+            </div>
+          </v-layout>
+          <v-layout
+            v-if="computer.patrimonio"
+            class="container-linha"
+            justify-start
+            align-center
+          >
+            <div class="table-title" style="height: 100%">
+              <v-text-field
+                class="table-title-text"
+                placeholder="host"
+                v-model="computer.host_name"
+                dense
+                light
+                hide-details
+              />
+            </div>
+          </v-layout>
+          <v-layout
+            v-if="computer.patrimonio"
+            class="container-linha"
+            justify-start
+            align-center
+          >
+            <div class="table-title" style="height: 100%">
+              <v-text-field
+                class="table-title-text"
+                placeholder="admin"
+                v-model="computer.admin_local"
+                dense
+                light
+                hide-details
+              />
+            </div>
+          </v-layout>
+          <v-layout
+            v-if="computer.patrimonio"
+            class="container-linha"
+            justify-start
+            align-center
+          >
+            <div class="table-title" style="height: 100%">
+              <v-text-field
+                class="table-title-text"
+                placeholder="senha"
+                v-model="computer.senha_admin"
+                dense
+                light
+                hide-details
+              />
+            </div>
+          </v-layout>
+          <v-layout
+            v-if="computer.patrimonio"
+            class="container-linha"
+            justify-start
+            align-center
+          >
+            <div class="table-title" style="height: 100%">
+              <div class="table-title-text slack-atribuido">
+                {{ computer.assigned_to }}
+              </div>
             </div>
           </v-layout>
           <v-layout
@@ -332,7 +446,6 @@
         dark
         icon
         text
-        flat
         @click="add_computer()"
       >
         <v-icon class="cor-cinza" dark size="27"> mdi-plus </v-icon>
@@ -371,6 +484,7 @@ export default {
 
 <style scoped>
 .container-linha {
+  max-width: 185px;
   min-width: 50px;
   margin-left: 5px;
   margin-right: 5px;
@@ -393,7 +507,6 @@ export default {
   align-items: flex-start;
   justify-content: center;
   flex-flow: column wrap;
-  width: 100px;
   margin-right: 5px;
 }
 .table-title {
@@ -428,7 +541,7 @@ export default {
 }
 .table-slack {
   margin-top: 2px;
-  width: 220px;
+  width: 80px;
   display: flex;
   align-items: center;
   position: relative;
@@ -446,6 +559,9 @@ export default {
 .slack-logo {
   height: 18px;
   width: auto;
+}
+.slack-atribuido {
+  width: 100px;
 }
 .debug-azul {
   background-color: lightblue;
