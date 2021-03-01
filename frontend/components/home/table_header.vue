@@ -58,7 +58,10 @@
       >
         {{ selected_employee.name }}
       </v-card-title>
-      <v-card-text class="flex-card fundo-cinza-light">
+      <v-card-text
+        class="flex-card fundo-cinza-light"
+        style="position: relative"
+      >
         <div class="employee-avatar">
           <v-img class="avatar-photo" :src="selected_employee.slack_image">
             <template v-slot:placeholder>
@@ -72,9 +75,10 @@
           </v-img>
         </div>
         <div class="infos">
-          <div class="table-slack">
+          <div class="table-slack ma-2">
             <img class="slack-logo ma-2" src="~/static/gmail.png" />
             <v-text-field
+              class="employee-card-text"
               style="font-size: 14px; color: white"
               v-model="selected_employee.buser_email"
               @change="edit_employee()"
@@ -83,33 +87,31 @@
               hide-details
             />
           </div>
-          <div class="table-slack">
+          <div class="table-slack ma-2">
             <img class="slack-logo ma-2" src="slack_logo.png" />
-            <span>{{ selected_employee.slack }}</span>
+            <span class="employee-card-text">{{
+              selected_employee.slack
+            }}</span>
           </div>
-          <div class="table-slack">
+          <div class="table-slack ma-2">
             <v-tooltip top>
               <template v-slot:activator="{ on, attrs }">
                 <img
                   class="slack-logo ma-2"
-                  src="~/static/laptop.png"
+                  src="~/static/other_devices.png"
                   v-bind="attrs"
                   v-on="on"
                 />
                 <v-select
                   return-object
-                  class="select-computer"
+                  class="select-computer employee-card-text"
                   :items="computers"
                   v-model="selected_employee.device"
                   item-text="patrimonio"
                   placeholder="computador"
                   @input="afterselection()"
-                  filled
-                  rounded
                   dense
-                  light
                   hide-details
-                  solo
                 />
               </template>
               <div v-if="selected_employee.device">
@@ -289,7 +291,9 @@
                 <span :class="permission.refers_to">{{
                   permission.refers_to
                 }}</span
-                >&nbsp;<span>{{ permission.level }}</span>
+                >&nbsp;<span class="employee-card-text">{{
+                  permission.level
+                }}</span>
                 <v-icon
                   color="green"
                   small
@@ -464,8 +468,8 @@ export default {
   color: #5b5b5b;
 }
 .slack-logo {
-  height: 18px;
-  width: auto;
+  width: 22px;
+  height: auto;
 }
 .flex-card {
   display: flex;
@@ -480,10 +484,11 @@ export default {
   justify-content: flex-start;
 }
 .employee-avatar {
-  width: 15%;
+  max-width: 15%;
+  min-width: 250px !important;
 }
 .infos {
-  width: 30%;
+  width: 20%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -554,5 +559,10 @@ export default {
   max-width: 50%;
   margin-left: 4px;
   margin-right: 4px;
+}
+.employee-card-text {
+  font-size: 14px;
+  color: #424242 !important;
+  font-weight: 300;
 }
 </style>
