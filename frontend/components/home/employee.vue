@@ -318,7 +318,7 @@
             ><v-icon
               v-if="employee.state == state.MODIFIED"
               @click.native="save_one(employee)"
-              color="red"
+              class="cor-rosa-buser"
               >mdi-content-save</v-icon
             ></a
           >
@@ -328,7 +328,7 @@
             color="primary"
           ></v-progress-circular>
           <v-icon v-if="employee.state == state.SAVED" color="green"
-            >mdi-check-bold</v-icon
+            >mdi-check</v-icon
           >
         </div>
       </v-layout>
@@ -345,8 +345,14 @@
       >
         <v-icon class="cor-cinza" dark size="27"> mdi-account-plus </v-icon>
       </v-btn>
-      <v-btn v-if="edit_count > 0" @click="save_all()"
-        ><v-icon color="red">mdi-content-save-all</v-icon></v-btn
+      <v-btn class="ma-2" text v-if="edit_count > 0" @click="save_all()"
+        ><span
+          class="texto-gaveta ma-2 cor-rosa-buser"
+          style="font-weight: 300; font-size: 20px"
+          >salvar todas as alterações</span
+        ><v-icon size="26" class="cor-rosa-buser"
+          >mdi-content-save-all</v-icon
+        ></v-btn
       >
     </div>
   </div>
@@ -484,8 +490,6 @@ export default {
 }
 .texto-gaveta {
   font-size: 15px;
-  padding-top: 5px;
-  padding-left: 2px;
   font-family: "Quicksand" !important;
   text-transform: lowercase;
   font-weight: 700;

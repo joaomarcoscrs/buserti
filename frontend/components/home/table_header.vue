@@ -39,6 +39,7 @@
           <img class="table-title-logo" src="~/static/padlock.png" />
           <h3 class="table-title-text">permissões</h3>
         </div>
+        <div v-if="!show_employee" class="save-icon"></div>
         <v-spacer v-else />
       </v-layout>
     </v-layout>
@@ -47,10 +48,10 @@
     <v-card light v-if="show_employee" class="mx-5 my-3">
       <v-card-title
         style="
-          font-family: 'Quicksand';
+          font-family: 'Montserrat';
           text-transform: lowercase;
           font-size: 30px;
-          font-weight: 500;
+          font-weight: 300;
         "
         height="10%"
         class="pa-3 cor-branco fundo-cinza-buser"
@@ -412,7 +413,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 18%;
+  width: 19%;
 }
 .table-title-logo {
   max-height: 45%;
@@ -496,5 +497,10 @@ export default {
 .subtitulo {
   font-weight: 300;
   font-size: 24px;
+}
+.save-icon {
+  width: 5%;
+  display: flex;
+  justify-content: center;
 }
 </style>
