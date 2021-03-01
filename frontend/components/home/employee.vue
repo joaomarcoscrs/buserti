@@ -7,11 +7,7 @@
             <v-tooltip top>
               <template v-slot:activator="{ on, attrs }">
                 <v-avatar color="indigo" class="avatar" size="36">
-                  <img
-                    :src="employee.slack_image"
-                    v-bind="attrs"
-                    v-on="on"
-                  />
+                  <img :src="employee.slack_image" v-bind="attrs" v-on="on" />
                 </v-avatar>
               </template>
               <span>slack: {{ employee.slack }}</span>
@@ -76,31 +72,19 @@
                     <span class="texto-gaveta">ver softwares</span>
                   </v-btn>
                 </template>
-                <!-- <v-list light>
-                  <v-list-item
-                    v-for="(software_group) in employee.software_groups"
-                    :key="software_group.id"
-                  >
-                    <v-list-item-title>{{ software_group.name }}</v-list-item-title>
-                  </v-list-item>
-                </v-list> -->
                 <div class="gaveta">
-                  <div class="fundo-rosa-buser title-gaveta">
+                  <div
+                    class="fundo-rosa-buser title-gaveta"
+                    style="
+                      text-transform: lowercase;
+                      font-family: 'Quicksand';
+                      font-size: 24px;
+                      font-weight: 400;
+                    "
+                  >
                     softwares e licenças
                   </div>
                   <div class="fundo-branco">
-                    <!-- <v-select
-                      return-object
-                      :items="groups"
-                      v-model="employee.software_groups"
-                      attach
-                      item-text="title"
-                      @change="add_software_group(employee)"
-                      chips
-                      solo
-                      label="Grupos"
-                      multiple
-                    ></v-select> -->
                     <v-autocomplete
                       return-object
                       :items="software_groups"
@@ -121,6 +105,9 @@
                         <v-chip
                           v-bind="data.attrs"
                           :input-value="data.selected"
+                          color="#5B5B5B"
+                          small
+                          text-color="white"
                           close
                           @click="data.select"
                           @click:close="
@@ -316,12 +303,14 @@
           </div>
         </v-layout>
         <div class="save-icon">
-          <a><v-icon
-            v-if="employee.state == state.MODIFIED"
-            @click.native="save_one(employee)"
-            color="red"
-            >mdi-content-save</v-icon
-          ></a>
+          <a
+            ><v-icon
+              v-if="employee.state == state.MODIFIED"
+              @click.native="save_one(employee)"
+              color="red"
+              >mdi-content-save</v-icon
+            ></a
+          >
           <v-progress-circular
             v-if="employee.state == state.LOADING"
             indeterminate
@@ -354,7 +343,7 @@
 
 <script>
 import api from "~api";
-import employeehelper from "./../../helpers/employees/employeehelper"
+import employeehelper from "./../../helpers/employees/employeehelper";
 
 export default {
   props: ["employees"],
@@ -363,22 +352,22 @@ export default {
       new_name: "",
       adding_employee: false,
       something_edited: false,
-      state: employeehelper.state
+      state: employeehelper.state,
     };
   },
   computed: {
     devices() {
-      return this.$store.state.devices.devices
+      return this.$store.state.devices.devices;
     },
     software_groups() {
-      return this.$store.state.groups.software_groups
+      return this.$store.state.groups.software_groups;
     },
     permission_groups() {
-      return this.$store.state.groups.permission_groups
+      return this.$store.state.groups.permission_groups;
     },
-    edit_count () {
-      return this.$store.state.employees.edit_count
-    }
+    edit_count() {
+      return this.$store.state.employees.edit_count;
+    },
   },
   methods: {
     add_employee() {
@@ -418,61 +407,61 @@ export default {
       }
     },
     install_software(software, employee) {
-      employeehelper.install_software(software, employee)
-      this.edit_employee(employee)
+      employeehelper.install_software(software, employee);
+      this.edit_employee(employee);
     },
     give_permission(permission, employee) {
-      employeehelper.give_permission(permission, employee)
-      this.edit_employee(employee)
+      employeehelper.give_permission(permission, employee);
+      this.edit_employee(employee);
     },
     add_software_group(employee) {
-      employeehelper.add_software_group(employee)
-      this.edit_employee(employee)
+      employeehelper.add_software_group(employee);
+      this.edit_employee(employee);
     },
     remove_software_group(item, employee) {
-      employeehelper.remove_software_group(item, employee)
-      this.edit_employee(employee)
+      employeehelper.remove_software_group(item, employee);
+      this.edit_employee(employee);
     },
     add_permission_group(employee) {
-      employeehelper.add_permission_group(employee)
-      this.edit_employee(employee)
+      employeehelper.add_permission_group(employee);
+      this.edit_employee(employee);
     },
     remove_permission_group(item, employee) {
-      employeehelper.remove_permission_group(item, employee)
-      this.edit_employee(employee)
+      employeehelper.remove_permission_group(item, employee);
+      this.edit_employee(employee);
     },
     save_all() {
-        this.employees.forEach((employee) => {
-            if (employee.edited) {
-                employee.state = this.state.LOADING;
-                api.save_employee(employee).then((response) => {
-                    if (response.status === 200) {
-                        employee.edited = false
-                        employee.state = this.state.SAVED
-                        this.$store.commit('employees/decrement')
-                    }
-                });
+      this.employees.forEach((employee) => {
+        if (employee.edited) {
+          employee.state = this.state.LOADING;
+          api.save_employee(employee).then((response) => {
+            if (response.status === 200) {
+              employee.edited = false;
+              employee.state = this.state.SAVED;
+              this.$store.commit("employees/decrement");
             }
-        });
-        this.something_edited = false
+          });
+        }
+      });
+      this.something_edited = false;
     },
     save_one(employee) {
-        employee.state = this.state.LOADING;
-        api.save_employee(employee).then((response) => {
-            if (response.status === 200) {
-                employee.edited = false
-                employee.state = this.state.SAVED
-                this.$store.commit('employees/decrement')
-            }
-        });
+      employee.state = this.state.LOADING;
+      api.save_employee(employee).then((response) => {
+        if (response.status === 200) {
+          employee.edited = false;
+          employee.state = this.state.SAVED;
+          this.$store.commit("employees/decrement");
+        }
+      });
     },
     edit_employee(employee) {
-        if (!employee.edited) {
-            employee.edited = true;
-            employee.state = this.state.MODIFIED;
-            this.$store.commit('employees/increment')
-        }
-    }
+      if (!employee.edited) {
+        employee.edited = true;
+        employee.state = this.state.MODIFIED;
+        this.$store.commit("employees/increment");
+      }
+    },
   },
 };
 </script>

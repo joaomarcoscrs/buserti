@@ -1,42 +1,48 @@
 .cor-rosa-buser {
-    color: #F11076 !important;
+  color: #f11076 !important;
 }
 .fundo-rosa-buser {
-    background-color: #F11076;
+  background-color: #f11076;
+}
+.cor-cinza-buser {
+  color: #424242 !important;
+}
+.fundo-cinza-buser {
+  background-color: #424242;
 }
 .cor-branco {
-    color: white !important;
+  color: white !important;
 }
 .fundo-branco {
-    background-color: white;
+  background-color: white;
 }
 .cor-cinza-light {
-    color: #ECECEC !important;
+  color: #ececec !important;
 }
 .fundo-cinza-light {
-    background-color: #ECECEC;
+  background-color: #ececec;
 }
 .cor-cinza-claro {
-    color: #DCDCDC !important;
+  color: #dcdcdc !important;
 }
 .fundo-cinza-claro {
-    background-color: #DCDCDC;
+  background-color: #dcdcdc;
 }
 .cor-cinza {
-    color: #969696 !important;
+  color: #969696 !important;
 }
 .fundo-cinza {
-    background-color: #969696;
+  background-color: #969696;
 }
 .cor-cinza-escuro {
-    color: #5B5B5B !important;
+  color: #5b5b5b !important;
 }
 .fundo-cinza-escuro {
-    background-color: #5B5B5B;
+  background-color: #5b5b5b;
 }
 .cor-rosa-escuro {
-    color: #BA0D5B !important;
+  color: #ba0d5b !important;
 }
 .fundo-rosa-escuro {
-    background-color: #BA0D5B;
+  background-color: #ba0d5b;
 }
