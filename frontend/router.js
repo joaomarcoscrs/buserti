@@ -2,7 +2,9 @@ import Vue from "vue";
 import Router from "vue-router";
 import Index from "~/pages/index.vue";
 import GruposSoftwares from "~/pages/grupos_softwares.vue";
+import Softwares from "~/pages/softwares.vue";
 import GruposPermissoes from "~/pages/grupos_permissoes.vue";
+import Permissoes from "~/pages/permissoes.vue";
 import Devices from "~/pages/devices.vue";
 import TestPage from "~/pages/test-page.vue";
 
@@ -36,6 +38,16 @@ export const routerOptions = {
       path: "/grupos_permissoes",
       component: GruposPermissoes,
       name: "grupos_permissoes",
+    },
+    {
+      path: "/permissoes",
+      component: Permissoes,
+      name: "permissoes",
+    },
+    {
+      path: "/softwares",
+      component: Softwares,
+      name: "softwares",
     },
   ],
 };
