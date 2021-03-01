@@ -5,13 +5,13 @@
         <v-autocomplete
           :items="employees"
           v-model="selected_employee"
-          class="cor-cinza"
+          class="cor-cinza mx-5"
+          dense
           color="#5B5B5B"
           hide-no-data
           hide-selected
           filled
           rounded
-          dense
           item-color="white"
           light
           style="max-width: 18%"
@@ -44,7 +44,7 @@
     </v-layout>
     <v-divider color="#969696" class="ml-5 mr-5 mt-2 mb-2" />
     <!-- color="#F11076" -->
-    <v-card light v-if="show_employee" class="mx-5 my-3" elevation="4">
+    <v-card light v-if="show_employee" class="mx-5 my-3">
       <v-card-title
         style="
           font-family: 'Quicksand';
@@ -287,9 +287,15 @@
           Limpar Busca
           <v-icon right size="24"> mdi-close-circle </v-icon>
         </v-btn>
-        <v-btn v-if="selected_employee.edited" color="green" @click="save()">
-          SAVE
-          <v-icon @click="save()">mdi-content-save</v-icon>
+        <v-btn
+          v-if="selected_employee.edited"
+          @click="save()"
+          text
+          class="cor-cinza-escuro"
+          style="text-transform: lowercase; font-size: 18px; font-weight: 400"
+        >
+          salvar alteraçẽs
+          <v-icon right size="24" @click="save()">mdi-content-save</v-icon>
         </v-btn>
       </v-card-actions>
     </v-card>

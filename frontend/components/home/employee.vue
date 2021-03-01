@@ -93,6 +93,8 @@
                       v-model="employee.software_groups"
                       placeholder="Grupos"
                       chips
+                      light
+                      background-color="white"
                       solo
                       color="blue-grey lighten-2"
                       item-text="title"
@@ -131,7 +133,7 @@
                       <div
                         v-for="software in employee.softwares"
                         :key="software.id"
-                        class="software-item"
+                        class="software-item ma-2"
                       >
                         <div class="software-logo">
                           <a
@@ -192,20 +194,18 @@
                   </v-btn>
                 </template>
                 <div class="gaveta">
-                  <div class="fundo-rosa-buser title-gaveta">permissões</div>
+                  <div
+                    class="fundo-rosa-buser title-gaveta"
+                    style="
+                      text-transform: lowercase;
+                      font-family: 'Quicksand';
+                      font-size: 24px;
+                      font-weight: 400;
+                    "
+                  >
+                    permissões
+                  </div>
                   <div class="fundo-branco">
-                    <!-- <v-select
-                      return-object
-                      :items="groups"
-                      v-model="employee.software_groups"
-                      attach
-                      item-text="title"
-                      @change="add_software_group(employee)"
-                      chips
-                      solo
-                      label="Grupos"
-                      multiple
-                    ></v-select> -->
                     <v-autocomplete
                       return-object
                       :items="permission_groups"
@@ -214,6 +214,8 @@
                       v-model="employee.permission_groups"
                       placeholder="Grupos"
                       chips
+                      light
+                      background-color="white"
                       solo
                       color="blue-grey lighten-2"
                       item-text="title"
@@ -226,6 +228,9 @@
                         <v-chip
                           v-bind="data.attrs"
                           :input-value="data.selected"
+                          color="#5B5B5B"
+                          small
+                          text-color="white"
                           close
                           @click="data.select"
                           @click:close="
@@ -249,7 +254,7 @@
                       <v-list-item
                         v-for="(permission, index) in employee.permissions"
                         :key="index"
-                        class="permission-list"
+                        class="permission-list ma-2"
                       >
                         <a @click="give_permission(permission, employee)"
                           ><span
@@ -258,10 +263,10 @@
                             >{{ permission.refers_to }}</span
                           >&nbsp;<span class="permission-text">{{
                             permission.level
-                          }}</span></a
-                        >
-                        <v-btn @click="give_permission(permission, employee)">
+                          }}</span>
                           <v-icon
+                            small
+                            style="margin-top: -15px"
                             color="green"
                             v-if="
                               is_on_list(
@@ -271,8 +276,14 @@
                             "
                             >mdi-check</v-icon
                           >
-                          <v-icon v-else color="red">mdi-close</v-icon>
-                        </v-btn>
+                          <v-icon
+                            small
+                            style="margin-top: -15px"
+                            v-else
+                            color="red"
+                            >mdi-close</v-icon
+                          >
+                        </a>
                       </v-list-item>
                     </v-list>
                   </div>
