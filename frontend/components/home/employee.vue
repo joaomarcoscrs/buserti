@@ -343,7 +343,9 @@
         text
         @click="add_employee()"
       >
-        <v-icon class="cor-cinza" dark size="27"> mdi-account-plus </v-icon>
+        <v-icon class="cor-cinza-buser" dark size="27">
+          mdi-account-plus
+        </v-icon>
       </v-btn>
       <v-btn class="ma-2" text v-if="edit_count > 0" @click="save_all()"
         ><span

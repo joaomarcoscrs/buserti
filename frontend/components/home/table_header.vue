@@ -14,11 +14,11 @@
           rounded
           item-color="white"
           light
-          style="max-width: 18%"
+          style="max-width: 18%; font-size: 14px; font-weight: 400"
           hide-details
           item-text="name"
           item-value="API"
-          label="Pesquisar Colaborador"
+          label="Procurar colaborador"
           prepend-inner-icon="mdi-magnify"
           return-object
           @change="select_employee()"
@@ -28,8 +28,8 @@
           <h3 class="table-title-text">e-mail</h3>
         </div>
         <div class="table-title" style="height: 100%" v-if="!show_employee">
-          <img class="table-title-logo" src="~/static/laptop.png" />
-          <h3 class="table-title-text">computador</h3>
+          <img class="table-title-logo" src="~/static/other_devices.png" />
+          <h3 class="table-title-text">devices</h3>
         </div>
         <div class="table-title" style="height: 100%" v-if="!show_employee">
           <img class="table-title-logo" src="~/static/software_icon.png" />
@@ -149,7 +149,7 @@
               width="100%"
               return-object
               :items="software_groups"
-              class="select-group cor-cinza-escuro"
+              class="select-group cor-rosa-buser"
               background-color="#ececec"
               v-model="selected_employee.software_groups"
               placeholder="Grupos"
@@ -177,11 +177,15 @@
               </template>
               <template v-slot:item="data">
                 <template>
-                  <v-list-item-content>
-                    <v-list-item-title
-                      v-html="data.item.title"
-                    ></v-list-item-title>
-                  </v-list-item-content>
+                  <v-list dense>
+                    <v-list-item-content>
+                      <v-list-item-title
+                        class="cor-branco"
+                        style="font-size: 14px; font-weight: 400"
+                        v-html="data.item.title"
+                      ></v-list-item-title>
+                    </v-list-item-content>
+                  </v-list>
                 </template>
               </template>
             </v-autocomplete>
@@ -266,6 +270,8 @@
                 <template>
                   <v-list-item-content>
                     <v-list-item-title
+                      class="cor-branco"
+                      style="font-size: 14px; font-weight: 400"
                       v-html="data.item.title"
                     ></v-list-item-title>
                   </v-list-item-content>
