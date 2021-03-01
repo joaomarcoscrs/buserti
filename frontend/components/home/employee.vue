@@ -318,7 +318,7 @@
             ><v-icon
               v-if="employee.state == state.MODIFIED"
               @click.native="save_one(employee)"
-              class="cor-rosa-buser"
+              class="cor-cinza-buser"
               >mdi-content-save</v-icon
             ></a
           >
@@ -347,10 +347,10 @@
       </v-btn>
       <v-btn class="ma-2" text v-if="edit_count > 0" @click="save_all()"
         ><span
-          class="texto-gaveta ma-2 cor-rosa-buser"
+          class="texto-gaveta ma-2 cor-cinza-buser"
           style="font-weight: 300; font-size: 20px"
           >salvar todas as alterações</span
-        ><v-icon size="26" class="cor-rosa-buser"
+        ><v-icon size="26" class="cor-cinza-buser"
           >mdi-content-save-all</v-icon
         ></v-btn
       >

@@ -141,139 +141,178 @@
           </div>
         </div>
         <div class="software-permission">
-          <h2 class="ma-4 subtitulo cor-cinza-buser">softwares</h2>
-          <v-autocomplete
-            return-object
-            style="max-width: 400px"
-            :items="software_groups"
-            class="select-group cor-cinza-escuro"
-            background-color="#ececec"
-            v-model="selected_employee.software_groups"
-            placeholder="Grupos"
-            chips
-            dense
-            item-text="title"
-            @change="add_software_group()"
-            item-value="title"
-            multiple
-            hide-details
-          >
-            <template v-slot:selection="data">
-              <v-chip
-                v-bind="data.attrs"
-                :input-value="data.selected"
-                color="#5B5B5B"
-                small
-                text-color="white"
-                close
-                @click="data.select"
-                @click:close="remove_software_group(data.item)"
-              >
-                {{ data.item.title }}
-              </v-chip>
-            </template>
-            <template v-slot:item="data">
-              <template>
-                <v-list-item-content>
-                  <v-list-item-title
-                    v-html="data.item.title"
-                  ></v-list-item-title>
-                </v-list-item-content>
-              </template>
-            </template>
-          </v-autocomplete>
-          <div class="softwares">
-            <div
-              style="display: inline-block"
-              v-for="(software, index) in selected_employee.softwares"
-              :key="index"
+          <div class="container">
+            <h2 class="ma-4 subtitulo cor-cinza-buser">softwares</h2>
+            <v-autocomplete
+              width="100%"
+              return-object
+              :items="software_groups"
+              class="select-group cor-cinza-escuro"
+              background-color="#ececec"
+              v-model="selected_employee.software_groups"
+              placeholder="Grupos"
+              chips
+              dense
+              item-text="title"
+              @change="add_software_group()"
+              item-value="title"
+              multiple
+              hide-details
             >
-              <a
-                ><img
-                  class="software-logo"
-                  @click="install_software(software)"
-                  :src="software.image"
-                  v-bind:class="
-                    !is_on_list(software, selected_employee.installed_softwares)
-                      ? 'not-installed'
-                      : ''
-                  "
-              /></a>
-              <v-icon
-                small
-                color="green"
-                v-if="
-                  is_on_list(software, selected_employee.installed_softwares)
-                "
-                >mdi-check</v-icon
+              <template v-slot:selection="data">
+                <v-chip
+                  v-bind="data.attrs"
+                  :input-value="data.selected"
+                  color="#5B5B5B"
+                  small
+                  text-color="white"
+                  close
+                  @click="data.select"
+                  @click:close="remove_software_group(data.item)"
+                >
+                  {{ data.item.title }}
+                </v-chip>
+              </template>
+              <template v-slot:item="data">
+                <template>
+                  <v-list-item-content>
+                    <v-list-item-title
+                      v-html="data.item.title"
+                    ></v-list-item-title>
+                  </v-list-item-content>
+                </template>
+              </template>
+            </v-autocomplete>
+            <div
+              class="softwares my-2"
+              style="
+                display: flex;
+                width: 100%;
+                justify-content: center;
+                flex-flow: row wrap;
+              "
+            >
+              <div
+                v-for="(software, index) in selected_employee.softwares"
+                :key="index"
+                class="ma-2"
               >
-              <v-icon small v-else color="red">mdi-close</v-icon>
+                <a @click="install_software(software)" style="display: flex"
+                  ><img
+                    class="software-logo"
+                    :src="software.image"
+                    v-bind:class="
+                      !is_on_list(
+                        software,
+                        selected_employee.installed_softwares
+                      )
+                        ? 'not-installed'
+                        : ''
+                    "
+                  />
+                  <v-icon
+                    small
+                    color="green"
+                    class="yes-no-icon"
+                    v-if="
+                      is_on_list(
+                        software,
+                        selected_employee.installed_softwares
+                      )
+                    "
+                    >mdi-check</v-icon
+                  >
+                  <v-icon class="yes-no-icon" small v-else color="red"
+                    >mdi-close</v-icon
+                  ></a
+                >
+              </div>
             </div>
           </div>
-        </div>
-        <div class="software-permission">
-          <h2 class="ma-4 subtitulo cor-cinza-buser">permissões</h2>
-          <v-autocomplete
-            return-object
-            :items="permission_groups"
-            class="select-group cor-cinza-escuro"
-            background-color="#ececec"
-            v-model="selected_employee.permission_groups"
-            placeholder="Grupos"
-            chips
-            style="max-width: 400px"
-            item-text="title"
-            @change="add_permission_group()"
-            item-value="title"
-            multiple
-            hide-details
-          >
-            <template v-slot:selection="data">
-              <v-chip
-                v-bind="data.attrs"
-                :input-value="data.selected"
-                color="#5B5B5B"
-                small
-                text-color="white"
-                close
-                @click="data.select"
-                @click:close="remove_permission_group(data.item)"
-              >
-                {{ data.item.title }}
-              </v-chip>
-            </template>
-            <template v-slot:item="data">
-              <template>
-                <v-list-item-content>
-                  <v-list-item-title
-                    v-html="data.item.title"
-                  ></v-list-item-title>
-                </v-list-item-content>
+          <div class="container">
+            <h2 class="ma-4 subtitulo cor-cinza-buser">permissões</h2>
+            <v-autocomplete
+              return-object
+              :items="permission_groups"
+              class="select-group cor-cinza-escuro pa-0 ma-2"
+              background-color="#ececec"
+              v-model="selected_employee.permission_groups"
+              placeholder="Grupos"
+              chips
+              style="width: 100%"
+              item-text="title"
+              @change="add_permission_group()"
+              item-value="title"
+              multiple
+              hide-details
+            >
+              <template v-slot:selection="data">
+                <v-chip
+                  v-bind="data.attrs"
+                  :input-value="data.selected"
+                  color="#5B5B5B"
+                  small
+                  text-color="white"
+                  close
+                  @click="data.select"
+                  @click:close="remove_permission_group(data.item)"
+                >
+                  {{ data.item.title }}
+                </v-chip>
               </template>
-            </template>
-          </v-autocomplete>
-          <v-list-item
-            v-for="(permission, index) in selected_employee.permissions"
-            :key="index"
-            class="list-permissions"
-          >
-            <span
-              class="permission-text-refers"
-              :class="permission.refers_to"
-              >{{ permission.refers_to }}</span
-            >&nbsp;<span class="permission-text">{{ permission.level }}</span>
-            <v-icon
-              @click="give_permission(permission)"
-              color="green"
-              v-if="
-                is_on_list(permission, selected_employee.acquired_permissions)
+              <template v-slot:item="data">
+                <template>
+                  <v-list-item-content>
+                    <v-list-item-title
+                      v-html="data.item.title"
+                    ></v-list-item-title>
+                  </v-list-item-content>
+                </template>
+              </template>
+            </v-autocomplete>
+            <div
+              class="pa-0"
+              style="
+                display: flex;
+                flex-flow: column wrap;
+                max-height: 100%;
+                justify-content: flex-start;
               "
-              >mdi-check</v-icon
             >
-            <v-icon @click="give_permission(permission)" v-else color="red"
-              >mdi-close</v-icon
-            >
-          </v-list-item>
+              <v-list-item
+                v-for="(permission, index) in selected_employee.permissions"
+                :key="index"
+                class="list-permissions py-2"
+                @click="give_permission(permission)"
+                style="max-width: 180px"
+              >
+                <span :class="permission.refers_to">{{
+                  permission.refers_to
+                }}</span
+                >&nbsp;<span>{{ permission.level }}</span>
+                <v-icon
+                  color="green"
+                  small
+                  style="margin-top: -15px"
+                  v-if="
+                    is_on_list(
+                      permission,
+                      selected_employee.acquired_permissions
+                    )
+                  "
+                  >mdi-check</v-icon
+                >
+                <v-icon
+                  small
+                  style="margin-top: -15px"
+                  @click="give_permission(permission)"
+                  v-else
+                  color="red"
+                  >mdi-close</v-icon
+                >
+              </v-list-item>
+            </div>
+          </div>
         </div>
       </v-card-text>
       <v-card-actions class="fundo-cinza-light">
@@ -360,7 +399,7 @@ export default {
       this.edit_employee();
     },
     install_software(software) {
-      employeehelper.install_software(software, this.selected_employee);
+      18 % employeehelper.install_software(software, this.selected_employee);
       this.edit_employee();
     },
     give_permission(permission) {
@@ -487,7 +526,10 @@ export default {
   margin: 10%;
 }
 .software-permission {
-  width: 30%;
+  position: relative;
+  display: flex;
+  width: 70%;
+  max-height: 400px;
   align-content: center;
   text-align: center;
 }
@@ -502,5 +544,15 @@ export default {
   width: 5%;
   display: flex;
   justify-content: center;
+}
+.yes-no-icon {
+  align-self: flex-start;
+}
+.container {
+  height: 100%;
+  position: relative;
+  max-width: 50%;
+  margin-left: 4px;
+  margin-right: 4px;
 }
 </style>
