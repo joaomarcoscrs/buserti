@@ -12,7 +12,7 @@
           hide-selected
           filled
           rounded
-          item-color="white"
+          item-color="pink lighten-1"
           light
           style="max-width: 18%; font-size: 14px; font-weight: 400"
           hide-details
@@ -155,6 +155,7 @@
               placeholder="Grupos"
               chips
               dense
+              item-color="pink lighten-1"
               item-text="title"
               @change="add_software_group()"
               item-value="title"
@@ -245,6 +246,7 @@
               v-model="selected_employee.permission_groups"
               placeholder="Grupos"
               chips
+              item-color="pink lighten-1"
               style="width: 100%"
               item-text="title"
               @change="add_permission_group()"

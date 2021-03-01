@@ -88,6 +88,7 @@
                     <v-autocomplete
                       return-object
                       :items="software_groups"
+                      item-color="pink lighten-1"
                       class="select-group"
                       filled
                       v-model="employee.software_groups"
@@ -96,7 +97,6 @@
                       light
                       background-color="white"
                       solo
-                      color="blue-grey lighten-2"
                       item-text="title"
                       @change="add_software_group(employee)"
                       item-value="title"
@@ -123,6 +123,7 @@
                         <template>
                           <v-list-item-content>
                             <v-list-item-title
+                              class="cor-branco"
                               v-html="data.item.title"
                             ></v-list-item-title>
                           </v-list-item-content>
@@ -186,7 +187,7 @@
                     text
                     color="#5B5B5B"
                     class="container-gaveta-soft-perms"
-                    dark
+                    light
                     v-bind="attrs"
                     v-on="on"
                   >
@@ -211,13 +212,13 @@
                       :items="permission_groups"
                       class="select-group"
                       filled
+                      item-color="pink lighten-1"
                       v-model="employee.permission_groups"
                       placeholder="Grupos"
                       chips
                       light
                       background-color="white"
                       solo
-                      color="blue-grey lighten-2"
                       item-text="title"
                       @change="add_permission_group(employee)"
                       item-value="title"
@@ -244,6 +245,7 @@
                         <template>
                           <v-list-item-content>
                             <v-list-item-title
+                              class="cor-branco"
                               v-html="data.item.title"
                             ></v-list-item-title>
                           </v-list-item-content>
@@ -338,12 +340,12 @@
       <v-btn
         v-if="!adding_employee"
         class="mx-2"
-        dark
+        light
         icon
         text
         @click="add_employee()"
       >
-        <v-icon class="cor-cinza-buser" dark size="27">
+        <v-icon class="cor-cinza-buser" light size="27">
           mdi-account-plus
         </v-icon>
       </v-btn>
