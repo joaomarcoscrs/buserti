@@ -12,24 +12,137 @@
       Dispositivos
     </div>
     <div class="fundo-branco">
-      <v-autocomplete
+      <!-- <v-autocomplete
         return-object
         v-model="employee.computers"
         :items="computers_list"
         item-color="pink lighten-1"
-        @change="change($event)"
+        @change="change()"
         attach
         chips
-        item-text="patrimonio"
         solo
+        item-text="patrimonio"
         placeholder="Computadores"
         background-color="white"
+        prepend-icon="mdi-laptop"
         multiple
         light
         filled
         hide-details
-      ></v-autocomplete>
+      >
+        <template v-slot:item="data">
+          <v-list-tile-content @mouseover="showDetails">
+              <p>{{data.item.patrimonio}} {{data.item._str}}</p> -->
+              <!-- <v-icon v-show="active">mdi-laptop</v-icon> -->
+          <!-- </v-list-tile-content>
+        </template>
+      </v-autocomplete> -->
       <v-autocomplete
+        v-model="employee.computers"
+        :items="computers_list"
+        item-color="pink lighten-1"
+        filled
+        placeholder="Computadores"
+        solo
+        prepend-icon="mdi-laptop"
+        multiple
+        light
+        hide-details
+        return-object
+        item-text="patrimonio"
+        item-value="patrimonio"
+        @change="changeComputers()"
+      >
+        <template v-slot:selection="data">
+          <v-chip
+            v-bind="data.attrs"
+            :input-value="data.selected"
+            close
+            @click="data.select"
+            @click:close="removeComputers(data.item)"
+          >
+            {{ data.item.patrimonio }}
+          </v-chip>
+        </template>
+        <template v-slot:item="data">
+          <template>
+            <v-list-item-content>
+              <v-list-item-title >{{data.item.patrimonio}} {{data.item._str}}</v-list-item-title>
+            </v-list-item-content>
+          </template>
+        </template>
+      </v-autocomplete>
+      <v-autocomplete
+        v-model="employee.cellphones"
+        :items="cellphones_list"
+        item-color="pink lighten-1"
+        filled
+        placeholder="Celulares"
+        solo
+        prepend-icon="mdi-cellphone"
+        multiple
+        light
+        hide-details
+        return-object
+        item-text="patrimonio"
+        item-value="patrimonio"
+        @change="changeCellphones()"
+      >
+        <template v-slot:selection="data">
+          <v-chip
+            v-bind="data.attrs"
+            :input-value="data.selected"
+            close
+            @click="data.select"
+            @click:close="removeCellphones(data.item)"
+          >
+            {{ data.item.patrimonio }}
+          </v-chip>
+        </template>
+        <template v-slot:item="data">
+          <template>
+            <v-list-item-content>
+              <v-list-item-title >{{data.item.patrimonio}}</v-list-item-title>
+            </v-list-item-content>
+          </template>
+        </template>
+      </v-autocomplete>
+      <v-autocomplete
+        v-model="employee.other_devices"
+        :items="other_devices_list"
+        item-color="pink lighten-1"
+        filled
+        placeholder="Outros Dispositivos"
+        solo
+        prepend-icon="mdi-devices"
+        multiple
+        light
+        hide-details
+        return-object
+        item-text="patrimonio"
+        item-value="patrimonio"
+        @change="changeOtherDevices()"
+      >
+        <template v-slot:selection="data">
+          <v-chip
+            v-bind="data.attrs"
+            :input-value="data.selected"
+            close
+            @click="data.select"
+            @click:close="removeOtherDevices(data.item)"
+          >
+            {{ data.item.patrimonio }}
+          </v-chip>
+        </template>
+        <template v-slot:item="data">
+          <template>
+            <v-list-item-content>
+              <v-list-item-title >{{data.item.patrimonio}} </v-list-item-title>
+            </v-list-item-content>
+          </template>
+        </template>
+      </v-autocomplete>
+      <!-- <v-autocomplete
         return-object
         :items="devices.cellphones"
         item-color="pink lighten-1"
@@ -39,6 +152,7 @@
         solo
         placeholder="Celulares"
         background-color="white"
+        prepend-icon="mdi-cellphone"
         multiple
         light
         filled
@@ -54,11 +168,12 @@
         solo
         placeholder="Outros Dispositivos"
         background-color="white"
+        prepend-icon="mdi-devices"
         multiple
         light
         filled
         hide-details
-      ></v-autocomplete>
+      ></v-autocomplete> -->
     </div>
   </div>
 </template>
@@ -70,21 +185,54 @@ export default {
     return {}
   },
   methods: {
-    change (event) {
-      console.log("Employee computers = ", this.employee.computers)
-      console.log("EVENTO: ", event)
+    changeComputers () {
       this.$store.commit("devices/assing_computers_to", this.employee)
-      // event.forEach(element => {
-      //   element.assigned_to = this.employee.slack
-      // })
+    },
+    removeComputers (item) {
+      const index = this.employee.computers.indexOf(item)
+      if (index >= 0) this.employee.computers.splice(index, 1)
+      this.$store.commit("devices/assing_computers_to", this.employee)
+    },
+    changeCellphones () {
+      this.$store.commit("devices/assing_cellphones_to", this.employee)
+    },
+    removeCellphones (item) {
+      const index = this.employee.cellphones.indexOf(item)
+      if (index >= 0) this.employee.cellphones.splice(index, 1)
+      this.$store.commit("devices/assing_cellphones_to", this.employee)
+    },
+    changeOtherDevices () {
+      this.$store.commit("devices/assing_other_devices_to", this.employee)
+    },
+    removeOtherDevices (item) {
+      const index = this.employee.other_devices.indexOf(item)
+      if (index >= 0) this.employee.other_devices.splice(index, 1)
+      this.$store.commit("devices/assing_other_devices_to", this.employee)
     }
   },
   computed: {
     computers_list () {
+      let _computers = this.devices.computers.filter(item => item.assigned_to === null)
       if (this.employee.computers) {
-        return this.devices.computers.filter(item => item.assigned_to === null).concat(this.employee.computers)
+        return _computers.concat(this.employee.computers)
       } else {
-        return this.devices.computers.filter(item => item.assigned_to === null)
+        return _computers
+      }
+    },
+    cellphones_list () {
+      let _cellphones = this.devices.cellphones.filter(item => item.assigned_to === null)
+      if (this.employee.cellphones) {
+        return _cellphones.concat(this.employee.cellphones)
+      } else {
+        return _cellphones
+      }
+    },
+    other_devices_list () {
+      let _other_devices = this.devices.other_devices.filter(item => item.assigned_to === null)
+      if (this.employee.other_devices) {
+        return _other_devices.concat(this.employee.other_devices)
+      } else {
+        return _other_devices
       }
     }
   }
