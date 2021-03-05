@@ -47,6 +47,19 @@ export const mutations = {
         state.devices.other_devices.find(pc => { return pc.id === element.id}).assigned_to = employee.id
       });
     }
+  },
+  assing_chips_to(state, employee) {
+    let previous_chips = state.devices.chips.filter(pc => { return pc.assigned_to === employee.id})
+    if (previous_chips) {
+      previous_chips.forEach(pc => {
+        pc.assigned_to = null
+      })
+    }
+    if (employee.chips) {
+      employee.chips.forEach(element => {
+        state.devices.chips.find(pc => { return pc.id === element.id}).assigned_to = employee.id
+      });
+    }
   }
 };
 

@@ -55,6 +55,8 @@
       >
         <template v-slot:selection="data">
           <v-chip
+            @mouseover="showDetails(data.item)"
+            @mouseleave="hideDetails()"
             v-bind="data.attrs"
             :input-value="data.selected"
             close
@@ -90,6 +92,8 @@
       >
         <template v-slot:selection="data">
           <v-chip
+            @mouseover="showDetails(data.item)"
+            @mouseleave="hideDetails()"
             v-bind="data.attrs"
             :input-value="data.selected"
             close
@@ -125,6 +129,8 @@
       >
         <template v-slot:selection="data">
           <v-chip
+            @mouseover="showDetails(data.item)"
+            @mouseleave="hideDetails()"
             v-bind="data.attrs"
             :input-value="data.selected"
             close
@@ -138,6 +144,43 @@
           <template>
             <v-list-item-content>
               <v-list-item-title >{{data.item.patrimonio}} </v-list-item-title>
+            </v-list-item-content>
+          </template>
+        </template>
+      </v-autocomplete>
+      <v-autocomplete
+        v-model="employee.chips"
+        :items="chips_list"
+        item-color="pink lighten-1"
+        filled
+        placeholder="Outros Dispositivos"
+        solo
+        prepend-icon="mdi-chip"
+        multiple
+        light
+        hide-details
+        return-object
+        item-text="phone_number"
+        item-value="phone_number"
+        @change="changeChips()"
+      >
+        <template v-slot:selection="data">
+          <v-chip
+            @mouseover="showDetails(data.item)"
+            @mouseleave="hideDetails()"
+            v-bind="data.attrs"
+            :input-value="data.selected"
+            close
+            @click="data.select"
+            @click:close="removeChips(data.item)"
+          >
+            {{ data.item.phone_number }}
+          </v-chip>
+        </template>
+        <template v-slot:item="data">
+          <template>
+            <v-list-item-content>
+              <v-list-item-title >{{data.item.phone_number}} </v-list-item-title>
             </v-list-item-content>
           </template>
         </template>
@@ -175,6 +218,20 @@
         hide-details
       ></v-autocomplete> -->
     </div>
+    <div class="fundo-branco" style="color: black;">
+      <div v-if="deviceToShow && deviceToShow.kind === 'computer'">
+        <img src="~/static/laptop.png" class="slack-logo ma-2"/>
+      </div>
+      <div v-else-if="deviceToShow && deviceToShow.kind === 'cellphone'">
+        <img src="~/static/smartphone.png" class="slack-logo ma-2"/>
+      </div>
+      <div v-else-if="deviceToShow && deviceToShow.kind === 'chip'">
+        <img src="~/static/chip.png" class="slack-logo ma-2"/>
+      </div>
+      <div v-else-if="deviceToShow">
+        <img src="~/static/other_devices.png" class="slack-logo ma-2"/>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -182,7 +239,10 @@
 export default {
   props: ['devices', 'employee'],
   data () {
-    return {}
+    return {
+      deviceToShow: null,
+      showComputer: false
+    }
   },
   methods: {
     changeComputers () {
@@ -208,6 +268,22 @@ export default {
       const index = this.employee.other_devices.indexOf(item)
       if (index >= 0) this.employee.other_devices.splice(index, 1)
       this.$store.commit("devices/assing_other_devices_to", this.employee)
+    },
+    changeChips () {
+      this.$store.commit("devices/assing_chips_to", this.employee)
+    },
+    removeChips (item) {
+      const index = this.employee.chips.indexOf(item)
+      if (index >= 0) this.employee.chips.splice(index, 1)
+      this.$store.commit("devices/assing_chips_to", this.employee)
+    },
+    showDetails (device) {
+      this.showComputer = !this.showComputer;
+      this.deviceToShow = device
+    },
+    hideDetails () {
+      this.showComputer = false
+      this.deviceToShow = null
     }
   },
   computed: {
@@ -234,6 +310,14 @@ export default {
       } else {
         return _other_devices
       }
+    },
+    chips_list () {
+      let _chips = this.devices.chips.filter(item => item.assigned_to === null)
+      if (this.employee.chips) {
+        return _chips.concat(this.employee.chips)
+      } else {
+        return _chips
+      }
     }
   }
 };
@@ -242,6 +326,11 @@ export default {
 <style scoped>
 .gaveta {
   width: 100%;
+}
+
+.slack-logo {
+  width: auto;
+  height: 40px;
 }
 
 .title-gaveta {
