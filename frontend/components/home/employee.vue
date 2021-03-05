@@ -31,7 +31,7 @@
               filled
               rounded
               dense
-        SelectDevicesDevices      light
+              light
               hide-details
             />
           </div>
