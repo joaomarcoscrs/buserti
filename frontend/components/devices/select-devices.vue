@@ -45,7 +45,9 @@
           </template>
           <template v-slot:item="data">
             <template>
-              <v-list-item-content>
+              <v-list-item-content
+                @mouseover="showDetails(data.item)"
+                @mouseleave="hideDetails()">
                 <v-list-item-title
                   >{{ data.item.patrimonio }}
                   {{ data.item._str }}</v-list-item-title
