@@ -218,46 +218,56 @@
 </template>
 
 <script>
+import employeehelper from "./../../helpers/employees/employeehelper"
 export default {
   props: ["devices", "employee"],
   data() {
     return {
       deviceToShow: null,
       showComputer: false,
+      state: employeehelper.state,
     };
   },
   methods: {
     changeComputers() {
       this.$store.commit("devices/assing_computers_to", this.employee);
+      this.edit_employee()
     },
     removeComputers(item) {
       const index = this.employee.computers.indexOf(item);
       if (index >= 0) this.employee.computers.splice(index, 1);
       this.$store.commit("devices/assing_computers_to", this.employee);
+      this.edit_employee()
     },
     changeCellphones() {
       this.$store.commit("devices/assing_cellphones_to", this.employee);
+      this.edit_employee()
     },
     removeCellphones(item) {
       const index = this.employee.cellphones.indexOf(item);
       if (index >= 0) this.employee.cellphones.splice(index, 1);
       this.$store.commit("devices/assing_cellphones_to", this.employee);
+      this.edit_employee()
     },
     changeOtherDevices() {
       this.$store.commit("devices/assing_other_devices_to", this.employee);
+      this.edit_employee()
     },
     removeOtherDevices(item) {
       const index = this.employee.other_devices.indexOf(item);
       if (index >= 0) this.employee.other_devices.splice(index, 1);
       this.$store.commit("devices/assing_other_devices_to", this.employee);
+      this.edit_employee()
     },
     changeChips() {
       this.$store.commit("devices/assing_chips_to", this.employee);
+      this.edit_employee()
     },
     removeChips(item) {
       const index = this.employee.chips.indexOf(item);
       if (index >= 0) this.employee.chips.splice(index, 1);
       this.$store.commit("devices/assing_chips_to", this.employee);
+      this.edit_employee()
     },
     showDetails(device) {
       this.showComputer = !this.showComputer;
@@ -266,6 +276,13 @@ export default {
     hideDetails() {
       this.showComputer = false;
       this.deviceToShow = null;
+    },
+    edit_employee() {
+      if (!this.employee.edited) {
+        this.employee.edited = true;
+        this.employee.state = this.state.MODIFIED;
+        this.$store.commit("employees/increment");
+      }
     },
   },
   computed: {
