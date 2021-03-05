@@ -17,6 +17,7 @@
           v-model="employee.computers"
           :items="computers_list"
           item-color="pink lighten-1"
+          width="1000"
           filled
           placeholder="Computadores"
           solo
@@ -180,19 +181,36 @@
       <div class="fundo-branco infos" style="color: black">
         <div v-if="deviceToShow && deviceToShow.kind === 'computer'" class="info-device">
           <img src="~/static/laptop.png" class="slack-logo ma-2" />
-          <span>{{deviceToShow.marca}}</span>
+          <spam>{{deviceToShow.patrimonio}}</spam>
+          <span>{{deviceToShow.marca}} {{deviceToShow.modelo}}</span>
+          <spam>{{deviceToShow.processador}} {{deviceToShow.ssd}}gb {{deviceToShow.ram}}gb</spam>
+          <spam>Atual: {{deviceToShow.os_atual}}</spam>
+          <spam>Original: {{deviceToShow.os_original}}</spam>
+          <spam>Admin: {{deviceToShow.admin_local}}</spam>
+          <spam>Senha: {{deviceToShow.senha_admin}}</spam>
+          <spam>Garantia: {{deviceToShow.garantia_expira}}</spam>
+          <spam>Observações: {{deviceToShow.observacoes}}</spam>
+
         </div>
         <div v-else-if="deviceToShow && deviceToShow.kind === 'cellphone'" class="info-device">
           <img src="~/static/smartphone.png" class="slack-logo ma-2" />
-          <span>{{deviceToShow.marca}}</span>
+          <spam>{{deviceToShow.patrimonio}}</spam>
+          <spam>{{deviceToShow.imei}}</spam>
+          <span>{{deviceToShow.marca}} {{deviceToShow.modelo}}</span>
+          <spam>Garantia: {{deviceToShow.garantia_expira}}</spam>
+          <spam>Observações: {{deviceToShow.observacoes}}</spam>
         </div>
         <div v-else-if="deviceToShow && deviceToShow.kind === 'chip'" class="info-device">
           <img src="~/static/chip.png" class="slack-logo ma-2" />
           <span>{{deviceToShow.phone_number | celular}}</span>
+          <span>{{deviceToShow.iccid}}</span>
+          <spam>Observações: {{deviceToShow.observacoes}}</spam>
         </div>
         <div v-else-if="deviceToShow" class="info-device">
           <img src="~/static/other_devices.png" class="slack-logo ma-2" />
-          <span>{{deviceToShow.modelo}}</span>
+          <spam>{{deviceToShow.patrimonio}}</spam>
+          <span>{{deviceToShow.marca}} {{deviceToShow.modelo}}</span>
+          <spam>Observações: {{deviceToShow.observacoes}}</spam>
         </div>
       </div>
     </div>
@@ -307,6 +325,7 @@ export default {
 .gaveta {
   display: flex;
   flex-direction: column;
+  width: 800px;
 }
 
 .slack-logo {
@@ -325,7 +344,6 @@ export default {
 }
 .horizontal-flex {
   display: flex;
-  width: 400px;
 }
 .infos {
   width: 400px;
@@ -334,6 +352,7 @@ export default {
   align-items: center;
 }
 .info-device {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;

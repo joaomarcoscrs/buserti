@@ -55,9 +55,8 @@
                 offset-y
                 :close-on-content-click="false"
                 class="gaveta"
-                max-height="300"
-                max-width="400"
-                min-width="400"
+                max-width="600"
+                min-width="600"
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
