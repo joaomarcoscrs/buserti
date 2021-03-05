@@ -1,7 +1,6 @@
 import api from '~api'
 
 export const state = () => ({
-  computers: [],
   software_groups: [],
   permission_groups: [],
   edit_count: 0

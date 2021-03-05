@@ -49,7 +49,28 @@ export default {
   },
   mounted() {
     api.list_devices().then((result) => {
-      this.$store.commit("devices/setdevices", result.data);
+      this.computers = result.data.filter((d) => d.kind === "computer");
+      this.cellphones = result.data.filter((d) => d.kind === "cellphone");
+      this.other_devices = result.data.filter(
+        (d) =>
+          d.kind !== "computer" && d.kind !== "cellphone" && d.kind !== "chip"
+      );
+      const chips = result.data.filter((d) => d.kind === "chip");
+      var i;
+      for (i = 0; i < chips.length; i++) {
+        chips[i]["phonenumber_error"] = false;
+        chips[i]["phonenumber_tem_letras"] = false;
+        chips[i]["phonenumber_tem_11_digitos"] = false;
+        chips[i]["editing_phone_number"] = false;
+        chips[i]["altura_linha"] = "table";
+      }
+      this.chips = chips;
+      this.$store.commit("devices/setdevices", {
+        computers: this.computers,
+        cellphones: this.cellphones,
+        other_devices: this.other_devices,
+        chips: this.chips
+      });
     });
     api.list_software_groups().then((result) => {
       this.$store.commit("groups/setSoftwareGroups", result.data);

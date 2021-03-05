@@ -31,14 +31,14 @@
               filled
               rounded
               dense
-              light
+        SelectDevicesDevices      light
               hide-details
             />
           </div>
           <div class="table-title" style="height: 100%">
-            <v-select
+            <!-- <v-select
               class="table-title-text"
-              :items="devices"
+              :items="devices.computers"
               v-model="employee.device"
               item-text="patrimonio"
               placeholder="computador"
@@ -49,7 +49,30 @@
               light
               hide-details
               solo
-            />
+            /> -->
+            <div class="text-center">
+              <v-menu
+                offset-y
+                :close-on-content-click="false"
+                class="gaveta"
+                max-height="300"
+                max-width="400"
+                min-width="400"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    text
+                    class="container-gaveta-soft-perms cor-cinza-escuro"
+                    light
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <span class="texto-gaveta">ver dispositivos</span>
+                  </v-btn>
+                </template>
+                <select-devices :devices="devices" :employee="employee"/>
+              </v-menu>
+            </div>
           </div>
           <div class="table-title" style="height: 100%">
             <div class="text-center">
@@ -364,10 +387,14 @@
 
 <script>
 import api from "~api";
-import employeehelper from "./../../helpers/employees/employeehelper";
+import selectDevices from '../devices/select-devices.vue'
+import employeehelper from "./../../helpers/employees/employeehelper"
 
 export default {
   props: ["employees"],
+  components: {
+    selectDevices
+  },
   data() {
     return {
       new_name: "",

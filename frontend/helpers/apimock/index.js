@@ -39,7 +39,7 @@ export default {
           slack: "tamires.cunha",
           buser_email: "tamires.cunha@buser.com.br",
           slack_image: "https://ca.slack-edge.com/T8DJ2DE76-USVSDBSG0-a1cef74b740b-512",
-          device: {
+          computers: [{
             id: 1,
             patrimonio: "000123",
             service_tag: "20GMD93",
@@ -53,7 +53,28 @@ export default {
             observacoes: "Está sem carregador",
             garantia_expira: "2021-01-03",
             _str: "Dell Inspiron 13 4gb RAM 500gb HD",
+            assigned_to: "tamires.cunha",
           },
+          {
+            id: 2,
+            kind: "computer",
+            patrimonio: "000939",
+            service_tag: "20GMD92",
+            ram: 4,
+            processador: "i5",
+            ssd: 256,
+            marca: "Dell",
+            modelo: "Inspiron 13",
+            os_original: "Windows 10 Home",
+            os_atual: "Mint 20",
+            host_name: "BUSER123",
+            admin_local: "admin",
+            senha_admin: "senha123",
+            observacoes: null,
+            assigned_to: "tamires.cunha",
+            garantia_expira: "2021-01-03",
+          }
+        ],
           software_groups: [
             {
               id: 2,
@@ -318,7 +339,7 @@ export default {
           admin_local: "admin",
           senha_admin: "senha123",
           observacoes: "Está sem carregador",
-          assigned_to: null,
+          assigned_to: "tamires.cunha",
           garantia_expira: "2021-01-03",
         },
         {
@@ -356,7 +377,7 @@ export default {
           admin_local: "admin",
           senha_admin: "senha123",
           observacoes: null,
-          assigned_to: "tony.lampada",
+          assigned_to: null,
           garantia_expira: "2022-01-03",
         },
         {

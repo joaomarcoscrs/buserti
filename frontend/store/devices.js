@@ -6,9 +6,22 @@ export const state = () => ({
 
 export const mutations = {
   setdevices(state, devices) {
-    let pcs = [""].concat(devices);
-    state.devices = pcs;
+    state.devices = devices;
+    console.log("SET_DEVICES: ", state.devices)
   },
+  assing_computers_to(state, employee) {
+    let previous_computers = state.devices.computers.filter(pc => { return pc.assigned_to === employee.slack})
+    if (previous_computers) {
+      previous_computers.forEach(pc => {
+        pc.assigned_to = null
+      })
+    }
+    if (employee.computers) {
+      employee.computers.forEach(element => {
+        state.devices.computers.find(pc => { return pc.id === element.id}).assigned_to = employee.slack
+      });
+    }
+  }
 };
 
 export const getters = {
