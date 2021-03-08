@@ -22,6 +22,9 @@ export const mutations = {
   },
   decrement (state) {
     state.edit_count--
+  },
+  clear_count (state) {
+    state.edit_count = 0
   }
 }
 

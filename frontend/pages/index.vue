@@ -47,6 +47,19 @@ export default {
       };
     });
   },
+  beforeRouteLeave (to, from , next) {
+    if (this.edit_count > 0) {
+      const answer = window.confirm('Deseja sair? Existem alterações não salvas!')
+      if (answer) {
+        this.$store.commit('employees/clear_count')
+        next()
+      } else {
+        next(false)
+      }
+    } else {
+      next()
+    }
+  },
   mounted() {
     api.list_devices().then((result) => {
       this.computers = result.data.filter((d) => d.kind === "computer");
@@ -79,6 +92,11 @@ export default {
       this.$store.commit("groups/setPermissionGroups", result.data);
     });
   },
+  computed: {
+    edit_count() {
+      return this.$store.state.employees.edit_count;
+    },
+  }
 };
 </script>
 
